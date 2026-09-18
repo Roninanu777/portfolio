@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OG image source — render at 1200×630 to og.png</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;width:1200px;height:630px;background:#0F1013;color:#F3F3F5;font-family:'Instrument Sans',system-ui,sans-serif;overflow:hidden}
+  .frame{position:relative;width:1200px;height:630px;padding:64px 72px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between}
+  .frame::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 420px at 100% 0%,rgba(45,212,191,.16),transparent 70%),radial-gradient(600px 400px at 0% 100%,rgba(167,139,250,.14),transparent 70%)}
+  .top{position:relative;display:flex;align-items:center;gap:14px;font-family:'DM Mono',monospace;font-size:20px;letter-spacing:.06em;text-transform:uppercase;color:#9A9EA8}
+  .top i{width:14px;height:14px;border-radius:50%;background:#2DD4BF;box-shadow:0 0 0 5px rgba(45,212,191,.18)}
+  h1{position:relative;margin:0;font-size:72px;font-weight:600;letter-spacing:-.03em;line-height:1.04;max-width:16ch}
+  .bottom{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:40px}
+  .name{font-size:28px;font-weight:600;letter-spacing:-.01em}
+  .name small{display:block;font-size:20px;color:#9A9EA8;font-weight:400;margin-top:4px}
+  .cards{display:flex;gap:10px}
+  .cards i{display:block;width:92px;height:64px;border-radius:12px;background:#17181C;border:1px solid #343843;position:relative;overflow:hidden}
+  .cards i::after{content:"";position:absolute;left:12px;right:12px;bottom:12px;height:6px;border-radius:3px;background:var(--c)}
+  .cards i::before{content:"";position:absolute;left:12px;top:12px;width:8px;height:8px;border-radius:50%;background:var(--c)}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="top"><i></i>Senior Software Engineer · full-stack + AI</div>
+  <h1>I build the surfaces users touch and the systems under them.</h1>
+  <div class="bottom">
+    <div class="name">Roni Raj Kamal Pradhan<small>React · Node · AWS serverless · Stripe · LLM agents · LiveKit</small></div>
+    <div class="cards"><i style="--c:#2DD4BF"></i><i style="--c:#A78BFA"></i><i style="--c:#FBBF24"></i><i style="--c:#7DD3FC"></i><i style="--c:#FB7185"></i></div>
+  </div>
+</div>
+</body>
+</html>

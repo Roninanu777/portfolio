@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0F1013">
+
+<!--
+  Things you will want to edit over time:
+  · the canonical / Open Graph / JSON-LD URLs below once you have a custom domain
+  · the timezone line in the "Where I work" card (keep availability details off the site)
+  · experience rows and the two project cards
+  · the resume PDF is generated, see README
+-->
+<title>Roni Pradhan — Senior Software Engineer</title>
+<meta name="description" content="Full-stack engineer who built a B2B research platform end to end as one of two engineers: React, Node, AWS serverless, Stripe, then its LLM agents and real-time voice interviews.">
+<link rel="canonical" href="https://portfolio.roni-pradhan.workers.dev/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Roni Pradhan — Senior Software Engineer">
+<meta property="og:description" content="I build the surfaces users touch and the systems under them. React, Node, AWS serverless, Stripe, LLM agents, real-time voice.">
+<meta property="og:url" content="https://portfolio.roni-pradhan.workers.dev/">
+<meta property="og:image" content="https://portfolio.roni-pradhan.workers.dev/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Roni Pradhan — Senior Software Engineer">
+<meta name="twitter:description" content="I build the surfaces users touch and the systems under them.">
+<meta name="twitter:image" content="https://portfolio.roni-pradhan.workers.dev/assets/og.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Roni Raj Kamal Pradhan",
+  "alternateName": "Roni Pradhan",
+  "jobTitle": "Senior Software Engineer",
+  "email": "mailto:ronirajkamalpradhan1112@gmail.com",
+  "url": "https://portfolio.roni-pradhan.workers.dev/",
+  "sameAs": [
+    "https://github.com/Roninanu777",
+    "https://www.linkedin.com/in/roni-r-k-pradhan-279b06436/"
+  ],
+  "address": { "@type": "PostalAddress", "addressLocality": "Itanagar", "addressRegion": "Arunachal Pradesh", "addressCountry": "IN" },
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "National Institute of Technology, Arunachal Pradesh" },
+  "knowsAbout": ["React", "Node.js", "TypeScript", "AWS Lambda", "Stripe", "LLM agents", "LiveKit", "Langfuse", "MongoDB", "Typesense"]
+}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<nav class="nav" aria-label="Primary">
+  <div class="wrap">
+    <a class="brand" href="#top"><i aria-hidden="true"></i>Roni Pradhan</a>
+    <div class="links">
+      <a class="in" href="#work">Work</a>
+      <a class="in" href="#experience">Experience</a>
+      <a class="in" href="#stack">Stack</a>
+      <a href="assets/Roni-Pradhan-Senior-Software-Engineer.pdf" download>Resume</a>
+      <span class="sep" aria-hidden="true"></span>
+      <a href="https://github.com/Roninanu777" rel="me">GitHub</a>
+      <a href="https://www.linkedin.com/in/roni-r-k-pradhan-279b06436/" rel="me">LinkedIn</a>
+      <a href="mailto:ronirajkamalpradhan1112@gmail.com">Email</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap" id="main">
+  <header class="hero" id="top">
+    <div class="eyebrow">Senior Software Engineer · Itanagar, IST · remote</div>
+    <h1>I build the surfaces users touch and the systems under them.</h1>
+    <p>Five years as one of two engineers on a B2B user-research platform: the <b>React app, Node API, AWS serverless layer and Stripe billing</b>, then its <b>LLM agents and real-time voice interviews</b>. Below is a working sketch of each thing I shipped.</p>
+    <div class="btns">
+      <a class="btn fill" href="mailto:ronirajkamalpradhan1112@gmail.com">Email me</a>
+      <button class="btn line" type="button" id="copy-email" data-email="ronirajkamalpradhan1112@gmail.com">Copy email</button>
+      <a class="btn line" href="assets/Roni-Pradhan-Senior-Software-Engineer.pdf" download><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8m0 0L5 7m3 3 3-3M3 12v1.5A.5.5 0 0 0 3.5 14h9a.5.5 0 0 0 .5-.5V12"/></svg>Resume (PDF)</a>
+      <a class="btn line" href="https://github.com/Roninanu777" rel="me">GitHub</a>
+    </div>
+  </header>
+
+  <section class="bento" id="work" aria-label="Things I shipped">
+
+    <!-- a. voice interviews -->
+    <article class="card c7 r2" style="--tint:var(--teal)">
+      <div class="eyebrow"><i></i>Real-time · CleverX</div>
+      <h3>AI voice interviews</h3>
+      <div class="ui grow voice" aria-label="Illustration of a live AI interview session">
+        <div class="hd"><span class="live">Interview · Q3 of 8</span><span>04:12</span></div>
+        <div class="wave" aria-hidden="true">
+          <i style="--h:0.35;animation-delay:0s"></i><i style="--h:0.6;animation-delay:-.1s"></i><i style="--h:0.9;animation-delay:-.35s"></i><i style="--h:0.5;animation-delay:-.5s"></i><i style="--h:1;animation-delay:-.2s"></i><i style="--h:0.7;animation-delay:-.8s"></i><i style="--h:0.45;animation-delay:-.6s"></i>
+          <i style="--h:0.8;animation-delay:-.15s"></i><i style="--h:0.3;animation-delay:-.9s"></i><i style="--h:0.95;animation-delay:-.4s"></i><i style="--h:0.6;animation-delay:-.7s"></i><i style="--h:0.4;animation-delay:-.05s"></i><i style="--h:0.85;animation-delay:-.55s"></i><i style="--h:0.55;animation-delay:-.3s"></i>
+          <i style="--h:0.3;animation-delay:-.95s"></i><i style="--h:0.75;animation-delay:-.25s"></i><i style="--h:1;animation-delay:-.65s"></i><i style="--h:0.5;animation-delay:-.45s"></i><i style="--h:0.65;animation-delay:-.1s"></i><i style="--h:0.9;animation-delay:-.85s"></i><i style="--h:0.4;animation-delay:-.2s"></i>
+          <i style="--h:0.7;animation-delay:-.6s"></i><i style="--h:0.35;animation-delay:-.35s"></i><i style="--h:0.8;animation-delay:-.75s"></i><i style="--h:0.6;animation-delay:-.5s"></i><i style="--h:0.95;animation-delay:-.15s"></i><i style="--h:0.45;animation-delay:-.9s"></i><i style="--h:0.3;animation-delay:-.4s"></i>
+        </div>
+        <div class="tr">
+          <b>AI interviewer</b><span>What made you switch tools last quarter?</span>
+          <b>Participant</b><span>Mostly the export limits. We hit them every sprint, so…</span>
+          <b>AI interviewer</b><span>Walk me through the last time that happened.</span>
+        </div>
+        <div class="sess"><span>participant reconnected · 0:03 gap</span><span>persona: “curious, neutral” · voice: cartesia/sonic</span></div>
+        <div class="chips"><span class="chip on">LiveKit agents</span><span class="chip">AssemblyAI</span><span class="chip">Cartesia</span><span class="chip">server-side completion</span></div>
+      </div>
+      <p class="cap">Persona and voice come from the study config. Live transcription through AssemblyAI and Cartesia, participant reconnection, and server-side session completion.</p>
+    </article>
+
+    <!-- b. study-builder agent -->
+    <article class="card c5 r2" style="--tint:var(--violet)">
+      <div class="eyebrow"><i></i>AI layer · CleverX</div>
+      <h3>LLM study-builder agent</h3>
+      <div class="ui grow" aria-label="Illustration of an agent run with ordered tool calls">
+        <div class="hd"><span>study-builder · run #4821</span><span>langfuse</span></div>
+        <div class="dag">
+          <div class="node done"><span>create_study</span><small>writes: study</small></div>
+          <div class="edge">reads study</div>
+          <div class="node done"><span>add_screener</span><small>writes: screener</small></div>
+          <div class="edge">reads study</div>
+          <div class="node done"><span>add_task ×4</span><small>writes: tasks</small></div>
+          <div class="edge">reads screener, tasks</div>
+          <div class="node done"><span>set_skip_logic</span><small>writes: rules</small></div>
+          <div class="edge">reads all</div>
+          <div class="node"><span>publish</span><span class="st">ok · 1.9s</span></div>
+        </div>
+      </div>
+      <p class="cap">A tool-call dependency scheduler orders calls by declared reads and writes, so a step never references something that isn't written yet. Anthropic and OpenAI, Langfuse-traced.</p>
+    </article>
+
+    <!-- c. cost -->
+    <article class="card c4" style="--tint:var(--amber)">
+      <div class="eyebrow"><i></i>Cost control</div>
+      <h3>−16% monthly LLM spend</h3>
+      <div class="ui">
+        <div class="big">−16%<small>after audit</small></div>
+        <svg class="spark" viewBox="0 0 300 80" aria-hidden="true">
+          <defs><linearGradient id="ag" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FBBF24" stop-opacity=".25"/><stop offset="1" stop-color="#FBBF24" stop-opacity="0"/></linearGradient></defs>
+          <path class="a" d="M0,52 L30,50 L60,48 L90,44 L120,30 L150,18 L180,20 L200,24 L215,44 L240,50 L270,52 L300,54 L300,80 L0,80 Z"/>
+          <path class="l" d="M0,52 L30,50 L60,48 L90,44 L120,30 L150,18 L180,20 L200,24 L215,44 L240,50 L270,52 L300,54"/>
+          <line x1="200" y1="8" x2="200" y2="72" stroke="#5B606B" stroke-dasharray="3 3"/>
+          <text x="196" y="10" fill="#9A9EA8" font-size="9" text-anchor="end" font-family="DM Mono, monospace">audit</text>
+        </svg>
+      </div>
+      <p class="cap">Audited Anthropic usage platform-wide, traced a spike to low-cache-hit LLM-as-a-judge eval rules, and fixed it with request sampling and model selection.</p>
+    </article>
+
+    <!-- d. migration -->
+    <article class="card c4" style="--tint:var(--teal)">
+      <div class="eyebrow"><i></i>Real-time video</div>
+      <h3>Twilio → LiveKit</h3>
+      <div class="ui">
+        <div class="mig">
+          <div class="repos">
+            <div class="repo"><span>api</span><small>rooms · tokens</small></div>
+            <div class="repo"><span>web</span><small>observer · reconnect</small></div>
+            <div class="repo"><span>recording</span><small>multi-egress</small></div>
+            <div class="repo"><span>archive</span><small>pipeline</small></div>
+          </div>
+          <svg viewBox="0 0 44 110" aria-hidden="true">
+            <path d="M0,12 C22,12 22,55 44,55"/><path d="M0,41 C22,41 22,55 44,55"/><path d="M0,69 C22,69 22,55 44,55"/><path d="M0,98 C22,98 22,55 44,55"/>
+          </svg>
+          <div class="rel">1 release<small>4 repos</small></div>
+        </div>
+      </div>
+      <p class="cap">Migrated the live video layer as one coordinated release across four repositories: room and token management, multi-egress recording, per-question highlight clips, observer mode, reconnect handling.</p>
+    </article>
+
+    <!-- e. public api -->
+    <article class="card c4" style="--tint:var(--sky)">
+      <div class="eyebrow"><i></i>Platform</div>
+      <h3>Public API + webhooks</h3>
+      <div class="ui">
+<pre class="code"><span class="k">POST</span> /v1/studies
+<span class="s">Authorization:</span> Bearer cx_live_••••
+{ <span class="g">"title"</span>: "Onboarding study",
+  <span class="g">"screener"</span>: "scr_9f2",
+  <span class="g">"seats"</span>: 12 }</pre>
+        <div class="evt"><span><b>study.completed</b> → https://…/hooks</span><span>200</span></div>
+      </div>
+      <p class="cap">v1 study and participant endpoints, API-key management with superadmin access control, developer dashboard, published docs.</p>
+    </article>
+
+    <!-- f. billing -->
+    <article class="card c4" style="--tint:var(--coral)">
+      <div class="eyebrow"><i></i>Billing</div>
+      <h3>Billing + multi-seat teams</h3>
+      <div class="ui" aria-label="Illustration of a team's seats and billing">
+        <div class="seat"><span class="av">AK</span><span class="nm">Anika K.</span><span class="role">Owner</span></div>
+        <div class="seat"><span class="av">JM</span><span class="nm">Jonas M.</span><span class="role">Editor</span></div>
+        <div class="seat"><span class="av">PR</span><span class="nm">Priya R.</span><span class="role x">Observer · not billed</span></div>
+        <div class="bill"><span class="tog"><i aria-hidden="true"></i>Autocharge on</span><span>Credits <b>1,250</b></span></div>
+      </div>
+      <p class="cap">Roles, ownership transfer, billing-excluded observer seats, Stripe autocharge, credits, and off-platform payment tracking.</p>
+    </article>
+
+    <!-- g. search -->
+    <article class="card c4" style="--tint:var(--lime)">
+      <div class="eyebrow"><i></i>Search</div>
+      <h3>Search + matching</h3>
+      <div class="ui" aria-label="Illustration of a participant search with filters">
+        <div class="q"><span>product managers in fintech, Berlin</span><span class="cur" aria-hidden="true"></span></div>
+        <div class="chips" style="margin:8px 0"><span class="chip on">job function</span><span class="chip on">job level</span><span class="chip">company size</span><span class="chip on">geo</span></div>
+        <div class="res"><span>Senior PM · N26 · Berlin</span><span class="sc">0.94</span></div>
+        <div class="res"><span>Product lead · Trade Republic · Berlin</span><span class="sc">0.91</span></div>
+        <div class="res"><span>PM · Solaris · remote (DE)</span><span class="sc">0.82</span></div>
+      </div>
+      <p class="cap">Migrated Algolia to Typesense with geo indexing and relevance tuning; rewrote participant–study matching with search scoring, location weighting and exclusion filters.</p>
+    </article>
+
+    <!-- h. unmoderated research -->
+    <article class="card c4" style="--tint:var(--amber)">
+      <div class="eyebrow"><i></i>Research suite</div>
+      <h3>Unmoderated research</h3>
+      <div class="ui">
+        <div class="tabs"><span>Diary</span><span class="on">Website test</span><span>Figma prototype</span></div>
+        <div class="heat" aria-hidden="true"></div>
+      </div>
+      <p class="cap">Video diary, website testing with interaction heatmaps, and Figma prototype testing. Took the Figma OAuth app through vendor review to general availability.</p>
+    </article>
+
+    <!-- i. codebase archaeology -->
+    <article class="card c6" style="--tint:var(--violet)">
+      <div class="eyebrow"><i></i>Open source · 2026</div>
+      <h3>Codebase Archaeology</h3>
+      <div class="ui chat" aria-label="Illustration of a cited answer from Codebase Archaeology">
+        <div class="bub q">why does retry_backoff exist?</div>
+        <div class="bub a">Added after a Postmark outage caused duplicate sends. Backoff is capped at five tries because the queue re-enqueues on failure.<span class="cite">cited: commit 7fd44e2 · PR #212 comment</span></div>
+        <div class="chips" style="margin-top:4px"><span class="chip">pgvector + BM25 → RRF</span><span class="chip">tree-sitter</span><span class="chip">MCP server</span><span class="chip">REST API</span></div>
+      </div>
+      <p class="cap">Answers “why does this code exist” from git history, PR discussions and linked issues, with every claim cited to a commit or comment, and abstains when evidence is thin. Python, Postgres 16 + pgvector.</p>
+      <div class="out"><a href="https://github.com/Roninanu777/codebase-archaeology">GitHub</a><a href="https://codebase-archaeology.pages.dev">Live demo</a></div>
+    </article>
+
+    <!-- j. year progress -->
+    <article class="card c3" style="--tint:var(--sky)">
+      <div class="eyebrow"><i></i>Side project</div>
+      <h3>Year Progress</h3>
+      <div class="phone" aria-hidden="true">
+        <div class="pct" id="ypct">—</div>
+        <div class="dots" id="ydots"></div>
+      </div>
+      <p class="cap">iPhone wallpapers that show the year as a dot grid. Next.js, TypeScript, iOS Shortcuts API.</p>
+      <div class="out"><a href="https://github.com/Roninanu777/year-progress-wallpaper">GitHub</a><a href="https://year-progress-wallpaper-tau.vercel.app">Live</a></div>
+    </article>
+
+    <!-- k. clock -->
+    <article class="card c3" style="--tint:var(--teal)">
+      <div class="eyebrow"><i></i>Where I work</div>
+      <h3>Itanagar, IST</h3>
+      <div class="grow" style="display:flex;align-items:center">
+        <div class="clock"><span id="clock">--:--:--</span><small id="dateline">UTC+5:30</small></div>
+      </div>
+      <p class="cap">UTC+5:30 · remote-first · working overlap with Europe and the US East Coast.</p>
+    </article>
+
+  </section>
+
+  <section class="plain" id="experience">
+    <h2>Experience</h2>
+    <div class="row">
+      <div class="when">Jan 2024 → present</div>
+      <div>
+        <h3>Senior Software Engineer <span>· CleverX</span></h3>
+        <p>Owned platform surfaces end to end in a two-engineer team: built the AI layer and voice interviews, replaced the real-time video layer, opened a public API and webhook platform, and delivered billing and multi-seat teams.</p>
+        <div class="chips"><span class="chip">React 18</span><span class="chip">Node</span><span class="chip">MongoDB</span><span class="chip">AWS Lambda</span><span class="chip">LiveKit</span><span class="chip">Anthropic SDK</span><span class="chip">Langfuse</span><span class="chip">Stripe</span></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="when">Mar 2021 → Dec 2023</div>
+      <div>
+        <h3>Software Engineer <span>· CleverX</span></h3>
+        <p>Built the design system and led the React 18 migration, owned the search revamp from Algolia to Typesense, built the screener engine, and took over transactional email on MJML and Postmark.</p>
+        <div class="chips"><span class="chip">Design system</span><span class="chip">Typesense</span><span class="chip">Elasticsearch</span><span class="chip">MJML</span><span class="chip">Postmark</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="plain" id="stack">
+    <h2>Stack</h2>
+    <div class="stack">
+      <div class="grp"><h3>Frontend</h3><div class="chips"><span class="chip">React 18</span><span class="chip">TypeScript</span><span class="chip">MobX</span><span class="chip">Tailwind</span><span class="chip">Radix UI</span><span class="chip">Vite</span><span class="chip">webpack</span><span class="chip">Framer Motion</span><span class="chip">TipTap</span><span class="chip">Recharts</span><span class="chip">Stripe Elements</span></div></div>
+      <div class="grp"><h3>Backend</h3><div class="chips"><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">MongoDB</span><span class="chip">Mongoose</span><span class="chip">Jest + Supertest</span><span class="chip">Typesense</span><span class="chip">Elasticsearch</span><span class="chip">Stripe</span><span class="chip">MJML</span><span class="chip">Postmark</span></div></div>
+      <div class="grp"><h3>AI &amp; real-time</h3><div class="chips"><span class="chip">Anthropic SDK</span><span class="chip">OpenAI SDK</span><span class="chip">Langfuse</span><span class="chip">LiveKit agents</span><span class="chip">AssemblyAI</span><span class="chip">Cartesia</span><span class="chip">ffmpeg</span><span class="chip">MCP</span><span class="chip">pgvector</span><span class="chip">tree-sitter</span></div></div>
+      <div class="grp"><h3>Infrastructure</h3><div class="chips"><span class="chip">AWS Lambda</span><span class="chip">CDK</span><span class="chip">S3</span><span class="chip">SQS</span><span class="chip">DynamoDB</span><span class="chip">CloudFront</span><span class="chip">GitHub Actions</span><span class="chip">Cloudflare Pages</span><span class="chip">PostHog</span></div></div>
+    </div>
+  </section>
+
+  <section class="plain" id="education">
+    <h2>Education</h2>
+    <div class="row">
+      <div class="when">2021</div>
+      <div><h3>B.Tech, Computer Science &amp; Engineering</h3><p>National Institute of Technology, Arunachal Pradesh</p></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>Roni Raj Kamal Pradhan · Senior Software Engineer</span>
+    <span><a href="https://github.com/Roninanu777" rel="me">GitHub</a> · <a href="https://www.linkedin.com/in/roni-r-k-pradhan-279b06436/" rel="me">LinkedIn</a> · <a href="mailto:ronirajkamalpradhan1112@gmail.com">Email</a> · <a href="assets/Roni-Pradhan-Senior-Software-Engineer.pdf" download>Resume (PDF)</a></span>
+    <span>Built by hand · <span id="year">2026</span></span>
+  </footer>
+</main>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

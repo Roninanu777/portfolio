@@ -1,0 +1,9 @@
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+/assets/*.pdf
+  Content-Disposition: attachment; filename="Roni-Pradhan-Senior-Software-Engineer.pdf"
+  Cache-Control: public, max-age=3600

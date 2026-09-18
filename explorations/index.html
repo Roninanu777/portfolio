@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio design options — Roni Pradhan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#FBFBFA;--ink:#1B1B1B;--muted:#6B6B70;--rule:#E1E1DD}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.5;padding:40px clamp(16px,4vw,56px) 80px}
+  h1{font-family:'Inter Tight',Inter,sans-serif;font-weight:500;letter-spacing:-.035em;font-size:clamp(34px,5vw,60px);line-height:1;margin:0 0 12px}
+  .lede{max-width:64ch;color:var(--muted);margin:0 0 36px}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;letter-spacing:.02em}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .card{border:1px solid var(--ink);text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .15s ease,box-shadow .15s ease;background:#fff}
+  .card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+  .card:focus-visible{outline:2px solid #6F42C1;outline-offset:2px}
+  .swatch{height:120px;display:grid;grid-template-columns:3fr 1fr 1fr 1fr;border-bottom:1px solid var(--ink)}
+  .swatch i{display:block}
+  .cap{padding:16px 18px 20px}
+  .cap .k{display:flex;justify-content:space-between;gap:10px;margin-bottom:8px}
+  .cap h2{font-family:'Inter Tight',Inter,sans-serif;font-weight:500;letter-spacing:-.02em;font-size:24px;margin:0 0 6px;line-height:1.1}
+  .cap p{margin:0 0 10px;color:var(--ink)}
+  .cap .meta{color:var(--muted);font-size:13px}
+  .note{margin-top:40px;padding-top:20px;border-top:1px solid var(--rule);color:var(--muted);max-width:70ch}
+  code{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px;background:#EFEFEC;padding:1px 5px}
+</style>
+</head>
+<body>
+<h1>Four portfolio directions</h1>
+<p class="lede">Parked explorations from 18 Sep 2026. Each card opens a complete single-page draft built from the resume. Same facts, four different visual theses. <b>Option D (Surfaces) was chosen</b> and lives at the project root; the other three are kept here for future reference.</p>
+
+<div class="grid">
+  <a class="card" href="a-typesafe.html">
+    <div class="swatch"><i style="background:#FEFEFE"></i><i style="background:#F27D98"></i><i style="background:#AFBBB8"></i><i style="background:#141414"></i></div>
+    <div class="cap">
+      <div class="k"><span class="mono">A · typesafe.ai homage</span><span class="mono">light</span></div>
+      <h2>Five Years, Two Engineers, One Whole Platform.</h2>
+      <p>Near-white canvas, giant tight grotesk headline, mono labels, hard color-block sections (pink, sage, black), corner crop marks, and retro system windows showing a live agent trace, a LiveKit room, and an IST clock.</p>
+      <div class="meta">Inter Tight · Inter · JetBrains Mono. Closest to your stated taste.</div>
+    </div>
+  </a>
+
+  <a class="card" href="b-trace.html">
+    <div class="swatch"><i style="background:#0B0C0F"></i><i style="background:#6FB7FF"></i><i style="background:#5ED0A5"></i><i style="background:#F5B841"></i></div>
+    <div class="cap">
+      <div class="k"><span class="mono">B · Trace</span><span class="mono">dark</span></div>
+      <h2>Your career as a span waterfall.</h2>
+      <p>The page is a tracing tool: roles are root spans, shipped features are child spans on a 2021→2026 axis, color-coded by AI / real-time / platform / search. Hover a span for details, stack rendered as span attributes.</p>
+      <div class="meta">Geist · Geist Mono. Speaks directly to Langfuse / LLM-ops hiring managers.</div>
+    </div>
+  </a>
+
+  <a class="card" href="c-changelog.html">
+    <div class="swatch"><i style="background:#FBFBF9"></i><i style="background:#6F42C1"></i><i style="background:#1A7F37"></i><i style="background:#B42318"></i></div>
+    <div class="cap">
+      <div class="k"><span class="mono">C · Changelog</span><span class="mono">light</span></div>
+      <h2>Release notes for one full-stack engineer.</h2>
+      <p>Sticky bio column plus a versioned changelog, newest first, with migrations rendered as diffs (twilio-video → livekit, algolia → typesense). Calm, editorial, developer-native. Ages well.</p>
+      <div class="meta">IBM Plex Sans · Plex Serif · Plex Mono. Best if you plan to write.</div>
+    </div>
+  </a>
+
+  <a class="card" href="d-bento-draft.html">
+    <div class="swatch"><i style="background:#0F1013"></i><i style="background:#A78BFA"></i><i style="background:#2DD4BF"></i><i style="background:#FB7185"></i></div>
+    <div class="cap">
+      <div class="k"><span class="mono">D · Surfaces</span><span class="mono">dark</span></div>
+      <h2>Every card is a thing you shipped.</h2>
+      <p>A bento grid where each card is a miniature working replica of a product surface: the voice interview call, the tool-call DAG, the −16% spend sparkline, the API request, the billing seats, the search filters.</p>
+      <div class="meta">Instrument Sans · DM Mono. Most "product" feel; strongest at showing UI craft.</div>
+    </div>
+  </a>
+</div>
+
+<p class="note">Fonts load from Google Fonts, so the pages need internet the first time. Dates for individual features inside a role (option B spans, option C versions) are approximate and should be corrected. Your phone number is deliberately left off every page. See <code>DESIGN-RESEARCH.md</code> for the research behind these.</p>
+</body>
+</html>

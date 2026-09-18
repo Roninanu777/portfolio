@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Roni Pradhan — Changelog</title>
+<meta name="description" content="Release notes for one full-stack engineer: five years, one B2B research platform, two engineers, everything from schema to UI to deployment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFBF9; --ink:#17171A; --muted:#6B6B72; --hair:#E4E4DF; --rail:#D2D2CC;
+    --accent:#6F42C1; --accent-soft:#F1EBFA;
+    --add-bg:#E8F5EC; --add:#1A7F37; --rm-bg:#FCEBEB; --rm:#B42318;
+    --sans:'IBM Plex Sans',system-ui,sans-serif; --serif:'IBM Plex Serif',Georgia,serif; --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+    --gutter:clamp(24px,5vw,56px);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#151517; --ink:#ECECEA; --muted:#9A9AA2; --hair:#2A2A2E; --rail:#35353A;
+      --accent:#A98BF0; --accent-soft:#25203A;
+      --add-bg:#15291C; --add:#6FD08A; --rm-bg:#33191B; --rm:#F08B85;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#151517; --ink:#ECECEA; --muted:#9A9AA2; --hair:#2A2A2E; --rail:#35353A;
+    --accent:#A98BF0; --accent-soft:#25203A;
+    --add-bg:#15291C; --add:#6FD08A; --rm-bg:#33191B; --rm:#F08B85;
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:var(--rail);transition:text-decoration-color .15s,color .15s}
+  a:hover{color:var(--accent);text-decoration-color:var(--accent);text-decoration-thickness:2px}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+  ::selection{background:var(--accent);color:#fff}
+  .mono{font-family:var(--mono);font-size:12px;letter-spacing:.02em}
+  p{margin:0}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 var(--gutter);display:grid;grid-template-columns:300px minmax(0,1fr);gap:72px;align-items:start}
+
+  /* ---- left, sticky ---- */
+  .side{position:static;padding:56px 0 40px}
+  /* stick the left column only when the viewport is tall enough to show all of it */
+  @media (min-width:861px) and (min-height:820px){ .side{position:sticky;top:28px;padding-top:48px} }
+  .side h2.name{font-family:var(--serif);font-weight:500;font-size:28px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+  .side .role{color:var(--muted);font-size:15px;margin-bottom:26px}
+  .side .bio{font-size:15.5px;line-height:1.6;margin-bottom:26px}
+  .side .links{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:34px;font-size:15px}
+  .now{border-top:1px solid var(--hair);padding-top:16px;margin-bottom:34px}
+  .now .lbl{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .now .lbl i{width:7px;height:7px;border-radius:50%;background:var(--add);display:inline-block}
+  .now p{font-size:14.5px;line-height:1.55}
+  .toc{list-style:none;margin:0;padding:0;border-top:1px solid var(--hair);padding-top:16px}
+  .toc li{margin:0}
+  .toc a{display:flex;justify-content:space-between;gap:12px;padding:6px 0;text-decoration:none;font-size:15px;color:var(--muted)}
+  .toc a:hover{color:var(--accent)}
+  .toc a .n{font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+
+  /* ---- right ---- */
+  .main{padding:56px 0 80px;min-width:0}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(40px,5.2vw,68px);letter-spacing:-.015em;line-height:1.02;margin:0 0 18px;max-width:14ch}
+  .sub{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(19px,2.1vw,24px);line-height:1.35;color:var(--muted);max-width:32ch;margin-bottom:64px}
+
+  section{margin-bottom:88px}
+  .sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:28px}
+  .sec-head h2{font-family:var(--serif);font-weight:500;font-size:26px;letter-spacing:-.01em;margin:0}
+  .sec-head .legend{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right}
+
+  /* the rail */
+  .entries{position:relative;padding-left:34px}
+  .entries::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:1px;background:var(--rail)}
+  .year{position:relative}
+  .year>h3{position:sticky;top:0;z-index:2;margin:0 0 6px -34px;padding:10px 0 8px 0;font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.1em;color:var(--muted);background:var(--paper)}
+  .year>h3::after{content:"";position:absolute;left:34px;right:0;bottom:0;height:1px;background:var(--hair)}
+  .entry{position:relative;padding:22px 0 30px;border-bottom:1px solid var(--hair)}
+  .year .entry:last-child{border-bottom:0}
+  .entry::before{content:"";position:absolute;left:-32.5px;top:30px;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--paper)}
+  .entry.milestone::before{background:var(--paper);border:2px solid var(--accent);width:6px;height:6px}
+  .entry .meta{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+  .ver{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--accent);background:var(--accent-soft);padding:2px 7px;border-radius:3px;letter-spacing:.02em}
+  .ver.approx::before{content:"~";opacity:.65;margin-right:1px}
+  .span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .entry h4{font-family:var(--serif);font-weight:500;font-size:clamp(22px,2.4vw,28px);line-height:1.15;letter-spacing:-.01em;margin:0 0 10px;max-width:26ch}
+  .entry p{max-width:64ch}
+  .entry p+p{margin-top:8px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .tags span{font-family:var(--mono);font-size:11.5px;color:var(--muted);border:1px solid var(--hair);padding:2px 7px;border-radius:3px;white-space:nowrap}
+
+  .diff{margin:16px 0 4px;border:1px solid var(--hair);border-radius:4px;overflow:hidden;font-family:var(--mono);font-size:12.5px;line-height:1.5;max-width:560px}
+  .diff .hd{display:flex;justify-content:space-between;gap:12px;padding:5px 10px;border-bottom:1px solid var(--hair);color:var(--muted);font-size:11.5px;background:color-mix(in srgb,var(--paper) 92%,var(--ink))}
+  .diff .body{overflow-x:auto}
+  .diff .l{display:flex;white-space:nowrap;padding:1px 10px 1px 8px}
+  .diff .l b{font-weight:500;display:inline-block;width:14px;flex:none}
+  .diff .l.a{background:var(--add-bg);color:var(--add)}
+  .diff .l.r{background:var(--rm-bg);color:var(--rm)}
+  .diff .l.c{color:var(--muted)}
+  .diff .cap{padding:6px 10px;border-top:1px solid var(--hair);font-size:11.5px;color:var(--muted)}
+
+  /* projects */
+  .proj{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:28px;align-items:start}
+  .illus{border:1px solid var(--hair);border-radius:4px;background:color-mix(in srgb,var(--paper) 94%,var(--ink));padding:12px;font-family:var(--mono);font-size:11.5px;line-height:1.5;overflow-wrap:anywhere;min-width:0}
+  .illus .q{color:var(--muted);margin-bottom:6px}
+  .illus .cite{color:var(--accent);margin-top:8px}
+  .illus .abst{color:var(--muted);margin-top:4px}
+  .dots{display:grid;grid-template-columns:repeat(25,1fr);gap:3px;margin:4px 0 8px}
+  .dots i{display:block;aspect-ratio:1;border-radius:50%;background:var(--rail)}
+  .dots i.on{background:var(--ink)}
+  .illus .pct{display:flex;justify-content:space-between;color:var(--muted)}
+  .plinks{display:flex;gap:16px;margin-top:12px;font-size:15px}
+
+  /* stack */
+  dl{margin:0;display:grid;grid-template-columns:150px minmax(0,1fr);gap:0 24px}
+  dt{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--muted);padding:14px 0;border-top:1px solid var(--hair)}
+  dd{margin:0;padding:14px 0;border-top:1px solid var(--hair);font-size:16px;line-height:1.55}
+  dt:first-of-type,dd:first-of-type{border-top:0}
+
+  .colophon p{max-width:60ch;color:var(--muted);font-size:15px}
+  .colophon .mono{display:block;margin-top:14px;color:var(--muted)}
+
+  /* reveal */
+  .js .reveal{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease}
+  .js .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .js .reveal{opacity:1;transform:none;transition:none}
+    html{scroll-behavior:auto}
+  }
+
+  @media (max-width:860px){
+    .wrap{grid-template-columns:1fr;gap:0}
+    .side{position:static;padding:40px 0 8px;border-bottom:1px solid var(--hair);margin-bottom:8px}
+    .side .bio{max-width:60ch}
+    .toc{display:none}
+    .main{padding-top:36px}
+    .sub{margin-bottom:48px}
+    .proj{grid-template-columns:1fr}
+    .illus{max-width:360px}
+    dl{grid-template-columns:1fr;gap:0}
+    dt{padding-bottom:2px}
+    dd{border-top:0;padding-top:4px;padding-bottom:16px}
+    dd:first-of-type{border-top:0}
+    .entries{padding-left:26px}
+    .entry::before{left:-24.5px}
+    .year>h3{margin-left:-26px}
+    .year>h3::after{left:26px}
+  }
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+
+<div class="wrap">
+  <aside class="side">
+    <h2 class="name">Roni Raj Kamal Pradhan</h2>
+    <div class="role">Senior Software Engineer · full-stack and AI</div>
+    <p class="bio">I build B2B software end to end. For five years I was one of two engineers behind CleverX, a user-research platform: its React web app, Node and MongoDB API, AWS serverless services and Stripe billing. Most recently I built its AI layer, an LLM study-builder agent and AI voice interviews, and moved its real-time video from Twilio to LiveKit.</p>
+    <div class="links">
+      <a href="https://github.com/Roninanu777" rel="me">GitHub</a>
+      <a href="https://www.linkedin.com/in/roni-r-k-pradhan-279b06436/" rel="me">LinkedIn</a>
+      <a href="mailto:ronirajkamalpradhan1112@gmail.com">Email</a>
+    </div>
+    <div class="now">
+      <div class="lbl"><i aria-hidden="true"></i>Now</div>
+      <p>Senior Software Engineer at CleverX, building its AI and real-time layers. Remote from Itanagar, IST, UTC+5:30.</p>
+    </div>
+    <nav aria-label="Sections">
+      <ul class="toc">
+        <li><a href="#changelog">Changelog <span class="n">2021 → 2026</span></a></li>
+        <li><a href="#projects">Projects <span class="n">2</span></a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#colophon">Colophon</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <h1>Release notes for one full-stack engineer.</h1>
+    <p class="sub">Five years, one B2B research platform, two engineers, everything from schema to UI to deployment.</p>
+
+    <!-- ================= CHANGELOG ================= -->
+    <section id="changelog">
+      <div class="sec-head"><h2>Changelog</h2><span class="legend">Newest first · ~ marks an approximate month</span></div>
+
+      <div class="entries">
+
+        <div class="year">
+          <h3>2026</h3>
+
+          <article class="entry reveal">
+            <div class="meta"><span class="ver approx">v2026.06</span><span class="span">CleverX</span></div>
+            <h4>AI voice interviews on LiveKit agents</h4>
+            <p>Interviews now run without a human moderator. A LiveKit agent takes its persona and voice from the study config, transcribes live through AssemblyAI and Cartesia, survives participant reconnection, and completes the session server-side.</p>
+            <div class="tags"><span>LiveKit agents</span><span>AssemblyAI</span><span>Cartesia</span><span>Node.js</span></div>
+          </article>
+
+          <article class="entry reveal">
+            <div class="meta"><span class="ver approx">v2026.03</span><span class="span">CleverX</span></div>
+            <h4>LLM spend cut by roughly 16%</h4>
+            <p>Audited Anthropic usage across the platform and traced a monthly cost spike to low-cache-hit LLM-as-a-judge eval rules. Fixed it with request sampling and model selection.</p>
+            <div class="tags"><span>Anthropic SDK</span><span>Langfuse</span><span>evals</span><span>prompt caching</span></div>
+          </article>
+        </div>
+
+        <div class="year">
+          <h3>2025</h3>
+
+          <article class="entry reveal">
+            <div class="meta"><span class="ver approx">v2025.10</span><span class="span">CleverX</span></div>
+            <h4>LLM study-builder agent</h4>
+            <p>An agent, on Anthropic and OpenAI and traced in Langfuse, that authors whole research studies: tasks, screeners, skip logic. A tool-call dependency scheduler orders every call by the reads and writes each tool declares, so nothing references a screener that does not exist yet.</p>
+            <div class="tags"><span>Anthropic SDK</span><span>OpenAI SDK</span><span>Langfuse</span><span>tool calling</span></div>
+          </article>
+
+          <article class="entry reveal">
+            <div class="meta"><span class="ver approx">v2025.04</span><span class="span">CleverX</span></div>
+            <h4>Real-time video moved from Twilio to LiveKit</h4>
+            <p>Replaced the live video layer across backend and frontend: room and token management, multi-egress recording, per-question highlight clips, observer mode, reconnect handling, and a recording archive pipeline.</p>
+            <div class="diff" role="figure" aria-label="Migration diff: Twilio to LiveKit">
+              <div class="hd"><span>real-time video</span><span>+6 −1</span></div>
+              <div class="body">
+                <div class="l r"><b>−</b>twilio-video</div>
+                <div class="l a"><b>+</b>livekit-server-sdk</div>
+                <div class="l a"><b>+</b>livekit agents</div>
+                <div class="l a"><b>+</b>multi-egress recording</div>
+                <div class="l a"><b>+</b>per-question highlight clips</div>
+                <div class="l a"><b>+</b>reconnect handling</div>
+                <div class="l a"><b>+</b>recording archive pipeline</div>
+              </div>
+              <div class="cap">4 repositories · 1 coordinated release</div>
+            </div>
+            <div class="tags"><span>LiveKit</span><span>ffmpeg</span><span>AWS Lambda</span><span>S3</span><span>SQS</span></div>
+          </article>
+        </div>
+
+        <div class="year">
+          <h3>2024</h3>
+
+          <article class="entry reveal">
+            <div class="meta"><span class="ver approx">v2024.11</span><span class="span">CleverX · through 2025</span></div>
+            <h4>Unmoderated research suite</h4>
+            <p>Broadened what the platform can test: video diary, website testing with interaction heatmaps, and Figma prototype testing. Took the Figma OAuth app through vendor review to general availability.</p>
+            <div class="tags"><span>React 18</span><span>Figma OAuth</span><span>interaction heatmaps</span></div>
+          </article>
+
+          <article class="entry reveal">
+            <div class="meta"><span class="ver approx">v2024.07</span><span class="span">CleverX</span></div>
+            <h4>Public REST API and webhook platform</h4>
+            <p>Opened the platform to programmatic customers: v1 study and participant endpoints, API-key management with superadmin access control, a developer dashboard, and published docs.</p>
+            <div class="tags"><span>Express</span><span>webhooks</span><span>API keys</span><span>docs</span></div>
+          </article>
+
+          <article class="entry reveal">
+            <div class="meta"><span class="ver approx">v2024.04</span><span class="span">CleverX</span></div>
+            <h4>Billing and multi-seat teams</h4>
+            <p>Roles, ownership transfer, billing-excluded observer seats, Stripe autocharge, credits, and off-platform payment tracking.</p>
+            <div class="tags"><span>Stripe</span><span>Stripe Elements</span><span>MongoDB</span></div>
+          </article>
+
+          <article class="entry milestone reveal">
+            <div class="meta"><span class="ver">v2024.01</span><span class="span">CleverX</span></div>
+            <h4>Promoted to Senior Software Engineer</h4>
+            <p>Two-engineer team. Ownership of the React 18 web app, the Node and Express API, the MongoDB data model and the AWS serverless services.</p>
+          </article>
+        </div>
+
+        <div class="year">
+          <h3>2023</h3>
+
+          <article class="entry reveal">
+            <div class="meta"><span class="ver approx">v2023.09</span><span class="span">CleverX</span></div>
+            <h4>Screener engine and transactional email</h4>
+            <p>Branching and skip logic with validation, country-match scoring, non-destructive re-screening, and quota release on reviewer rejection. Took over transactional email delivery on MJML and Postmark.</p>
+            <div class="tags"><span>Node.js</span><span>MJML</span><span>Postmark</span></div>
+          </article>
+
+          <article class="entry reveal">
+            <div class="meta"><span class="ver approx">v2023.04</span><span class="span">CleverX</span></div>
+            <h4>Participant–study matching rewritten</h4>
+            <p>Search scoring, location weighting and exclusion filters replaced the old matching path.</p>
+            <div class="tags"><span>Typesense</span><span>relevance tuning</span></div>
+          </article>
+        </div>
+
+        <div class="year">
+          <h3>2022</h3>
+
+          <article class="entry reveal">
+            <div class="meta"><span class="ver approx">v2022.08</span><span class="span">CleverX</span></div>
+            <h4>Search revamp</h4>
+            <p>Migrated Algolia to Typesense, indexed geography, and added job-function, job-level and company-size filters with relevance tuning.</p>
+            <div class="diff" role="figure" aria-label="Migration diff: Algolia to Typesense">
+              <div class="hd"><span>search</span><span>+4 −1</span></div>
+              <div class="body">
+                <div class="l r"><b>−</b>algolia</div>
+                <div class="l a"><b>+</b>typesense</div>
+                <div class="l a"><b>+</b>geo index</div>
+                <div class="l a"><b>+</b>job-function / job-level / company-size filters</div>
+                <div class="l a"><b>+</b>relevance tuning</div>
+              </div>
+            </div>
+            <div class="tags"><span>Typesense</span><span>Elasticsearch</span></div>
+          </article>
+        </div>
+
+        <div class="year">
+          <h3>2021</h3>
+
+          <article class="entry reveal">
+            <div class="meta"><span class="ver approx">v2021.12</span><span class="span">CleverX · through 2022</span></div>
+            <h4>Design system and React 18 migration</h4>
+            <p>A component library and palette adopted across the web app and the admin console. Led the React 18 migration.</p>
+            <div class="diff" role="figure" aria-label="Migration diff: ad-hoc styles to design system">
+              <div class="hd"><span>frontend</span><span>+2 −1</span></div>
+              <div class="body">
+                <div class="l r"><b>−</b>ad-hoc styles</div>
+                <div class="l a"><b>+</b>design system (component library, palette)</div>
+                <div class="l a"><b>+</b>React 18</div>
+              </div>
+            </div>
+            <div class="tags"><span>React 18</span><span>Radix UI</span><span>Tailwind</span></div>
+          </article>
+
+          <article class="entry milestone reveal">
+            <div class="meta"><span class="ver">v2021.03</span><span class="span">CleverX</span></div>
+            <h4>Joined CleverX as Software Engineer</h4>
+            <p>Remote. A B2B user-research platform and a two-engineer team.</p>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= PROJECTS ================= -->
+    <section id="projects">
+      <div class="sec-head"><h2>Projects</h2><span class="legend">Open source, built alongside full-time work</span></div>
+      <div class="entries">
+        <div class="year">
+          <h3>2026</h3>
+
+          <article class="entry reveal">
+            <div class="meta"><span class="ver">codebase-archaeology</span><span class="span">Python · MCP</span></div>
+            <div class="proj">
+              <div>
+                <h4>Codebase Archaeology</h4>
+                <p>Answers “why does this code exist” from git history, PR discussions and linked issues, with every claim cited to a commit or comment, and abstains when evidence is thin.</p>
+                <p>Python, Postgres 16 + pgvector, BM25 hybrid retrieval fused with RRF, tree-sitter symbol resolution, REST API + MCP server.</p>
+                <div class="plinks"><a href="https://github.com/Roninanu777/codebase-archaeology">GitHub</a><a href="https://codebase-archaeology.pages.dev">Demo</a></div>
+              </div>
+              <div class="illus" aria-hidden="true">
+                <div class="q">why_does_this_exist("retry_backoff")</div>
+                <div>Added after a Postmark outage caused duplicate sends. Backoff is capped at five tries because the queue re-enqueues on failure.</div>
+                <div class="cite">cited: commit 7fd44e2 · PR #212 comment</div>
+                <div class="abst">confidence: high · 2 sources</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="entry reveal">
+            <div class="meta"><span class="ver">year-progress-wallpaper</span><span class="span">TypeScript · Next.js</span></div>
+            <div class="proj">
+              <div>
+                <h4>Year Progress Wallpaper</h4>
+                <p>iPhone wallpapers that show the year or month as a dot grid, with a live device preview and shareable API URLs for iOS Shortcuts.</p>
+                <p>Next.js, TypeScript, Tailwind.</p>
+                <div class="plinks"><a href="https://github.com/Roninanu777/year-progress-wallpaper">GitHub</a><a href="https://year-progress-wallpaper-tau.vercel.app">Live</a></div>
+              </div>
+              <div class="illus" aria-hidden="true">
+                <div class="dots" id="dots"></div>
+                <div class="pct"><span id="yr">2026</span><span id="pct">--%</span></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= STACK ================= -->
+    <section id="stack">
+      <div class="sec-head"><h2>Stack</h2><span class="legend">In production unless noted</span></div>
+      <dl>
+        <dt>Frontend</dt><dd>React 18, TypeScript, MobX, Tailwind, Radix UI, Vite, webpack, Framer Motion, TipTap, Recharts, Stripe Elements</dd>
+        <dt>Backend</dt><dd>Node.js, Express, MongoDB and Mongoose, Jest and Supertest, Stripe, MJML, Postmark</dd>
+        <dt>AI &amp; real-time</dt><dd>Anthropic and OpenAI SDKs, Langfuse, LiveKit server SDK and agents, AssemblyAI, Cartesia, ffmpeg, MCP servers</dd>
+        <dt>Infrastructure</dt><dd>AWS Lambda, CDK, S3, SQS, DynamoDB, CloudFront, GitHub Actions, Cloudflare Pages, PostHog</dd>
+        <dt>Retrieval</dt><dd>Typesense, Elasticsearch, Postgres + pgvector, BM25 hybrid retrieval with reciprocal rank fusion, tree-sitter (open source)</dd>
+      </dl>
+    </section>
+
+    <!-- ================= COLOPHON ================= -->
+    <section id="colophon" class="colophon">
+      <div class="sec-head"><h2>Colophon</h2></div>
+      <p>B.Tech, Computer Science &amp; Engineering, National Institute of Technology, Arunachal Pradesh, 2021. Set in IBM Plex. Built by hand.</p>
+      <span class="mono">Last updated Sep 2026</span>
+    </section>
+  </main>
+</div>
+
+<script>
+  // reveal on scroll
+  (function(){
+    const els=document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'));return;}
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);} });
+    },{rootMargin:'0px 0px -8% 0px',threshold:0.05});
+    els.forEach(e=>io.observe(e));
+  })();
+  // year progress dots
+  (function(){
+    const box=document.getElementById('dots'); if(!box) return;
+    const now=new Date(), y=now.getFullYear();
+    const start=new Date(y,0,1), end=new Date(y+1,0,1);
+    const total=Math.round((end-start)/864e5), done=Math.floor((now-start)/864e5);
+    const frag=document.createDocumentFragment();
+    for(let i=0;i<total;i++){const d=document.createElement('i'); if(i<done) d.className='on'; frag.appendChild(d);}
+    box.appendChild(frag);
+    document.getElementById('yr').textContent=y;
+    document.getElementById('pct').textContent=Math.round(done/total*100)+'% of the year';
+  })();
+</script>
+</body>
+</html>

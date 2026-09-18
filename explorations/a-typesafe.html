@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Roni Pradhan — Senior Software Engineer</title>
+<meta name="description" content="Full-stack engineer who built a B2B research platform end to end as one of two engineers: React, Node, AWS serverless, Stripe, then its AI agents and real-time voice layers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FEFEFE; --ink:#1B1B1B; --ink-60:rgba(27,27,27,.62); --ink-30:rgba(27,27,27,.3);
+    --hot:#F27D98; --sage:#AFBBB8; --black:#141414; --rule:#D9D9D9;
+    --display:'Inter Tight',system-ui,sans-serif; --body:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+    --gutter:clamp(16px,4vw,56px);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  ::selection{background:var(--hot);color:var(--ink)}
+  .mono{font-family:var(--mono);font-size:12px;letter-spacing:.01em}
+  .tag{display:inline-block;font-family:var(--mono);font-size:11.5px;background:var(--ink);color:var(--paper);padding:1px 5px;line-height:1.5}
+  .tag.hot{background:var(--hot);color:var(--ink)}
+
+  /* nav: white boxes on a transparent bar, like a window chrome */
+  nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none}
+  nav .box{pointer-events:auto;background:var(--paper);border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:8px 12px;font-size:15px;font-weight:500;text-decoration:none}
+  nav .box:hover{background:var(--ink);color:var(--paper)}
+  nav .grp{display:flex}
+  nav .grp .box{border-left:1px solid var(--rule)}
+  nav .grp .box+.box{border-left:0}
+  nav .box:focus-visible{outline:2px solid var(--hot);outline-offset:-2px}
+
+  /* sky band: css-only dithered clouds */
+  .sky{position:relative;height:clamp(300px,42vh,480px);overflow:hidden;
+    background:
+      radial-gradient(60% 55% at 12% 30%, var(--hot) 0 32%, transparent 62%),
+      radial-gradient(45% 60% at 88% 35%, var(--hot) 0 28%, transparent 60%),
+      radial-gradient(35% 40% at 70% 80%, #f9b8c8 0 20%, transparent 55%),
+      linear-gradient(#DDF1FB, #F6FAFD 70%, var(--paper));
+  }
+  .sky::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--paper) 0.9px,transparent 1px);background-size:4px 4px;mix-blend-mode:screen;opacity:.85}
+  .sky::after{content:"";position:absolute;left:0;right:0;bottom:0;height:45%;background:linear-gradient(transparent,var(--paper))}
+  .ticker{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);z-index:2;width:min(420px,calc(100% - 32px));border:1px solid var(--ink);background:#EDEDED;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:12.5px}
+  .ticker .bar{background:var(--ink);color:var(--paper);padding:3px 8px}
+  .ticker .row{display:flex;gap:16px;justify-content:space-between;align-items:flex-start;padding:7px 8px 8px}
+  .ticker a{text-decoration:underline;white-space:nowrap}
+
+  /* generic section frame with corner crop marks */
+  .frame{position:relative;padding:0 var(--gutter)}
+  .marks{position:relative}
+  .marks::before,.marks::after,.marks>i::before,.marks>i::after{content:"";position:absolute;width:10px;height:10px;border-color:var(--ink);border-style:solid;opacity:.5}
+  .marks::before{left:-14px;top:-14px;border-width:1px 0 0 1px}
+  .marks::after{right:-14px;top:-14px;border-width:1px 1px 0 0}
+  .marks>i::before{left:-14px;bottom:-14px;border-width:0 0 1px 1px}
+  .marks>i::after{right:-14px;bottom:-14px;border-width:0 1px 1px 0}
+
+  /* hero */
+  .hero{padding:24px var(--gutter) 88px;position:relative}
+  .hero .inner{position:relative;padding:40px 8px 48px}
+  .kicker{display:flex;align-items:baseline;gap:10px;justify-content:center;max-width:720px;margin:0 auto 34px;font-size:16px;font-weight:500}
+  .kicker .lead{flex:1;border-bottom:2px dotted var(--ink);transform:translateY(-5px);min-width:40px}
+  h1.big{font-family:var(--display);font-weight:500;letter-spacing:-.045em;line-height:.96;text-align:center;margin:0 auto;max-width:1240px;font-size:clamp(46px,9.6vw,148px)}
+  h1.big .line{display:block;overflow:hidden;padding:0 .06em .1em;margin-bottom:-.1em}
+  h1.big .line span{display:block;transform:translateY(110%);animation:rise .9s cubic-bezier(.2,.7,.1,1) forwards}
+  h1.big .line:nth-child(2) span{animation-delay:.08s}
+  h1.big .line:nth-child(3) span{animation-delay:.16s}
+  @keyframes rise{to{transform:translateY(0)}}
+  .hero-links{display:flex;gap:clamp(24px,5vw,64px);justify-content:center;margin-top:40px;flex-wrap:wrap}
+  .hero-links a{font-family:var(--display);font-weight:500;letter-spacing:-.03em;font-size:clamp(22px,3.4vw,42px);text-decoration:none;border-bottom:3px solid var(--ink);line-height:1.15;padding-bottom:2px}
+  .hero-links a:hover{border-color:var(--hot)}
+  .margin-col{position:absolute;top:120px;left:calc(var(--gutter) + 6px);width:14px;font-family:var(--mono);font-size:10px;color:var(--ink-60);writing-mode:vertical-rl;letter-spacing:.06em;user-select:none;max-height:520px;overflow:hidden;line-height:1;white-space:nowrap}
+  .margin-col.r{left:auto;right:calc(var(--gutter) + 6px);top:auto;bottom:24px}
+
+  /* color blocks */
+  .block{padding:56px var(--gutter) 88px;position:relative}
+  .block.hot{background:var(--hot)}
+  .block.sage{background:var(--sage)}
+  .block.black{background:var(--black);color:var(--paper)}
+  .block h2.big{font-family:var(--display);font-weight:500;letter-spacing:-.045em;line-height:.95;margin:0;font-size:clamp(40px,7.2vw,112px)}
+  .block h2.mid{font-family:var(--display);font-weight:500;letter-spacing:-.035em;line-height:1.02;margin:0;font-size:clamp(30px,4.2vw,62px)}
+  .plate{font-family:var(--mono);font-size:11.5px;display:inline-block;background:var(--ink);color:var(--paper);padding:1px 5px}
+  .black .plate{background:var(--paper);color:#141414}
+
+  /* the desktop: dotted field with system windows */
+  .desktop{position:relative;border:1px solid var(--ink);margin:18px 0 64px;min-height:560px;
+    background-image:radial-gradient(rgba(27,27,27,.55) 0.7px,transparent 1px);background-size:5px 5px;overflow:hidden}
+  .desktop .blob{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(27,27,27,.55) 0 30%,rgba(27,27,27,.18) 60%,transparent 72%);filter:contrast(1.1);pointer-events:none}
+  .desktop .blob::after{content:"";position:absolute;inset:0;border-radius:50%;background-image:radial-gradient(var(--hot) 1.1px,transparent 1.3px);background-size:3px 3px;mix-blend-mode:lighten}
+  .win{position:absolute;background:var(--paper);border:1px solid var(--ink);box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:12px;line-height:1.45}
+  .win .tb{background:var(--ink);color:var(--paper);padding:2px 7px;display:flex;justify-content:space-between;gap:12px}
+  .win .body{padding:8px 9px}
+  .win .body .row{display:flex;justify-content:space-between;gap:12px;white-space:nowrap}
+  .win .dim{color:var(--ink-60)}
+  .win .ok{color:#0A7C4E}
+  /* trace window */
+  .trace .call{opacity:0;animation:pop .35s ease forwards}
+  .trace .call:nth-child(1){animation-delay:.2s}.trace .call:nth-child(2){animation-delay:.9s}.trace .call:nth-child(3){animation-delay:1.6s}.trace .call:nth-child(4){animation-delay:2.3s}.trace .call:nth-child(5){animation-delay:3.0s}.trace .call:nth-child(6){animation-delay:3.7s}.trace .call:nth-child(7){animation-delay:4.4s}
+  @keyframes pop{to{opacity:1}}
+  .trace .bar{display:inline-block;height:7px;background:var(--ink);vertical-align:middle;margin:0 6px 0 0}
+  /* room window */
+  .room .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:7px}
+  .room .tile{aspect-ratio:4/3;background:#DFDFDF;border:1px solid var(--ink);position:relative;overflow:hidden}
+  .room .tile::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(27,27,27,.7) .6px,transparent 1px);background-size:3px 3px;opacity:.7}
+  .room .tile b{position:absolute;left:4px;bottom:3px;font-weight:500;font-size:10px;background:var(--paper);padding:0 3px}
+  .room .rec{color:#B3261E;animation:blink 1.2s steps(1) infinite}
+  @keyframes blink{50%{opacity:.25}}
+  .room .clip{height:8px;border:1px solid var(--ink);position:relative;margin-top:6px}
+  .room .clip i{position:absolute;top:0;bottom:0;background:var(--ink)}
+  /* clock */
+  .clock .time{font-size:22px;font-weight:500;letter-spacing:-.02em}
+  /* stat window */
+  .stat .meter{height:9px;border:1px solid var(--ink);margin:4px 0 8px;position:relative}
+  .stat .meter i{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
+  .stat .meter i.pink{background:var(--hot)}
+  .win.plate-win{left:14px;bottom:14px;box-shadow:none;background:transparent;border:0}
+  .win.plate-win .body{padding:0;color:var(--ink)}
+
+  .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:56px}
+  .cols .lbl{font-family:var(--mono);font-size:11.5px;display:block;margin-bottom:22px;letter-spacing:.02em}
+  .cols p{margin:0;font-size:16.5px;line-height:1.45;max-width:38ch}
+  .cols p+p{margin-top:12px}
+  .numbers{margin-top:96px}
+  .numbers .foot{font-family:var(--mono);font-size:11px;margin-top:14px}
+  .numbers .foot u{text-decoration:underline}
+
+  /* experience on sage */
+  .roles{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:48px}
+  .role{border-top:1px solid var(--ink);padding-top:16px}
+  .role .head{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-bottom:8px}
+  .role h3{margin:0;font-family:var(--display);font-weight:500;letter-spacing:-.02em;font-size:26px;line-height:1.1}
+  .role .sub{font-size:14px;color:var(--ink-60);margin:0 0 18px}
+  .role ul{margin:0;padding:0;list-style:none}
+  .role li{padding:11px 0;border-top:1px dotted var(--ink-30);font-size:15px;line-height:1.45}
+  .role li b{font-weight:500}
+  .projects{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:64px}
+  .proj{border:1px solid var(--ink);background:rgba(254,254,254,.35);padding:0;display:flex;flex-direction:column;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease}
+  .proj:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+  .proj .cap{padding:18px 18px 20px;border-top:1px solid var(--ink)}
+  .proj .thumb{min-height:200px;padding:16px;font-family:var(--mono);font-size:11.5px;line-height:1.55;position:relative;overflow:hidden;background-image:radial-gradient(rgba(27,27,27,.35) .6px,transparent 1px);background-size:5px 5px}
+  .proj .thumb .win{position:relative;box-shadow:2px 2px 0 var(--ink);width:min(100%,380px)}
+  .proj h3{margin:8px 0 6px;font-family:var(--display);font-weight:500;letter-spacing:-.02em;font-size:24px}
+  .proj p{margin:0;font-size:14.5px;line-height:1.45;color:var(--ink);opacity:.85}
+  .proj .more{display:inline-block;margin-top:12px;font-size:14px;text-decoration:underline}
+
+  /* black stack block */
+  .stack-list{margin:40px 0 0;padding:0;list-style:none;border-top:1px solid rgba(254,254,254,.25)}
+  .stack-list li{display:grid;grid-template-columns:200px 1fr;gap:24px;padding:16px 0;border-bottom:1px solid rgba(254,254,254,.25);align-items:baseline}
+  .stack-list .k{font-family:var(--mono);font-size:11.5px;color:var(--paper);opacity:.85}
+  .stack-list .v{font-size:16px;line-height:1.5}
+  .cta{display:flex;justify-content:space-between;align-items:center;gap:32px;margin-top:96px;flex-wrap:wrap}
+  .cta a{font-family:var(--display);font-weight:500;letter-spacing:-.03em;font-size:clamp(30px,4.2vw,62px);text-decoration:none;border-bottom:3px solid var(--paper);line-height:1.05}
+  .cta a:hover{border-color:var(--hot);color:var(--hot)}
+  .cta .arrows{display:inline-block;width:clamp(36px,4.6vw,66px);height:auto;margin:0 20px -6px 0;fill:var(--paper)}
+  footer{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:72px;font-family:var(--mono);font-size:11.5px;opacity:.75}
+  footer a{text-decoration:none}
+  footer a:hover{text-decoration:underline}
+
+  @media (max-width:900px){
+    .cols,.roles,.projects{grid-template-columns:1fr}
+    .stack-list li{grid-template-columns:1fr;gap:6px}
+    .margin-col{display:none}
+    .kicker{flex-direction:column;align-items:center;gap:8px;font-size:15px}
+    .kicker .lead{flex:none;width:48px;transform:none;border-bottom-width:3px}
+    .hero{padding-top:8px}
+    .desktop{min-height:auto;padding:12px;display:flex;flex-direction:column;gap:12px}
+    .win{position:static!important;width:100%!important}
+    .desktop .blob{display:none}
+    nav .grp{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    h1.big .line span{animation:none;transform:none}
+    .trace .call{animation:none;opacity:1}
+    .room .rec{animation:none}
+    .proj{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<nav aria-label="Primary">
+  <a class="box" href="#top">Roni Pradhan</a>
+  <div class="grp">
+    <a class="box" href="#work">Work</a>
+    <a class="box" href="#projects">Projects</a>
+    <a class="box" href="#stack">Stack</a>
+  </div>
+  <a class="box" href="mailto:ronirajkamalpradhan1112@gmail.com">Email</a>
+</nav>
+
+<div class="sky" id="top" aria-hidden="true">
+  <div class="ticker" aria-hidden="false" role="note">
+    <div class="bar">Sep 2026 • Now</div>
+    <div class="row"><span>Building the AI and real-time layers of a B2B research platform. Remote from Itanagar, IST.</span><a href="mailto:ronirajkamalpradhan1112@gmail.com">Say hi</a></div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="marks inner"><i></i>
+    <div class="margin-col" aria-hidden="true">c1a4f2e · 9b7d03a · e5f6c88 · 0d21b7f · a83e9c1 · 7fd44e2 · 3c0b91d · f2a7e6b · 5e8c12d · b6d0f9a · 1a9c3e7 · d4e5b2c · 8c7f0a1 · 62b3d9e · every claim cited to a commit</div>
+    <p class="kicker"><span>Roni Raj Kamal Pradhan</span><span class="lead" aria-hidden="true"></span><span>Senior Software Engineer</span></p>
+    <h1 class="big">
+      <span class="line"><span>Five Years,</span></span>
+      <span class="line"><span>Two Engineers,</span></span>
+      <span class="line"><span>One Whole Platform.</span></span>
+    </h1>
+    <div class="hero-links">
+      <a href="#work">See The Work</a>
+      <a href="https://github.com/Roninanu777" rel="me">GitHub</a>
+      <a href="https://www.linkedin.com/in/roni-r-k-pradhan-279b06436/" rel="me">LinkedIn</a>
+    </div>
+  </div>
+</header>
+
+<!-- HOT BLOCK: the AI + real-time layer -->
+<section class="block hot" id="work">
+  <div class="marks"><i></i>
+    <span class="plate">R.P.0S1 — CleverX platform, 2021 → 2026</span>
+
+    <div class="desktop" aria-label="Illustration of the systems described below">
+      <div class="blob" style="width:420px;height:420px;left:-120px;top:120px"></div>
+      <div class="blob" style="width:360px;height:360px;right:-90px;top:-60px"></div>
+      <div class="blob" style="width:260px;height:260px;right:120px;bottom:-110px"></div>
+
+      <div class="win trace" style="left:24px;top:22px;width:440px">
+        <div class="tb"><span>study-builder.agent — trace</span><span>langfuse</span></div>
+        <div class="body">
+          <div class="row dim"><span>tool-call scheduler: order by declared reads/writes</span></div>
+          <div class="call row"><span><i class="bar" style="width:34px"></i>create_study</span><span class="dim">writes: study</span></div>
+          <div class="call row"><span><i class="bar" style="width:62px"></i>add_screener</span><span class="dim">reads: study</span></div>
+          <div class="call row"><span><i class="bar" style="width:48px"></i>add_task ×4</span><span class="dim">reads: study</span></div>
+          <div class="call row"><span><i class="bar" style="width:26px"></i>set_skip_logic</span><span class="dim">reads: screener, tasks</span></div>
+          <div class="call row"><span><i class="bar" style="width:20px"></i>llm.judge (sampled)</span><span class="dim">cache hit ↑</span></div>
+          <div class="call row"><span><i class="bar" style="width:14px"></i>publish</span><span class="ok">ok · 1.9s</span></div>
+          <div class="call row dim"><span>7 calls · 0 conflicts · cost −16% vs. baseline</span></div>
+        </div>
+      </div>
+
+      <div class="win room" style="left:500px;top:60px;width:300px">
+        <div class="tb"><span>livekit.room — q3 interview</span><span class="rec">● REC</span></div>
+        <div class="body">
+          <div class="grid">
+            <div class="tile"><b>participant</b></div>
+            <div class="tile"><b>ai interviewer</b></div>
+            <div class="tile"><b>observer</b></div>
+            <div class="tile"><b>egress</b></div>
+          </div>
+          <div class="row"><span>transcription</span><span class="dim">assemblyai · live</span></div>
+          <div class="row"><span>voice</span><span class="dim">cartesia</span></div>
+          <div class="row"><span>highlight clip · q3</span><span class="dim">00:42 → 01:07</span></div>
+          <div class="clip"><i style="left:38%;width:22%"></i></div>
+        </div>
+      </div>
+
+      <div class="win clock" style="right:22px;top:22px;width:190px">
+        <div class="tb"><span>Clock Tool 1.1</span></div>
+        <div class="body">
+          <div class="dim" id="dateline">Itanagar, IST</div>
+          <div class="time" id="clock">--:--:--</div>
+          <div class="dim">UTC+5:30 · remote-first</div>
+        </div>
+      </div>
+
+      <div class="win stat" style="right:60px;bottom:40px;width:280px">
+        <div class="tb"><span>Twilio → LiveKit</span><span>1 release</span></div>
+        <div class="body">
+          <div class="row"><span>api</span><span class="dim">room + token mgmt</span></div><div class="meter"><i style="width:100%"></i></div>
+          <div class="row"><span>web</span><span class="dim">observer mode, reconnect</span></div><div class="meter"><i style="width:100%"></i></div>
+          <div class="row"><span>recording</span><span class="dim">multi-egress, clips</span></div><div class="meter"><i style="width:100%"></i></div>
+          <div class="row"><span>archive</span><span class="dim">pipeline</span></div><div class="meter"><i style="width:100%"></i></div>
+          <div class="row dim"><span>4 repos · shipped together</span><span class="ok">ok</span></div>
+        </div>
+      </div>
+
+      <div class="win plate-win">
+        <div class="body">
+          Roni Pradhan<br>Version 2026.09<br>©2026. Built in Itanagar, IST.
+        </div>
+      </div>
+    </div>
+
+    <h2 class="big">Built The AI Layer.<br>Then Replaced The Video Layer.</h2>
+
+    <div class="cols">
+      <div>
+        <span class="lbl">LLM Study-Builder Agent</span>
+        <p>An agent (Anthropic and OpenAI, Langfuse-traced) that authors whole research studies: tasks, screeners, skip logic.</p>
+        <p>Its tool-call dependency scheduler orders every call by the reads and writes each tool declares, so a study never references a screener that doesn't exist yet.</p>
+      </div>
+      <div>
+        <span class="lbl">AI Voice Interviews</span>
+        <p>Interviews run on LiveKit agents with a persona and voice driven by the study config, live transcription through AssemblyAI and Cartesia, participant reconnection, and server-side session completion.</p>
+      </div>
+      <div>
+        <span class="lbl">LLM Cost Control</span>
+        <p>Audited Anthropic usage across the platform and traced a cost spike to low-cache-hit LLM-as-a-judge eval rules.</p>
+        <p>Request sampling and model selection fixed it: roughly 16% off the monthly LLM bill.</p>
+      </div>
+    </div>
+
+    <div class="numbers">
+      <h2 class="big">~16% Lower LLM Spend,<br>4 Repos In 1 Release.</h2>
+      <div class="foot">*Production work at CleverX, a B2B user-research platform, 2024–2026. <u>Details below.</u></div>
+    </div>
+  </div>
+</section>
+
+<!-- SAGE BLOCK: experience + projects -->
+<section class="block sage">
+  <div class="marks"><i></i>
+    <span class="plate">Work — CleverX, remote, two-engineer team</span>
+    <h2 class="mid" style="margin-top:22px">Owned the platform end to end: React app, Node API, MongoDB, AWS serverless, Stripe.</h2>
+
+    <div class="roles">
+      <div class="role">
+        <div class="head"><h3>Senior Software Engineer</h3><span class="mono">Jan 2024 → present</span></div>
+        <p class="sub">CleverX · B2B user-research platform</p>
+        <ul>
+          <li><b>Public API and webhooks.</b> v1 study and participant endpoints, API-key management with superadmin access control, developer dashboard, published docs.</li>
+          <li><b>Unmoderated research suite.</b> Video diary, website testing with interaction heatmaps, and Figma prototype testing; took the Figma OAuth app through vendor review to general availability.</li>
+          <li><b>Billing and multi-seat teams.</b> Roles, ownership transfer, billing-excluded observer seats, Stripe autocharge, credits, off-platform payment tracking.</li>
+          <li><b>Real-time video migration.</b> Twilio to LiveKit across backend and frontend: room and token management, multi-egress recording, per-question highlight clips, observer mode, reconnect handling, recording archive pipeline.</li>
+        </ul>
+      </div>
+      <div class="role">
+        <div class="head"><h3>Software Engineer</h3><span class="mono">Mar 2021 → Dec 2023</span></div>
+        <p class="sub">CleverX · B2B user-research platform</p>
+        <ul>
+          <li><b>Design system.</b> Component library and palette adopted across the web app and admin console; led the React 18 migration.</li>
+          <li><b>Search revamp.</b> Migrated Algolia to Typesense, indexed geography, added job-function, job-level and company-size filters with relevance tuning. Later rewrote participant–study matching with search scoring, location weighting and exclusion filters.</li>
+          <li><b>Screener engine.</b> Branching and skip logic with validation, country-match scoring, non-destructive re-screening, quota release on reviewer rejection. Took over transactional email on MJML and Postmark.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="projects" class="projects">
+      <a class="proj" href="https://github.com/Roninanu777/codebase-archaeology">
+        <div class="thumb">
+          <div class="win">
+            <div class="tb"><span>why_does_this_exist("retry_backoff")</span><span>mcp</span></div>
+            <div class="body">
+              Added after a Postmark outage caused duplicate sends. Backoff is capped at 5 tries because the queue re-enqueues on failure.<br>
+              <span class="dim">— cited: commit 7fd44e2 · PR #212 comment</span><br>
+              <span class="dim">retrieval: pgvector + BM25 → RRF · symbol: tree-sitter</span>
+            </div>
+          </div>
+        </div>
+        <div class="cap">
+          <span class="tag hot">Open source · 2026</span>
+          <h3>Codebase Archaeology</h3>
+          <p>Answers “why does this code exist” from git history, PR discussions and linked issues, with every claim cited to a commit or comment. Python, Postgres + pgvector, tree-sitter, REST API and MCP server.</p>
+          <span class="more">Read more</span>
+        </div>
+      </a>
+      <a class="proj" href="https://github.com/Roninanu777/year-progress-wallpaper">
+        <div class="thumb">
+          <div class="win" style="width:220px">
+            <div class="tb"><span>2026 · 72%</span><span>year</span></div>
+            <div class="body" id="dots" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="cap">
+          <span class="tag hot">Side project · 2026</span>
+          <h3>Year Progress Wallpaper</h3>
+          <p>Generates iPhone wallpapers that show the year or month as a dot grid, with a live device preview and shareable API URLs for iOS Shortcuts. Next.js, TypeScript, Tailwind.</p>
+          <span class="more">Read more</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- BLACK BLOCK: stack + contact -->
+<section class="block black" id="stack">
+  <div class="marks" style="--ink:#FEFEFE"><i></i>
+    <span class="plate">Stack</span>
+    <h2 class="mid" style="margin-top:22px">The tools, listed plainly.</h2>
+    <ul class="stack-list">
+      <li><span class="k">Frontend</span><span class="v">React 18, TypeScript, MobX, Tailwind, Radix UI, Vite, webpack, Framer Motion, TipTap, Recharts, Stripe Elements</span></li>
+      <li><span class="k">Backend</span><span class="v">Node.js, Express, MongoDB and Mongoose, Jest and Supertest, Typesense, Elasticsearch, Stripe, MJML, Postmark</span></li>
+      <li><span class="k">AI &amp; real-time</span><span class="v">Anthropic and OpenAI SDKs, Langfuse, LiveKit server SDK and agents, AssemblyAI, Cartesia, ffmpeg, MCP servers, pgvector + BM25 hybrid retrieval</span></li>
+      <li><span class="k">Infrastructure</span><span class="v">AWS Lambda, CDK, S3, SQS, DynamoDB, CloudFront, GitHub Actions, Cloudflare Pages, PostHog</span></li>
+      <li><span class="k">Education</span><span class="v">B.Tech, Computer Science &amp; Engineering — National Institute of Technology, Arunachal Pradesh, 2021</span></li>
+    </ul>
+
+    <div class="cta">
+      <span style="font-family:var(--display);font-weight:500;letter-spacing:-.03em;font-size:clamp(30px,4.2vw,62px);line-height:1.05">Come Build With Me</span>
+      <span><svg class="arrows" viewBox="0 0 66 40" aria-hidden="true"><path d="M0 0l20 20L0 40V0zm23 0l20 20-20 20V0zm23 0l20 20-20 20V0z"/></svg><a href="mailto:ronirajkamalpradhan1112@gmail.com">Email</a></span>
+    </div>
+
+    <footer>
+      <span>Roni Raj Kamal Pradhan · Senior Software Engineer</span>
+      <span><a href="https://github.com/Roninanu777">GitHub</a> · <a href="https://www.linkedin.com/in/roni-r-k-pradhan-279b06436/">LinkedIn</a> · <a href="mailto:ronirajkamalpradhan1112@gmail.com">Email</a></span>
+      <span>Version 2026.09 · Itanagar, IST</span>
+    </footer>
+  </div>
+</section>
+
+<script>
+  // live IST clock
+  (function(){
+    const el=document.getElementById('clock'), dl=document.getElementById('dateline');
+    function tick(){
+      const now=new Date();
+      el.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(now);
+      dl.textContent=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Kolkata',weekday:'short',month:'short',day:'numeric',year:'numeric'}).format(now)+' · IST';
+    }
+    tick(); setInterval(tick,1000);
+  })();
+  // year-progress dots
+  (function(){
+    const box=document.getElementById('dots'); if(!box) return;
+    const now=new Date(), start=new Date(now.getFullYear(),0,1), end=new Date(now.getFullYear()+1,0,1);
+    const pct=(now-start)/(end-start); const total=52*7, done=Math.round(total*pct);
+    box.style.display='grid'; box.style.gridTemplateColumns='repeat(26,1fr)'; box.style.gap='2px';
+    for(let i=0;i<total;i++){const d=document.createElement('i');d.style.cssText='display:block;aspect-ratio:1;border-radius:50%;background:'+(i<done?'#1B1B1B':'transparent')+';border:1px solid #1B1B1B';box.appendChild(d);}
+    box.parentElement.querySelector('.tb span').textContent=now.getFullYear()+' · '+Math.round(pct*100)+'%';
+  })();
+</script>
+</body>
+</html>

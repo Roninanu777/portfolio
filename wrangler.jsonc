@@ -1,0 +1,12 @@
+{
+  // Cloudflare Pages is now part of Workers: this deploys dist/ as static assets.
+  // Deploy with ./deploy.sh (builds dist/, then `wrangler deploy`).
+  "name": "portfolio",
+  "compatibility_date": "2026-09-18",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none"
+  }
+}

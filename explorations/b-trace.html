@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Roni Pradhan — trace: career</title>
+<meta name="description" content="Senior Software Engineer. Five years shipping a B2B research platform end to end as one of two engineers: React, Node, AWS serverless, Stripe, then LLM agents and real-time voice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0C0F; --panel:#12141A; --panel2:#171A21; --border:#23272F;
+    --text:#E7E9EE; --muted:#8B919C; --faint:#4B515C;
+    --ai:#6FB7FF; --rt:#5ED0A5; --pf:#F5B841; --se:#B48CFF; --oss:#FF7A90; --role:#C9CED8;
+    --sans:'Geist',system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+    --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --names:300px; --rowh:36px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--text);outline-offset:2px}
+  ::selection{background:rgba(111,183,255,.35)}
+  .mono{font-family:var(--mono);font-size:12px;letter-spacing:.01em}
+  .wrap{max-width:1240px;margin:0 auto;padding-left:24px;padding-right:24px}
+
+  /* top bar */
+  .topbar{position:sticky;top:0;z-index:40;background:rgba(11,12,15,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:52px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+  .crumb{font-family:var(--mono);font-size:12.5px;color:var(--muted);white-space:nowrap}
+  .crumb b{color:var(--text);font-weight:500}
+  .crumb span{margin:0 6px;color:var(--faint)}
+  .tb-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;border:1px solid var(--border);background:var(--panel);border-radius:999px;padding:4px 10px 4px 8px;color:var(--text);white-space:nowrap}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--rt);box-shadow:0 0 0 0 rgba(94,208,165,.5);animation:pulse 2.2s ease-out infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(94,208,165,.45)}70%{box-shadow:0 0 0 7px rgba(94,208,165,0)}100%{box-shadow:0 0 0 0 rgba(94,208,165,0)}}
+  .clock{font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tb-links{display:flex;gap:4px}
+  .tb-links a{font-size:13px;text-decoration:none;color:var(--muted);padding:5px 8px;border-radius:6px}
+  .tb-links a:hover{color:var(--text);background:var(--panel2)}
+
+  /* hero */
+  .hero{padding-top:72px;padding-bottom:44px}
+  .eyebrow{font-family:var(--mono);font-size:12px;color:var(--muted);margin:0 0 18px}
+  .eyebrow .ok{color:var(--rt)}
+  h1{font-size:clamp(34px,4.6vw,64px);font-weight:500;letter-spacing:-.02em;line-height:1.02;margin:0 0 20px}
+  .sub{font-size:17px;line-height:1.55;color:var(--muted);max-width:66ch;margin:0}
+  .sub b{color:var(--text);font-weight:500}
+
+  /* sections */
+  section{padding-top:36px;padding-bottom:36px}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .sec-head h2{font-size:20px;font-weight:500;letter-spacing:-.01em;margin:0}
+  .sec-head .eyebrow{margin:0 0 6px}
+  .legend{display:flex;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;border-left:2px solid}
+  .c-ai{--c:var(--ai)} .c-rt{--c:var(--rt)} .c-pf{--c:var(--pf)} .c-se{--c:var(--se)} .c-oss{--c:var(--oss)} .c-role{--c:var(--role)}
+  .legend i{background:color-mix(in srgb,var(--c) 22%,transparent);border-color:var(--c)}
+
+  /* trace layout */
+  .trace-layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:20px;align-items:start}
+  .trace-layout>div{min-width:0}
+  .waterfall{border:1px solid var(--border);background:var(--panel);border-radius:10px;overflow-x:auto;overflow-y:hidden}
+  .wf-inner{position:relative;min-width:780px}
+  .gridlines{position:absolute;top:0;bottom:0;left:var(--names);right:16px;pointer-events:none}
+  .gridlines i{position:absolute;top:0;bottom:0;width:1px;background:var(--border)}
+  .gridlines i.now{background:var(--faint);width:1px;border-left:1px dashed var(--faint);background:transparent}
+  .axis{position:relative;height:34px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:var(--names) 1fr;padding-right:16px}
+  .axis .lbl{padding:9px 14px;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+  .axis .ticks{position:relative}
+  .axis .ticks span{position:absolute;top:9px;transform:translateX(-50%);font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+  .axis .ticks span.now{transform:translateX(-100%);color:var(--text)}
+  .rows{position:relative;padding:6px 0 8px}
+  .row{display:block;width:100%;border:0;background:transparent;color:inherit;font:inherit;text-align:left;padding:0;cursor:pointer;height:var(--rowh);display:grid;grid-template-columns:var(--names) 1fr;padding-right:16px;position:relative}
+  .row:hover,.row.active{background:rgba(255,255,255,.035)}
+  .row:focus-visible{outline:2px solid var(--text);outline-offset:-2px}
+  .row .name{display:flex;align-items:center;gap:8px;padding:0 14px;font-family:var(--mono);font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .row .name .txt{overflow:hidden;text-overflow:ellipsis}
+  .row.d0 .name{color:var(--text);font-weight:500}
+  .row.d1 .name{padding-left:32px}
+  .row.d1 .name::before{content:"";width:8px;height:8px;border-left:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-left:-14px;margin-right:2px;transform:translateY(-3px);flex:none}
+  .row.active .name{color:var(--text)}
+  .track{position:relative}
+  .bar{position:absolute;top:9px;height:18px;border-radius:3px;background:color-mix(in srgb,var(--c) 20%,transparent);border:1px solid color-mix(in srgb,var(--c) 35%,transparent);border-left:2px solid var(--c);transform-origin:left center;transform:scaleX(0);transition:transform .7s cubic-bezier(.2,.7,.2,1),background .15s}
+  .bar.in{transform:scaleX(1)}
+  .row:hover .bar,.row.active .bar{background:color-mix(in srgb,var(--c) 34%,transparent)}
+  .row.d0 .bar{height:10px;top:13px;border-radius:2px}
+  .bar .dur{position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:11px;color:var(--faint);white-space:nowrap;opacity:0;transition:opacity .15s}
+  .row:hover .dur,.row.active .dur{opacity:1}
+  .row.d0 .dur{top:-1px;transform:none}
+  .wf-foot{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin:10px 2px 0}
+  .wf-hint{display:none}
+  .wf-wrap{position:relative}
+
+  /* details */
+  .details{position:sticky;top:72px;border:1px solid var(--border);background:var(--panel);border-radius:10px;padding:18px 18px 20px;min-height:320px}
+  .details .eyebrow{margin-bottom:10px;display:flex;justify-content:space-between;gap:10px}
+  .details .pin{color:var(--faint)}
+  .details h3{font-size:18px;font-weight:500;letter-spacing:-.01em;margin:0 0 12px;line-height:1.25}
+  .kv{display:grid;grid-template-columns:76px 1fr;gap:6px 12px;font-family:var(--mono);font-size:12px;margin:0 0 14px}
+  .kv dt{color:var(--faint);margin:0}
+  .kv dd{margin:0;color:var(--muted)}
+  .kv dd .chip{display:inline-block;padding:1px 7px;border-radius:999px;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--text)}
+  .details p{margin:0 0 14px;font-size:14.5px;line-height:1.55;color:var(--text)}
+  .metric{font-family:var(--mono);font-size:12.5px;color:var(--text);border:1px solid var(--border);background:var(--panel2);border-radius:6px;padding:8px 10px;margin:0 0 14px}
+  .metric b{font-weight:500;color:var(--c)}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+  .tags li{font-family:var(--mono);font-size:11.5px;color:var(--muted);border:1px solid var(--border);border-radius:4px;padding:2px 7px}
+
+  /* attributes */
+  .attrs{border:1px solid var(--border);border-radius:10px;background:var(--panel);overflow:hidden}
+  .attrs dl{margin:0;display:grid;grid-template-columns:180px 1fr}
+  .attrs dt,.attrs dd{padding:13px 16px;border-top:1px solid var(--border);margin:0}
+  .attrs dt{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+  .attrs dd{font-family:var(--mono);font-size:12.5px;color:var(--text);line-height:1.6}
+  .attrs dt:first-of-type,.attrs dd:first-of-type{border-top:0}
+  .attrs dd .q{color:var(--muted)}
+
+  /* child traces */
+  .cards{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+  .card{border:1px solid var(--border);background:var(--panel);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+  .card h3{margin:0;font-size:17px;font-weight:500;letter-spacing:-.01em;display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .card h3 .mono{color:var(--faint)}
+  .log{font-family:var(--mono);font-size:12px;line-height:1.7;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:10px 12px;color:var(--muted);margin:0;white-space:pre-wrap;overflow-wrap:anywhere;min-width:0}
+  .log b{color:var(--text);font-weight:500}
+  .log .k{color:var(--c)}
+  .card p{margin:0;font-size:14.5px;color:var(--muted)}
+  .card .links{display:flex;gap:14px;font-size:13.5px}
+  .card .links a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--faint)}
+  .card .links a:hover{border-color:var(--text)}
+
+  footer{border-top:1px solid var(--border);padding:28px 0 40px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+  footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  footer a{text-decoration:none;color:var(--text)}
+  footer a:hover{text-decoration:underline}
+
+  @media (max-width:960px){
+    .trace-layout{grid-template-columns:minmax(0,1fr)}
+    .details{position:static;min-height:0}
+    .cards{grid-template-columns:minmax(0,1fr)}
+    .attrs dl{grid-template-columns:1fr}
+    .attrs dt{padding-bottom:2px}
+    .attrs dd{border-top:0;padding-top:0}
+  }
+  @media (max-width:700px){
+    :root{--names:132px}
+    .wf-inner{min-width:calc(var(--names) + 576px)}
+    .row .name,.axis .lbl{position:sticky;left:0;z-index:2;background:var(--panel)}
+    .row:hover .name,.row.active .name{background:#171A21}
+    .wf-hint{display:block;font-family:var(--mono);font-size:11.5px;color:var(--faint);margin:0 2px 8px;text-align:right}
+    .wf-wrap::after{content:"";position:absolute;top:1px;bottom:1px;right:1px;width:44px;border-radius:0 10px 10px 0;background:linear-gradient(to right,rgba(18,20,26,0),var(--panel));pointer-events:none}
+  }
+  @media (max-width:560px){
+    .clock{display:none}
+    .hero{padding-top:48px;padding-bottom:32px}
+    .row .name{font-size:12px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .bar{transition:none;transform:none}
+    .dot{animation:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="crumb"><b>roni.pradhan</b><span>/</span>traces<span>/</span>career</div>
+    <div class="tb-right">
+      <span class="pill"><i class="dot" aria-hidden="true"></i>Remote · Itanagar, IST</span>
+      <span class="clock" id="clock" aria-label="Current time in Itanagar, India">--:--:-- IST</span>
+      <nav class="tb-links" aria-label="Links">
+        <a href="https://github.com/Roninanu777" rel="me">GitHub</a>
+        <a href="https://www.linkedin.com/in/roni-r-k-pradhan-279b06436/" rel="me">LinkedIn</a>
+        <a href="mailto:ronirajkamalpradhan1112@gmail.com">Email</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <p class="eyebrow">trace: career · 2021-03 → now · status: <span class="ok">ok</span></p>
+    <h1>Roni Raj Kamal Pradhan</h1>
+    <p class="sub"><b>Senior Software Engineer.</b> Five years shipping a B2B research platform end to end as one of two engineers: React app, Node API, AWS serverless, Stripe billing, and lately its LLM-agent and real-time voice layers.</p>
+  </section>
+
+  <section class="wrap" id="trace">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">span waterfall · 13 spans · hover to inspect, click to pin</p>
+        <h2>What got built, and when</h2>
+      </div>
+      <div class="legend" aria-label="Span categories">
+        <span class="c-ai"><i></i>AI / LLM</span>
+        <span class="c-rt"><i></i>real-time</span>
+        <span class="c-pf"><i></i>platform</span>
+        <span class="c-se"><i></i>search</span>
+        <span class="c-oss"><i></i>open source</span>
+      </div>
+    </div>
+
+    <div class="trace-layout">
+      <div>
+        <p class="wf-hint" aria-hidden="true">scroll →</p>
+        <div class="wf-wrap">
+        <div class="waterfall">
+          <div class="wf-inner" id="wf">
+            <div class="gridlines" id="grid" aria-hidden="true"></div>
+            <div class="axis" aria-hidden="true">
+              <div class="lbl">span</div>
+              <div class="ticks" id="ticks"></div>
+            </div>
+            <div class="rows" id="rows" role="list"></div>
+          </div>
+        </div>
+        </div>
+        <p class="wf-foot">child span positions are approximate · role spans are exact</p>
+      </div>
+
+      <aside class="details" id="details" aria-live="polite">
+        <p class="eyebrow"><span>span details</span><span class="pin" id="pinstate">pinned</span></p>
+        <h3 id="d-name"></h3>
+        <dl class="kv">
+          <dt>dates</dt><dd id="d-dates"></dd>
+          <dt>duration</dt><dd id="d-dur"></dd>
+          <dt>category</dt><dd id="d-cat"></dd>
+        </dl>
+        <p id="d-desc"></p>
+        <div class="metric" id="d-metric" hidden></div>
+        <ul class="tags" id="d-tags"></ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="wrap" id="attributes">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">span.attributes · stack</p>
+        <h2>Attributes</h2>
+      </div>
+    </div>
+    <div class="attrs">
+      <dl>
+        <dt>frontend</dt><dd>React 18 <span class="q">·</span> TypeScript <span class="q">·</span> MobX <span class="q">·</span> Tailwind <span class="q">·</span> Radix UI <span class="q">·</span> Vite <span class="q">·</span> webpack <span class="q">·</span> Framer Motion <span class="q">·</span> TipTap <span class="q">·</span> Recharts <span class="q">·</span> Stripe Elements</dd>
+        <dt>backend</dt><dd>Node.js <span class="q">·</span> Express <span class="q">·</span> MongoDB &amp; Mongoose <span class="q">·</span> Jest + Supertest <span class="q">·</span> Typesense <span class="q">·</span> Elasticsearch <span class="q">·</span> Stripe <span class="q">·</span> MJML <span class="q">·</span> Postmark</dd>
+        <dt>ai.llm</dt><dd>Anthropic SDK <span class="q">·</span> OpenAI SDK <span class="q">·</span> Langfuse tracing and evals <span class="q">·</span> tool-call agents with dependency scheduling <span class="q">·</span> LLM-as-a-judge tuning <span class="q">·</span> MCP servers</dd>
+        <dt>realtime</dt><dd>LiveKit server SDK and agents <span class="q">·</span> room and token management <span class="q">·</span> multi-egress recording <span class="q">·</span> AssemblyAI <span class="q">·</span> Cartesia <span class="q">·</span> ffmpeg</dd>
+        <dt>infra</dt><dd>AWS Lambda <span class="q">·</span> CDK <span class="q">·</span> S3 <span class="q">·</span> SQS <span class="q">·</span> DynamoDB <span class="q">·</span> CloudFront <span class="q">·</span> GitHub Actions <span class="q">·</span> Cloudflare Pages <span class="q">·</span> PostHog</dd>
+        <dt>retrieval</dt><dd>Postgres 16 + pgvector <span class="q">·</span> BM25 <span class="q">·</span> reciprocal rank fusion <span class="q">·</span> tree-sitter symbol resolution <span class="q">·</span> embeddings and relevance tuning</dd>
+        <dt>education</dt><dd>B.Tech, Computer Science &amp; Engineering <span class="q">·</span> National Institute of Technology, Arunachal Pradesh <span class="q">·</span> 2021</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="wrap" id="projects">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">child traces · independent projects</p>
+        <h2>Child traces</h2>
+      </div>
+    </div>
+    <div class="cards">
+      <article class="card c-oss">
+        <h3>Codebase Archaeology <span class="mono">open source · 2026</span></h3>
+        <pre class="log"><b>$</b> <span class="k">why</span> "does this retry backoff exist"
+→ answer assembled from git history, PR threads, linked issues
+→ every claim cited to a commit or comment; abstains when evidence is thin
+→ retrieval: pgvector + BM25 fused with RRF · symbols: tree-sitter
+→ surfaces: REST API + MCP server over one Python core</pre>
+        <p>Answers “why does this code exist” for any symbol in a repository. Postgres 16 with pgvector, Alembic migrations, uv / pytest / ruff / mypy toolchain.</p>
+        <ul class="tags"><li>Python</li><li>FastAPI</li><li>pgvector</li><li>BM25</li><li>tree-sitter</li><li>MCP</li></ul>
+        <div class="links"><a href="https://github.com/Roninanu777/codebase-archaeology">GitHub</a><a href="https://codebase-archaeology.pages.dev">Live demo</a></div>
+      </article>
+      <article class="card c-se">
+        <h3>Year Progress Wallpaper <span class="mono">side project · 2026</span></h3>
+        <pre class="log"><b>$</b> <span class="k">wallpaper</span> --mode year --tz Asia/Kolkata
+→ renders the year as a dot grid, or the month as a styled calendar
+→ live iPhone-frame preview; colors, fonts and spacing are adjustable
+→ PNG download, plus shareable API URLs for iOS Shortcuts automation</pre>
+        <p>A small generator that turns time-left into a lock screen. Next.js, React 19, TypeScript, Tailwind CSS 4, images rendered with next/og.</p>
+        <ul class="tags"><li>Next.js</li><li>React 19</li><li>TypeScript</li><li>Tailwind 4</li><li>next/og</li></ul>
+        <div class="links"><a href="https://github.com/Roninanu777/year-progress-wallpaper">GitHub</a><a href="https://year-progress-wallpaper-tau.vercel.app">Live</a></div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Roni Raj Kamal Pradhan · Itanagar, IST · B.Tech CSE, NIT Arunachal Pradesh 2021</span>
+    <span><a href="https://github.com/Roninanu777">GitHub</a> · <a href="https://www.linkedin.com/in/roni-r-k-pradhan-279b06436/">LinkedIn</a> · <a href="mailto:ronirajkamalpradhan1112@gmail.com">Email</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // ---- clock (IST) ----
+  const clock=document.getElementById('clock');
+  function tick(){clock.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date())+' IST';}
+  tick(); setInterval(tick,1000);
+
+  // ---- time axis: Mar 2021 → Sep 2026 (66 months) ----
+  const M0=2021*12+2, TOTAL=(2026*12+8)-M0; // month index of Mar 2021; Sep 2026
+  const pos=(y,m)=>((y*12+(m-1))-M0)/TOTAL*100;
+  const fmt=([y,m])=>new Date(y,m-1,1).toLocaleString('en-US',{month:'short',year:'numeric'});
+  const months=(a,b)=>(b[0]*12+b[1])-(a[0]*12+a[1]);
+  const durTxt=n=>n>=12?`${(n/12).toFixed(n%12?1:0)} yr`:`${n} mo`;
+
+  const CATS={ai:['AI / LLM','c-ai'],rt:['real-time','c-rt'],pf:['platform','c-pf'],se:['search','c-se'],oss:['open source','c-oss'],role:['role','c-role']};
+
+  const spans=[
+    {id:'se',d:0,cat:'role',name:'CleverX · Software Engineer',s:[2021,3],e:[2023,12],exact:true,
+     desc:'B2B user-research platform, remote, two-engineer team. Owned the web app front to back: design system, search, screener engine, transactional email.',
+     tags:['React','Node.js','Express','MongoDB','Typesense','MJML']},
+    {id:'ds',d:1,cat:'pf',name:'design system + React 18 migration',s:[2021,6],e:[2022,6],
+     desc:'Built and rolled out the design system, a component library and palette adopted across the web app and admin console, and led the React 18 migration.',
+     tags:['React 18','Tailwind','Radix UI','design systems'],metric:'adopted across the web app and admin console'},
+    {id:'search',d:1,cat:'se',name:'search revamp · Algolia → Typesense',s:[2022,3],e:[2022,11],
+     desc:'Owned the search revamp end to end: migrated Algolia to Typesense, indexed geography, and added job-function, job-level and company-size filters with relevance tuning.',
+     tags:['Typesense','Algolia','geo indexing','relevance tuning']},
+    {id:'match',d:1,cat:'se',name:'participant–study matching rewrite',s:[2023,1],e:[2023,7],
+     desc:'Rewrote participant–study matching on top of the new search layer: search scoring, location weighting and exclusion filters.',
+     tags:['Typesense','scoring','Node.js']},
+    {id:'screener',d:1,cat:'pf',name:'screener engine + MJML/Postmark email',s:[2023,5],e:[2023,12],
+     desc:'Built the screener engine: branching and skip logic with validation, country-match scoring, non-destructive re-screening, quota release on reviewer rejection. Took over transactional email delivery on MJML and Postmark.',
+     tags:['Node.js','MongoDB','MJML','Postmark']},
+    {id:'sr',d:0,cat:'role',name:'CleverX · Senior Software Engineer',s:[2024,1],e:[2026,9],exact:true,now:true,
+     desc:'Owned platform surfaces end to end in a two-engineer team: the React 18 web app, the Node and Express API, the MongoDB data model, and AWS serverless services. Built the AI layer and replaced the real-time video layer.',
+     tags:['React 18','Node.js','MongoDB','AWS Lambda','CDK','Stripe','LiveKit','Anthropic SDK']},
+    {id:'api',d:1,cat:'pf',name:'public REST API + webhooks',s:[2024,1],e:[2024,8],
+     desc:'Opened the platform to programmatic customers: v1 study and participant endpoints, a webhook platform, API-key management with superadmin access control, a developer dashboard, and published docs.',
+     tags:['REST','webhooks','API keys','access control','docs']},
+    {id:'billing',d:1,cat:'pf',name:'billing + multi-seat teams',s:[2024,6],e:[2025,1],
+     desc:'Delivered billing and multi-seat teams: roles, ownership transfer, billing-excluded observer seats, Stripe autocharge, credits, and off-platform payment tracking.',
+     tags:['Stripe','Stripe Elements','roles','credits']},
+    {id:'unmod',d:1,cat:'pf',name:'unmoderated research suite + Figma OAuth GA',s:[2024,10],e:[2025,6],
+     desc:'Broadened what the platform can test: video diary, website testing with interaction heatmaps, and Figma prototype testing. Took the Figma OAuth app through vendor review to general availability.',
+     tags:['Figma OAuth','heatmaps','video diary'],metric:'Figma OAuth app · vendor review → GA'},
+    {id:'livekit',d:1,cat:'rt',name:'Twilio → LiveKit migration',s:[2025,3],e:[2025,10],
+     desc:'Replaced the live real-time video layer, migrating Twilio to LiveKit across backend and frontend: room and token management, multi-egress recording, per-question highlight clips, observer mode, reconnect handling, plus a recording archive pipeline.',
+     tags:['LiveKit','WebRTC','egress','ffmpeg','S3'],metric:'4 repos · 1 coordinated release'},
+    {id:'agent',d:1,cat:'ai',name:'LLM study-builder agent',s:[2025,7],e:[2026,2],
+     desc:'An LLM agent (Anthropic and OpenAI, Langfuse-traced) that authors whole research studies: tasks, screeners, skip logic. Its tool-call dependency scheduler orders every call by the reads and writes each tool declares.',
+     tags:['Anthropic SDK','OpenAI SDK','Langfuse','tool calling','scheduler'],metric:'tool calls ordered by declared reads / writes'},
+    {id:'voice',d:1,cat:'ai',name:'AI voice interviews on LiveKit agents',s:[2026,1],e:[2026,7],
+     desc:'Shipped AI voice interviews on LiveKit agents: study-config-driven persona and voice, live transcription through AssemblyAI and Cartesia, participant reconnection, and server-side session completion.',
+     tags:['LiveKit agents','AssemblyAI','Cartesia','voice']},
+    {id:'cost',d:1,cat:'ai',name:'LLM cost audit',s:[2026,5],e:[2026,9],now:true,
+     desc:'Audited Anthropic usage platform-wide, traced a cost spike to low-cache-hit LLM-as-a-judge eval rules, and fixed it with request sampling and model selection.',
+     tags:['Langfuse','prompt caching','evals','sampling'],metric:'−16% monthly LLM spend'},
+    {id:'oss',d:0,cat:'oss',name:'codebase-archaeology (open source)',s:[2026,2],e:[2026,9],now:true,
+     desc:'Answers “why does this code exist” from git history, PR discussions and linked issues, with every claim cited to a commit or comment. pgvector + BM25 hybrid retrieval fused with RRF, tree-sitter symbol resolution, REST API and MCP server surfaces. Built alongside full-time work.',
+     tags:['Python','Postgres','pgvector','tree-sitter','MCP','FastAPI'],metric:'every claim cited to a commit or comment'}
+  ];
+
+  // gridlines + ticks
+  const grid=document.getElementById('grid'), ticks=document.getElementById('ticks');
+  for(let y=2022;y<=2026;y++){
+    const p=pos(y,1);
+    const g=document.createElement('i'); g.style.left=p+'%'; grid.appendChild(g);
+    const t=document.createElement('span'); t.style.left=p+'%'; t.textContent=y; ticks.appendChild(t);
+  }
+  const gn=document.createElement('i'); gn.className='now'; gn.style.left='100%'; grid.appendChild(gn);
+  const tn=document.createElement('span'); tn.className='now'; tn.style.left='100%'; tn.textContent='now'; ticks.appendChild(tn);
+
+  // rows
+  const rows=document.getElementById('rows');
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  spans.forEach((sp,i)=>{
+    const b=document.createElement('button');
+    b.type='button'; b.className=`row d${sp.d} ${CATS[sp.cat][1]}`; b.dataset.id=sp.id; b.setAttribute('role','listitem');
+    b.setAttribute('aria-label',`${sp.name}, ${fmt(sp.s)} to ${sp.now?'now':fmt(sp.e)}`);
+    const left=pos(sp.s[0],sp.s[1]), w=pos(sp.e[0],sp.e[1])-left;
+    b.innerHTML=`<span class="name"><span class="txt">${sp.name}</span></span><span class="track"><span class="bar" style="left:${left}%;width:${w}%;transition-delay:${reduce?0:i*45}ms"><span class="dur">${durTxt(months(sp.s,sp.e))}</span></span></span>`;
+    rows.appendChild(b);
+  });
+  requestAnimationFrame(()=>requestAnimationFrame(()=>rows.querySelectorAll('.bar').forEach(el=>el.classList.add('in'))));
+
+  // details panel
+  const D={name:g('d-name'),dates:g('d-dates'),dur:g('d-dur'),cat:g('d-cat'),desc:g('d-desc'),metric:g('d-metric'),tags:g('d-tags'),pin:g('pinstate'),box:g('details')};
+  function g(id){return document.getElementById(id)}
+  let pinned='agent', hovering=null;
+  function show(id){
+    const sp=spans.find(s=>s.id===id); if(!sp) return;
+    D.box.className='details '+CATS[sp.cat][1];
+    D.name.textContent=sp.name;
+    D.dates.textContent=`${fmt(sp.s)} → ${sp.now?'now':fmt(sp.e)}${sp.exact?'':' (approx.)'}`;
+    D.dur.textContent=durTxt(months(sp.s,sp.e));
+    D.cat.innerHTML=`<span class="chip">${CATS[sp.cat][0]}</span>`;
+    D.desc.textContent=sp.desc;
+    if(sp.metric){D.metric.hidden=false;D.metric.innerHTML=`metric <b>${sp.metric}</b>`;}else{D.metric.hidden=true;}
+    D.tags.innerHTML=sp.tags.map(t=>`<li>${t}</li>`).join('');
+    rows.querySelectorAll('.row').forEach(r=>r.classList.toggle('active',r.dataset.id===id));
+  }
+  rows.addEventListener('mouseover',e=>{const r=e.target.closest('.row'); if(r&&r.dataset.id!==hovering){hovering=r.dataset.id;show(hovering);D.pin.textContent='preview';}});
+  rows.addEventListener('mouseleave',()=>{hovering=null;show(pinned);D.pin.textContent='pinned';});
+  rows.addEventListener('focusin',e=>{const r=e.target.closest('.row'); if(r){show(r.dataset.id);D.pin.textContent='preview';}});
+  rows.addEventListener('focusout',e=>{if(!rows.contains(e.relatedTarget)){show(pinned);D.pin.textContent='pinned';}});
+  rows.addEventListener('click',e=>{const r=e.target.closest('.row'); if(r){pinned=r.dataset.id;show(pinned);D.pin.textContent='pinned';}});
+  show(pinned);
+})();
+</script>
+</body>
+</html>
