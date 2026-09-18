@@ -57,8 +57,8 @@ Hosted on Cloudflare as the Worker `portfolio`, live at https://portfolio.roni-p
 
 Two ways to ship:
 
-- **From the terminal** (what this repo is set up for): `./deploy.sh`. Builds `dist/` and runs `wrangler deploy`. Run `npx wrangler login` once per machine.
-- **Auto-deploy on push** (optional): Cloudflare dashboard → Workers & Pages → `portfolio` → Settings → Builds → connect this GitHub repo. Build command `./build.sh`, deploy command `npx wrangler deploy`.
+- **Auto-deploy on push** (the default): `.github/workflows/deploy.yml` runs on every push to `main`, builds `dist/` and deploys with Wrangler. It needs two repository secrets under Settings → Secrets and variables → Actions: `CLOUDFLARE_ACCOUNT_ID` (already set) and `CLOUDFLARE_API_TOKEN`, an API token created from the "Edit Cloudflare Workers" template at https://dash.cloudflare.com/profile/api-tokens. The workflow fails with a clear message until the token exists.
+- **From the terminal**: `./deploy.sh`. Same build, then `wrangler deploy` with your local login. Run `npx wrangler login` once per machine.
 
 To add a custom domain: dashboard → the Worker → Settings → Domains & Routes → add the domain (it must be on your Cloudflare account), then replace the workers.dev URL in the `<head>` of `index.html` with it and redeploy.
 
