@@ -15,12 +15,22 @@ assets/og.html      source for the social preview image
 assets/og.png       rendered 1200×630 social preview
 assets/Roni-Pradhan-Senior-Software-Engineer.pdf
                     public resume (no phone number); generated, do not edit by hand
-explorations/       the four original design drafts + DESIGN-RESEARCH.md
+resume/             resume source (resume.html), local IBM Plex fonts, build +## Resume PDF
+
+The resume lives in `resume/`. Edit `resume/resume.html`, then run:
+
+```sh
+./resume/build.sh
 ```
 
-## Resume PDF
+It prints the page through headless Chromium and writes two PDFs from the one source:
 
-The downloadable resume is generated from `~/Documents/job-hunt/documents/cv/source/resume.html`. Running that folder's `build.sh` writes two files from the one source: the full resume (with phone) into the job-hunt folder for applications, and a public copy without the phone number into `assets/` here. To update the resume on the site, edit the HTML source there and rebuild; never edit the PDF in `assets/` directly.
+- `assets/Roni-Pradhan-Senior-Software-Engineer.pdf`: the public copy linked from the site. It never contains the phone number.
+- `resume/out/Roni-Pradhan-Senior-Software-Engineer.pdf`: the private copy for applications, with the phone number. It is only written when a number is configured, either in the `RESUME_PHONE` environment variable or on the first line of `resume/.private`. Both `resume/.private` and `resume/out/` are gitignored.
+
+The script then checks both files: exactly one page, and every font embedded as a real font, so applicant-tracking systems can read the text. It fails if either check breaks. Comments at the top of `resume.html` explain the layout rules that keep the text layer readable.
+
+a public copy without the phone number into `assets/` here. To update the resume on the site, edit the HTML source there and rebuild; never edit the PDF in `assets/` directly.
 
 ## Preview locally
 
@@ -69,4 +79,4 @@ To move to a different domain: change `CANONICAL_HOST` in `src/worker.js`, the t
 - [x] Canonical, Open Graph and JSON-LD URLs point at https://ronipradhan.dev/.
 - [ ] Check the two project links still resolve.
 - [ ] Optional: add analytics (PostHog snippet) at the end of `<body>`.
-- [ ] Rebuild the resume PDF after any resume edit so the site copy stays current.
+- [ ] Run `./resume/build.sh` after any resume edit, then deploy, so the site copy stays current.

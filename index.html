@@ -146,7 +146,7 @@
           <text x="196" y="10" fill="#9A9EA8" font-size="9" text-anchor="end" font-family="DM Mono, monospace">audit</text>
         </svg>
       </div>
-      <p class="cap">Audited Anthropic usage platform-wide, traced a spike to low-cache-hit LLM-as-a-judge eval rules, and fixed it with request sampling and model selection.</p>
+      <p class="cap">Traced a spike to low-cache-hit LLM-as-a-judge eval rules and fixed it with request sampling and model selection. Later moved tracing to Langfuse v4 ahead of its Cloud cutover and fixed agent traces that were reporting zero cost.</p>
     </article>
 
     <!-- d. migration -->
@@ -223,6 +223,48 @@
       <p class="cap">Video diary, website testing with interaction heatmaps, and Figma prototype testing. Took the Figma OAuth app through vendor review to general availability.</p>
     </article>
 
+    <!-- l. website task scoring -->
+    <article class="card c4" style="--tint:var(--violet)">
+      <div class="eyebrow"><i></i>Research methods</div>
+      <h3>Website task scoring</h3>
+      <div class="ui" aria-label="Illustration of website-test sessions graded against a goal page">
+        <div class="hd"><span>goal page: /signup</span><span>re-scored</span></div>
+        <div class="verdict"><span class="pid">P-07</span><span class="path">home › pricing › signup</span><span class="v d">Direct</span></div>
+        <div class="verdict"><span class="pid">P-12</span><span class="path">home › blog › pricing › signup</span><span class="v i">Indirect</span></div>
+        <div class="verdict"><span class="pid">P-19</span><span class="path">home › docs › contact</span><span class="v f">Failed</span></div>
+        <div class="quote">“I expected the plans under Product, not in the footer.”<small>think-aloud · transcribed</small></div>
+      </div>
+      <p class="cap">Sessions are graded against the researcher's goal page as direct, indirect or failed. Grading runs at read time, so changing the goal re-scores every past session. Think-aloud narration is transcribed for website and prototype tasks.</p>
+    </article>
+
+    <!-- m. email consent -->
+    <article class="card c4" style="--tint:var(--sky)">
+      <div class="eyebrow"><i></i>Email</div>
+      <h3>Email consent</h3>
+      <div class="ui" aria-label="Illustration of email notification preferences">
+        <div class="hd"><span>Settings · Notifications</span><span>saved</span></div>
+        <div class="pref"><span>Invites, reminders and digests</span><span class="sw on" aria-hidden="true"></span></div>
+        <div class="pref"><span>Account, billing, sessions, payouts</span><span class="lock">always sent</span></div>
+        <div class="unsub">in every email · <u>Unsubscribe</u> · <u>Preferences</u></div>
+      </div>
+      <p class="cap">One-click unsubscribe and opt-out enforcement across the API, the mail Lambda and all 110 email templates. Bulk and essential mail go out on separate Postmark streams, and opt-outs sync back to the database.</p>
+    </article>
+
+    <!-- n. invite delivery -->
+    <article class="card c4" style="--tint:var(--lime)">
+      <div class="eyebrow"><i></i>Reliability</div>
+      <h3>Invite delivery at scale</h3>
+      <div class="ui" aria-label="Illustration of study invites delivered in batches until the queue drains">
+        <div class="hd"><span>deliver invites · live study</span><span>drained</span></div>
+        <div class="batch"><span>batch 1</span><span class="bar"><i style="--w:100%"></i></span><b>200</b></div>
+        <div class="batch"><span>batch 2</span><span class="bar"><i style="--w:100%"></i></span><b>200</b></div>
+        <div class="batch gap"><span>3 – 6</span><span class="bar"><i style="--w:100%"></i></span><b>800</b></div>
+        <div class="batch"><span>batch 7</span><span class="bar"><i style="--w:72%"></i></span><b>143</b></div>
+        <div class="sweep"><span>recovery sweep · every 15 min</span><span>alerts → Slack</span></div>
+      </div>
+      <p class="cap">Invites used to stop at 1,000 per run and never resume. Delivery now runs in batches until the queue drains, a 15-minute sweep recovers stranded invites, and matching and delivery fail and alert independently.</p>
+    </article>
+
     <!-- i. codebase archaeology -->
     <article class="card c6" style="--tint:var(--violet)">
       <div class="eyebrow"><i></i>Open source · 2026</div>
@@ -266,8 +308,8 @@
       <div class="when">Jan 2024 → present</div>
       <div>
         <h3>Senior Software Engineer <span>· CleverX</span></h3>
-        <p>Owned platform surfaces end to end in a two-engineer team: built the AI layer and voice interviews, replaced the real-time video layer, opened a public API and webhook platform, and delivered billing and multi-seat teams.</p>
-        <div class="chips"><span class="chip">React 18</span><span class="chip">Node</span><span class="chip">MongoDB</span><span class="chip">AWS Lambda</span><span class="chip">LiveKit</span><span class="chip">Anthropic SDK</span><span class="chip">Langfuse</span><span class="chip">Stripe</span></div>
+        <p>Owned platform surfaces end to end in a two-engineer team: built the AI layer and voice interviews, replaced the real-time video layer, opened a public API and webhook platform, and delivered billing and multi-seat teams. Since then: email consent across four codebases, invite delivery that scales past its old ceiling, website and prototype task scoring, hardened tenant isolation, and about 13,700 lines of legacy scheduling code retired.</p>
+        <div class="chips"><span class="chip">React 18</span><span class="chip">Node</span><span class="chip">MongoDB</span><span class="chip">AWS Lambda</span><span class="chip">SQS</span><span class="chip">LiveKit</span><span class="chip">Anthropic SDK</span><span class="chip">Langfuse</span><span class="chip">Stripe</span><span class="chip">Postmark</span></div>
       </div>
     </div>
     <div class="row">
@@ -284,9 +326,9 @@
     <h2>Stack</h2>
     <div class="stack">
       <div class="grp"><h3>Frontend</h3><div class="chips"><span class="chip">React 18</span><span class="chip">TypeScript</span><span class="chip">MobX</span><span class="chip">Tailwind</span><span class="chip">Radix UI</span><span class="chip">Vite</span><span class="chip">webpack</span><span class="chip">Framer Motion</span><span class="chip">TipTap</span><span class="chip">Recharts</span><span class="chip">Stripe Elements</span></div></div>
-      <div class="grp"><h3>Backend</h3><div class="chips"><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">MongoDB</span><span class="chip">Mongoose</span><span class="chip">Jest + Supertest</span><span class="chip">Typesense</span><span class="chip">Elasticsearch</span><span class="chip">Stripe</span><span class="chip">MJML</span><span class="chip">Postmark</span></div></div>
+      <div class="grp"><h3>Backend</h3><div class="chips"><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">MongoDB</span><span class="chip">Mongoose</span><span class="chip">Jest + Supertest</span><span class="chip">Typesense</span><span class="chip">Elasticsearch</span><span class="chip">Stripe</span><span class="chip">MJML</span><span class="chip">Postmark</span><span class="chip">Resend</span></div></div>
       <div class="grp"><h3>AI &amp; real-time</h3><div class="chips"><span class="chip">Anthropic SDK</span><span class="chip">OpenAI SDK</span><span class="chip">Langfuse</span><span class="chip">LiveKit agents</span><span class="chip">AssemblyAI</span><span class="chip">Cartesia</span><span class="chip">ffmpeg</span><span class="chip">MCP</span><span class="chip">pgvector</span><span class="chip">tree-sitter</span></div></div>
-      <div class="grp"><h3>Infrastructure</h3><div class="chips"><span class="chip">AWS Lambda</span><span class="chip">CDK</span><span class="chip">S3</span><span class="chip">SQS</span><span class="chip">DynamoDB</span><span class="chip">CloudFront</span><span class="chip">GitHub Actions</span><span class="chip">Cloudflare Pages</span><span class="chip">PostHog</span></div></div>
+      <div class="grp"><h3>Infrastructure</h3><div class="chips"><span class="chip">AWS Lambda</span><span class="chip">CDK</span><span class="chip">S3</span><span class="chip">SQS</span><span class="chip">DynamoDB</span><span class="chip">CloudFront</span><span class="chip">GitHub Actions</span><span class="chip">Cloudflare Workers</span><span class="chip">PostHog</span></div></div>
     </div>
   </section>
 

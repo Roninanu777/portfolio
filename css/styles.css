@@ -111,7 +111,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--sky); outline-o
 .card:nth-child(5) { animation-delay: .25s; } .card:nth-child(6) { animation-delay: .3s; }
 .card:nth-child(7) { animation-delay: .35s; } .card:nth-child(8) { animation-delay: .4s; }
 .card:nth-child(9) { animation-delay: .45s; } .card:nth-child(10) { animation-delay: .5s; }
-.card:nth-child(11) { animation-delay: .55s; }
+.card:nth-child(11) { animation-delay: .55s; } .card:nth-child(12) { animation-delay: .6s; }
+.card:nth-child(13) { animation-delay: .65s; } .card:nth-child(14) { animation-delay: .7s; }
 
 .card .eyebrow { display: flex; align-items: center; gap: 8px; }
 .card .eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: var(--tint, var(--muted)); }
@@ -232,6 +233,38 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--sky); outline-o
     radial-gradient(30px 22px at 48% 22%, rgba(190, 242, 100, .5), transparent 70%);
 }
 
+/* l. website task scoring */
+.verdict { display: flex; align-items: center; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--border); }
+.verdict:last-of-type { border-bottom: 0; }
+.verdict .pid { color: var(--text); flex: none; }
+.verdict .path { flex: 1; min-width: 0; color: var(--faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.verdict .v { flex: none; font-size: 10.5px; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--border-strong); white-space: nowrap; }
+.verdict .v.d { color: var(--lime); border-color: color-mix(in srgb, var(--lime) 45%, transparent); }
+.verdict .v.i { color: var(--amber); border-color: color-mix(in srgb, var(--amber) 45%, transparent); }
+.verdict .v.f { color: var(--coral); border-color: color-mix(in srgb, var(--coral) 45%, transparent); }
+.quote { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-strong); color: var(--text); }
+.quote small { display: block; margin-top: 3px; color: var(--faint); font-size: 10.5px; }
+
+/* m. email consent */
+.pref { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--border); color: var(--text); }
+.pref:last-of-type { border-bottom: 0; }
+.sw { width: 24px; height: 13px; border-radius: 999px; background: var(--border-strong); position: relative; flex: none; }
+.sw::after { content: ""; position: absolute; top: 2px; left: 2px; width: 9px; height: 9px; border-radius: 50%; background: var(--muted); }
+.sw.on { background: var(--sky); }
+.sw.on::after { left: 13px; background: #0F1013; }
+.lock { flex: none; font-size: 10.5px; color: var(--faint); white-space: nowrap; }
+.unsub { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-strong); color: var(--faint); text-align: center; }
+.unsub u { color: var(--muted); text-underline-offset: 2px; }
+
+/* n. invite delivery */
+.batch { display: grid; grid-template-columns: 58px 1fr 32px; align-items: center; gap: 8px; padding: 3px 0; }
+.batch .bar { height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.batch .bar i { display: block; height: 100%; width: var(--w); background: var(--lime); transform-origin: left; animation: grow .9s ease-out both; }
+.batch b { color: var(--text); font-weight: 500; text-align: right; }
+.batch.gap { color: var(--faint); }
+.sweep { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-strong); }
+@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
 /* i. codebase archaeology */
 .chat { display: flex; flex-direction: column; gap: 6px; }
 .bub { background: var(--card); border: 1px solid var(--border-strong); border-radius: 10px; padding: 9px 11px; color: var(--text); max-width: 100%; }
@@ -289,6 +322,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--sky); outline-o
   .card { animation: none; opacity: 1; transform: none; }
   .wave i { animation: none; height: 60%; }
   .spark .l { animation: none; stroke-dashoffset: 0; }
-  .live::before, .q .cur { animation: none; }
+  .live::before, .q .cur, .batch .bar i { animation: none; }
   .card, .btn { transition: none; }
 }

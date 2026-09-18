@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Roni Raj Kamal Pradhan — Senior Software Engineer</title>
+<meta name="author" content="Roni Raj Kamal Pradhan">
+<meta name="description" content="Resume of Roni Raj Kamal Pradhan, Senior Software Engineer (full-stack and AI).">
+<style>
+  /* Master resume source. Build with ./build.sh, which prints it through Chromium so the
+     PDF keeps a real text layer. One A4 page: build.sh fails if it spills to a second.
+
+     Rules learned the hard way (each one broke ATS text extraction):
+     - Fonts are local TTFs. Google-Fonts woff2 comes out of Chromium as Type3 glyph fonts.
+     - No position:relative/absolute anywhere. Chromium paints positioned boxes later,
+       which scrambles the text order a parser reads.
+     - Heading letter-spacing stays small, or parsers split words into letters.
+     - Ligatures off, so "fi" and "fl" stay plain letters for keyword matching.
+
+     The phone number is deliberately not in this file. build.sh inserts it into the
+     .phone span for the private copy only, from resume/.private (gitignored). */
+  @font-face { font-family: 'IBM Plex Sans'; font-weight: 400; src: url(fonts/IBMPlexSans-Regular.ttf) format('truetype'); }
+  @font-face { font-family: 'IBM Plex Sans'; font-weight: 500; src: url(fonts/IBMPlexSans-Medium.ttf) format('truetype'); }
+  @font-face { font-family: 'IBM Plex Sans'; font-weight: 600; src: url(fonts/IBMPlexSans-SemiBold.ttf) format('truetype'); }
+  @font-face { font-family: 'IBM Plex Sans'; font-weight: 700; src: url(fonts/IBMPlexSans-Bold.ttf) format('truetype'); }
+  @font-face { font-family: 'IBM Plex Mono'; font-weight: 400; src: url(fonts/IBMPlexMono-Regular.ttf) format('truetype'); }
+  @font-face { font-family: 'IBM Plex Mono'; font-weight: 500; src: url(fonts/IBMPlexMono-Medium.ttf) format('truetype'); }
+
+  @page { size: A4; margin: 10mm 13mm 10mm 13mm; }
+  :root {
+    --ink: #1A1A1A; --muted: #555; --faint: #8A8A8A; --rule: #DADADA; --blue: #2151C5;
+    --sans: 'IBM Plex Sans', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    --mono: 'IBM Plex Mono', Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: var(--sans); font-size: 9.1pt; line-height: 1.32; color: var(--ink); font-variant-ligatures: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  a { color: inherit; text-decoration: none; }
+  [hidden] { display: none !important; }
+
+  /* header */
+  .head { padding-bottom: 6pt; border-bottom: 2.4pt solid var(--blue); margin-bottom: 7pt; }
+  h1 { font-size: 21pt; font-weight: 700; letter-spacing: -.015em; line-height: 1.05; margin: 0 0 3pt; }
+  .role { font-size: 8pt; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--blue); margin: 0 0 5pt; }
+  .contact { font-family: var(--mono); font-size: 7.5pt; color: var(--muted); line-height: 1.5; }
+  .contact span { white-space: nowrap; }
+  .contact span + span:not(.nl)::before { content: "  /  "; color: var(--faint); }
+
+  /* sections */
+  h2 { font-family: var(--mono); font-size: 7.6pt; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--blue); margin: 7pt 0 3.5pt; padding-bottom: 2pt; border-bottom: .6pt solid var(--rule); }
+  p { margin: 0; }
+  .summary { font-size: 9.2pt; line-height: 1.36; }
+
+  /* experience */
+  .job { margin-bottom: 5pt; }
+  .job-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12pt; }
+  .job-head h3 { margin: 0; font-size: 10.3pt; font-weight: 700; letter-spacing: -.005em; }
+  .job-head h3 span { font-weight: 400; }
+  .when { font-family: var(--mono); font-size: 7.7pt; color: var(--muted); white-space: nowrap; }
+  .sub { font-size: 8.2pt; color: var(--muted); margin: 1pt 0 2.5pt; }
+  ul { margin: 0; padding: 0 0 0 10pt; list-style: disc; }
+  li { margin: 0 0 1.6pt; padding-left: 1pt; }
+  li::marker { color: var(--muted); font-size: 8pt; }
+  li b { font-weight: 600; }
+
+  /* projects */
+  .proj { margin-bottom: 3pt; }
+  .proj .name { font-weight: 700; }
+  .proj .links { font-family: var(--mono); font-size: 7.6pt; color: var(--muted); margin-left: 4pt; }
+  .proj .links a + a::before { content: " · "; color: var(--faint); }
+
+  /* technical */
+  table.tech { border-collapse: collapse; width: 100%; }
+  table.tech th { text-align: left; vertical-align: top; font-weight: 600; font-size: 8.8pt; width: 96pt; padding: 1.2pt 8pt 1.2pt 0; white-space: nowrap; }
+  table.tech td { vertical-align: top; font-size: 8.9pt; padding: 1.2pt 0; }
+
+  /* education */
+  .edu { display: flex; justify-content: space-between; align-items: baseline; gap: 12pt; }
+</style>
+</head>
+<body>
+
+<header class="head">
+  <h1>Roni Raj Kamal Pradhan</h1>
+  <p class="role">Senior Software Engineer · Full-stack &amp; AI</p>
+  <p class="contact">
+    <span><a href="mailto:ronirajkamalpradhan1112@gmail.com">ronirajkamalpradhan1112@gmail.com</a></span><span class="phone" hidden></span><span>Itanagar, India · Remote</span><br>
+    <span class="nl"><a href="https://ronipradhan.dev">ronipradhan.dev</a></span><span><a href="https://github.com/Roninanu777">github.com/Roninanu777</a></span><span><a href="https://www.linkedin.com/in/roni-r-k-pradhan-279b06436/">linkedin.com/in/roni-r-k-pradhan-279b06436</a></span>
+  </p>
+</header>
+
+<p class="summary">Senior full-stack engineer (React, Node, TypeScript, AWS) with five years building a B2B user-research platform end to end as one of two engineers. Built its AI layer, AI voice interviews on LiveKit and the Twilio-to-LiveKit migration, cut its LLM spend by ~16%, and own the systems around them, from the public API and Stripe billing to email consent and invite delivery.</p>
+
+<h2>Experience</h2>
+
+<div class="job">
+  <div class="job-head"><h3>Senior Software Engineer<span>, CleverX</span></h3><span class="when">Jan 2024 – Present</span></div>
+  <!-- TODO when you have the numbers: add stage / customer count to this line, e.g. "seed-stage, N customers". -->
+  <p class="sub">B2B user-research platform · promoted from Software Engineer · two-engineer team</p>
+  <ul>
+    <li><b>Built the platform's AI layer:</b> an LLM study-builder agent (Anthropic and OpenAI SDKs, Langfuse-traced) that authors complete research studies, with a tool-call scheduler that orders calls by each tool's declared reads and writes.</li>
+    <li><b>Shipped AI voice interviews</b> on LiveKit agents: persona and voice from the study config, live transcription (AssemblyAI, Cartesia), think-aloud transcription in prototype and website tasks, and atomic server-side completion.</li>
+    <!-- TODO: add the dollar figure if you can share it, e.g. "(~$X/month)". -->
+    <li><b>Cut monthly LLM spend by ~16%</b> by fixing low-cache-hit LLM-as-a-judge eval rules with request sampling and model selection; migrated Langfuse to v4 ahead of its Cloud cutover and fixed agent traces reporting zero cost.</li>
+    <li><b>Replaced the live video layer,</b> migrating Twilio to LiveKit in one release across four repositories: rooms and tokens, multi-egress recording, highlight clips, observer mode, reconnects, and an SQS-backed recording archive.</li>
+    <li><b>Deepened unmoderated research:</b> website tests graded against a goal URL and re-scored at read time, video diaries, and Figma prototype testing, taking the Figma OAuth app through Figma's review to general availability.</li>
+    <li><b>Owned email consent and audience data:</b> one-click unsubscribe and opt-out enforcement across the API, mail Lambda and all 110 templates, and a Resend and Google Sheets pipeline tracking signups, demos, studies and payments by funnel stage.</li>
+    <li><b>Made invite delivery reliable at scale:</b> delivery past the old 1,000-per-run cap in batches, a 15-minute recovery sweep with Slack alerts, and re-screening that archives earlier answers instead of destroying them.</li>
+    <li><b>Hardened tenant isolation</b> in session and recording reads, and retired the legacy scheduling model and dead call flows, deleting ~13,700 lines across three repositories.</li>
+    <!-- TODO: add "used by N integrations" if known. -->
+    <li><b>Opened the platform to programmatic customers:</b> public REST API and webhooks, v1 study and participant endpoints, API keys with superadmin access control, a developer dashboard and published docs.</li>
+    <li><b>Delivered billing and multi-seat teams on Stripe:</b> roles, ownership transfer, billing-excluded observer seats, autocharge, credits, and off-platform payment tracking.</li>
+  </ul>
+</div>
+
+<div class="job">
+  <div class="job-head"><h3>Software Engineer<span>, CleverX</span></h3><span class="when">Mar 2021 – Dec 2023</span></div>
+  <ul>
+    <li><b>Built and rolled out the design system</b> (component library and palette) across the web app and admin console, and led the React 18 migration.</li>
+    <li><b>Owned the search revamp:</b> migrated Algolia to Typesense with geography indexing and job, level and company-size filters; later rewrote participant–study matching with search scoring, location weighting and exclusion filters.</li>
+    <li><b>Built the screener engine</b> (branching and skip logic with validation, country-match scoring, non-destructive re-screening, quota release on reviewer rejection) and took over transactional email on MJML and Postmark.</li>
+  </ul>
+</div>
+
+<h2>Projects</h2>
+
+<div class="proj">
+  <p><span class="name">Codebase Archaeology</span> <span class="links"><a href="https://github.com/Roninanu777/codebase-archaeology">github.com/Roninanu777/codebase-archaeology</a><a href="https://codebase-archaeology.pages.dev">codebase-archaeology.pages.dev</a></span></p>
+  <p>Open-source tool that answers “why does this code exist” from git history, PR discussions and linked issues, citing every claim to a commit or comment. Python, Postgres + pgvector, BM25 hybrid retrieval with reciprocal rank fusion, tree-sitter, REST API and MCP server.</p>
+</div>
+<div class="proj">
+  <p><span class="name">Year Progress Wallpaper</span> <span class="links"><a href="https://github.com/Roninanu777/year-progress-wallpaper">github.com/Roninanu777/year-progress-wallpaper</a></span> iPhone wallpapers showing the year as a dot grid, with an API for iOS Shortcuts. Next.js, TypeScript.</p>
+</div>
+
+<h2>Technical Skills</h2>
+
+<table class="tech">
+  <tr><th>Languages</th><td>JavaScript, TypeScript (primary), Python</td></tr>
+  <tr><th>Frontend</th><td>React 18, MobX, Tailwind, Radix UI, Vite, webpack, Framer Motion, TipTap, Recharts, Stripe Elements</td></tr>
+  <tr><th>Backend &amp; data</th><td>Node.js, Express, REST and webhooks, MongoDB, Postgres + pgvector, Typesense, Elasticsearch, Stripe, Jest, Postmark, MJML, Resend</td></tr>
+  <tr><th>AI &amp; real-time</th><td>Anthropic and OpenAI SDKs, LLM agents and tool calling, RAG, MCP servers, Langfuse, LiveKit agents, AssemblyAI, Cartesia, ffmpeg</td></tr>
+  <tr><th>Infra &amp; CI/CD</th><td>AWS Lambda, CDK, S3, SQS, DynamoDB, CloudFront, GitHub Actions, Cloudflare Workers, Docker, PostHog</td></tr>
+</table>
+
+<h2>Education</h2>
+
+<div class="edu"><p><b>B.Tech, Computer Science &amp; Engineering</b> — National Institute of Technology, Arunachal Pradesh</p><span class="when">2021</span></div>
+
+</body>
+</html>
