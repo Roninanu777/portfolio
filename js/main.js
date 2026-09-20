@@ -14,28 +14,6 @@
   setInterval(tick, 1000);
 })();
 
-// Year-progress dot grid for the wallpaper card.
-(function yearDots() {
-  const box = document.getElementById('ydots');
-  const pctEl = document.getElementById('ypct');
-  if (!box || !pctEl) return;
-  const now = new Date();
-  const y = now.getFullYear();
-  const start = new Date(y, 0, 1);
-  const end = new Date(y + 1, 0, 1);
-  const pct = (now - start) / (end - start);
-  const total = 14 * 13;
-  const done = Math.round(total * pct);
-  const frag = document.createDocumentFragment();
-  for (let i = 0; i < total; i++) {
-    const d = document.createElement('i');
-    if (i < done) d.className = 'on';
-    frag.appendChild(d);
-  }
-  box.appendChild(frag);
-  pctEl.innerHTML = Math.round(pct * 100) + '%<small>of ' + y + '</small>';
-})();
-
 // "Copy email" button: copies the address, confirms inline, falls back to mailto.
 (function copyEmail() {
   const btn = document.getElementById('copy-email');

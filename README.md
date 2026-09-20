@@ -46,7 +46,7 @@ python3 -m http.server 8080
 Everything is plain HTML in `index.html`:
 
 - **Hero copy and buttons**: the `<header class="hero">` block.
-- **Cards**: each `<article class="card">` has an eyebrow, a title, a mini UI (`.ui`), and a caption (`.cap`). Card size is set by the `c3`…`c7` and `r2` classes (12-column grid). The tint is the inline `--tint` variable.
+- **Cards**: each `<article class="card">` has an eyebrow, a title, a mini UI (`.ui`), and a caption (`.cap`). Card size is set by the `c3`…`c7` and `r2` classes on a 12-column grid, so each row should add up to 12. The tint is the inline `--tint` variable.
 - **Timezone line**: the caption of the "Where I work" card. Keep availability and notice-period details off the public site.
 - **Experience, Stack, Education**: the `section.plain` blocks.
 - **Domain**: the canonical and Open Graph URLs in `<head>` point at https://ronipradhan.dev/.
