@@ -255,7 +255,7 @@ const WX = (code) => {
   const IDLE = 1000;
   let rpm = 0, held = false, last = 0, running = false, peaked = false;
   function frame(now) {
-    const dt = Math.min((now - last) / 1000, 0.05); last = now;
+    const dt = last ? clamp((now - last) / 1000, 0, 0.05) : 0; last = now;
     const target = held ? MAX - 150 : IDLE;
     rpm += (target - rpm) * (held ? 2.2 : 3.2) * dt + (Math.random() - 0.5) * 60;
     rpm = clamp(rpm, 0, MAX);
@@ -267,7 +267,7 @@ const WX = (code) => {
     if (held || Math.abs(rpm - IDLE) > 40) requestAnimationFrame(frame);
     else { running = false; panel.classList.remove('shake'); }
   }
-  function kick() { if (!running) { running = true; last = performance.now(); requestAnimationFrame(frame); } }
+  function kick() { if (!running) { running = true; last = 0; requestAnimationFrame(frame); } }
   function start(e) { e.preventDefault(); held = true; btn.classList.add('on'); btn.textContent = 'Revving…'; if (rpm < IDLE) rpm = IDLE; kick(); }
   function stop() { if (!held) return; held = false; btn.classList.remove('on'); btn.textContent = 'Hold to rev'; kick(); }
   btn.addEventListener('pointerdown', start);
@@ -314,13 +314,14 @@ const WX = (code) => {
   function rest() { const [w, h] = size(); x = w / 2 - R; y = h - 2 * R; draw(); }
   function draw() { ball.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) rotate(${spin.toFixed(0)}deg)`; }
   function frame(now) {
-    const dt = Math.min((now - last) / 1000, 0.033); last = now;
+    // rAF timestamps can predate the kick that started the loop; never step backwards
+    const dt = last ? clamp((now - last) / 1000, 0, 0.033) : 0; last = now;
     const [w, h] = size();
     vy += G * dt; x += vx * dt; y += vy * dt; spin += vx * dt * 3;
     if (x < 0) { x = 0; vx = Math.abs(vx) * 0.7; }
     if (x > w - 2 * R) { x = w - 2 * R; vx = -Math.abs(vx) * 0.7; }
     if (y < 44) { y = 44; vy = Math.abs(vy) * 0.3; }
-    if (y >= h - 2 * R) {
+    if (y >= h - 2 * R && vy >= 0) {   // only a falling ball lands; a fresh kick is still on the grass
       y = h - 2 * R;
       if (airborne) {
         airborne = false;
@@ -348,7 +349,7 @@ const WX = (code) => {
     if (count > best) { best = count; kb.textContent = best; try { localStorage.setItem('keepy-best', best); } catch {} }
     if (count === 10) { say.textContent = 'Visca el Barça!'; say.classList.add('cheer'); }
     else if (count < 10) say.textContent = count === 1 ? 'Keep it up…' : '';
-    if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
+    if (!raf) { last = 0; raf = requestAnimationFrame(frame); }
   }
   rest();
   let wait;
