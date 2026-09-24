@@ -10,22 +10,23 @@
   Things you will want to edit over time:
   · the canonical / Open Graph / JSON-LD URLs below if the domain ever changes
   · the timezone line in the "Say hello" block (keep availability details off the site)
+  · the story waypoints in "The ride so far"
   · experience rows and the Codebase Archaeology card
   · the resume PDF is generated, see README
 -->
 <title>Roni Pradhan — Senior Software Engineer</title>
-<meta name="description" content="Full-stack engineer who built a B2B research platform end to end as one of two engineers: React, Node, AWS serverless, Stripe, then its LLM agents and real-time voice interviews.">
+<meta name="description" content="Roni Pradhan, senior software engineer in Itanagar, Arunachal Pradesh. One of two engineers on a B2B research platform: React, Node, AWS serverless, Stripe, LLM agents and real-time voice interviews. I own what I ship.">
 <link rel="canonical" href="https://ronipradhan.dev/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Roni Pradhan — Senior Software Engineer">
-<meta property="og:description" content="I build the surfaces users touch and the systems under them. React, Node, AWS serverless, Stripe, LLM agents, real-time voice.">
+<meta property="og:description" content="Senior software engineer in Itanagar, Arunachal Pradesh. React, Node, AWS serverless, Stripe, LLM agents, real-time voice. I own what I ship.">
 <meta property="og:url" content="https://ronipradhan.dev/">
 <meta property="og:image" content="https://ronipradhan.dev/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Roni Pradhan — Senior Software Engineer">
-<meta name="twitter:description" content="I build the surfaces users touch and the systems under them.">
+<meta name="twitter:description" content="Senior software engineer in Itanagar, Arunachal Pradesh. I own what I ship.">
 <meta name="twitter:image" content="https://ronipradhan.dev/assets/og.png">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
@@ -62,8 +63,8 @@
     <a class="brand" href="#top"><i aria-hidden="true"></i>Roni Pradhan</a>
     <div class="links">
       <a class="in" href="#work">Work</a>
-      <a class="in" href="#experience">Experience</a>
-      <a class="in" href="#stack">Stack</a>
+      <a class="in" href="#story">Story</a>
+      <a class="in" href="#off">Off the clock</a>
       <a class="in" href="#contact">Contact</a>
       <a href="assets/Roni-Pradhan-Senior-Software-Engineer.pdf" download>Resume</a>
       <span class="sep" aria-hidden="true"></span>
@@ -75,20 +76,87 @@
 
 <main class="wrap" id="main">
   <header class="hero" id="top">
-    <div class="meta"><span class="who"><span class="av" aria-hidden="true">RP</span><span><b>Roni Pradhan</b><small>Senior Software Engineer at CleverX</small></span></span><span class="loc"><i aria-hidden="true"></i>Itanagar, India · remote</span></div>
-    <h1>I build the surfaces users touch and the systems under them.</h1>
-    <div class="lede">
-      <p>Five years as one of two engineers on a B2B user-research platform: the <b>React app, Node API, AWS serverless layer and Stripe billing</b>, then its <b>LLM agents and real-time voice interviews</b>. Every window below is a working sketch of something I shipped. Click around.</p>
-      <div class="btns">
-        <a class="btn fill" href="mailto:ronirajkamalpradhan1112@gmail.com">Email me</a>
-        <a class="btn line" href="assets/Roni-Pradhan-Senior-Software-Engineer.pdf" download><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8m0 0L5 7m3 3 3-3M3 12v1.5A.5.5 0 0 0 3.5 14h9a.5.5 0 0 0 .5-.5V12"/></svg>Resume (PDF)</a>
-        <a class="btn line" href="https://github.com/Roninanu777" rel="me">GitHub</a>
+    <div class="scene" id="scene" data-wx="clear">
+      <svg class="land" viewBox="0 0 1600 440" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="skyg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" class="s-top" stop-color="#0b1230"/>
+            <stop offset=".78" class="s-hor" stop-color="#2a2c58"/>
+          </linearGradient>
+          <radialGradient id="glowg"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+          <linearGradient id="beamg" x1="0" x2="1"><stop offset="0" stop-color="#FFE7A3" stop-opacity=".55"/><stop offset="1" stop-color="#FFE7A3" stop-opacity="0"/></linearGradient>
+          <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+          <filter id="beamblur" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+        </defs>
+        <rect class="skyfill" width="1600" height="440" fill="url(#skyg)"/>
+        <g class="stars"></g>
+        <circle class="glow" cx="800" cy="300" r="260" fill="url(#glowg)"/>
+        <circle class="sun" cx="800" cy="300" r="17"/>
+        <g class="moon" transform="translate(1210 96)"><circle r="15"/><circle class="bite" cx="7" cy="-5" r="13"/></g>
+        <g class="clouds" filter="url(#soft)">
+          <ellipse cx="220" cy="118" rx="200" ry="9"/><ellipse cx="330" cy="132" rx="140" ry="6"/><ellipse cx="700" cy="84" rx="240" ry="10"/><ellipse cx="820" cy="98" rx="160" ry="6"/>
+          <ellipse cx="1120" cy="150" rx="220" ry="11"/><ellipse cx="1000" cy="164" rx="130" ry="6"/><ellipse cx="1450" cy="104" rx="190" ry="8"/><ellipse cx="560" cy="196" rx="260" ry="7"/>
+        </g>
+        <path class="r0" d="M-40,185.8 C-37.3,184.3 -29.3,180.2 -24,177.2 C-18.7,174.2 -13.3,170.4 -8,167.7 C-2.7,165.0 2.7,162.2 8,160.9 C13.3,159.6 18.7,159.2 24,159.9 C29.3,160.6 34.7,162.9 40,165.0 C45.3,167.1 50.7,170.4 56,172.5 C61.3,174.7 66.7,176.8 72,177.7 C77.3,178.6 82.7,178.4 88,177.9 C93.3,177.3 98.7,175.5 104,174.3 C109.3,173.2 114.7,171.5 120,170.8 C125.3,170.1 130.7,170.0 136,170.2 C141.3,170.3 146.7,171.4 152,172.0 C157.3,172.5 162.7,173.4 168,173.4 C173.3,173.4 178.7,172.8 184,171.9 C189.3,171.0 194.7,169.1 200,168.1 C205.3,167.0 210.7,165.5 216,165.5 C221.3,165.5 226.7,166.2 232,168.1 C237.3,169.9 242.7,173.3 248,176.6 C253.3,179.9 258.7,184.5 264,188.0 C269.3,191.5 274.7,195.1 280,197.4 C285.3,199.7 290.7,201.1 296,201.8 C301.3,202.5 306.7,202.0 312,201.7 C317.3,201.5 322.7,200.6 328,200.3 C333.3,200.1 338.7,200.1 344,200.2 C349.3,200.3 354.7,201.0 360,200.9 C365.3,200.7 370.7,200.6 376,199.3 C381.3,198.0 386.7,195.8 392,192.9 C397.3,190.1 402.7,185.9 408,182.2 C413.3,178.6 418.7,174.1 424,171.2 C429.3,168.2 434.7,165.6 440,164.5 C445.3,163.3 450.7,163.5 456,164.1 C461.3,164.7 466.7,166.7 472,168.1 C477.3,169.5 482.7,171.4 488,172.4 C493.3,173.3 498.7,173.8 504,173.9 C509.3,174.1 514.7,173.3 520,173.2 C525.3,173.1 530.7,172.7 536,173.1 C541.3,173.6 546.7,174.8 552,176.2 C557.3,177.6 562.7,179.9 568,181.6 C573.3,183.2 578.7,185.2 584,185.9 C589.3,186.7 594.7,186.7 600,185.9 C605.3,185.2 610.7,183.1 616,181.4 C621.3,179.7 626.7,177.0 632,175.8 C637.3,174.5 642.7,173.5 648,173.9 C653.3,174.3 658.7,176.0 664,178.4 C669.3,180.7 674.7,184.5 680,187.8 C685.3,191.2 690.7,195.3 696,198.6 C701.3,201.9 706.7,204.9 712,207.6 C717.3,210.4 722.7,212.5 728,215.3 C733.3,218.0 738.7,220.6 744,224.2 C749.3,227.7 754.7,232.0 760,236.5 C765.3,241.1 770.7,246.7 776,251.4 C781.3,256.2 786.7,261.4 792,264.9 C797.3,268.5 802.7,271.3 808,272.7 C813.3,274.1 818.7,274.0 824,273.6 C829.3,273.1 834.7,271.3 840,270.2 C845.3,269.2 850.7,267.7 856,267.3 C861.3,266.8 866.7,267.1 872,267.6 C877.3,268.2 882.7,269.7 888,270.6 C893.3,271.5 898.7,272.8 904,273.1 C909.3,273.5 914.7,273.3 920,272.8 C925.3,272.3 930.7,270.9 936,270.2 C941.3,269.5 946.7,268.5 952,268.6 C957.3,268.7 962.7,269.6 968,270.9 C973.3,272.3 978.7,274.9 984,276.8 C989.3,278.7 994.7,281.4 1000,282.5 C1005.3,283.6 1010.7,284.2 1016,283.4 C1021.3,282.6 1026.7,280.3 1032,277.7 C1037.3,275.0 1042.7,270.9 1048,267.4 C1053.3,264.0 1058.7,260.0 1064,257.0 C1069.3,254.0 1074.7,251.5 1080,249.4 C1085.3,247.3 1090.7,246.1 1096,244.4 C1101.3,242.7 1106.7,241.4 1112,239.3 C1117.3,237.2 1122.7,234.6 1128,232.0 C1133.3,229.3 1138.7,225.9 1144,223.4 C1149.3,220.9 1154.7,218.3 1160,217.2 C1165.3,216.2 1170.7,216.0 1176,217.0 C1181.3,218.0 1186.7,220.6 1192,223.1 C1197.3,225.7 1202.7,229.4 1208,232.1 C1213.3,234.7 1218.7,237.5 1224,239.0 C1229.3,240.5 1234.7,241.0 1240,241.1 C1245.3,241.2 1250.7,240.1 1256,239.6 C1261.3,239.0 1266.7,238.0 1272,237.7 C1277.3,237.5 1282.7,237.7 1288,238.2 C1293.3,238.6 1298.7,239.8 1304,240.2 C1309.3,240.6 1314.7,241.3 1320,240.8 C1325.3,240.3 1330.7,239.1 1336,237.4 C1341.3,235.8 1346.7,232.9 1352,230.8 C1357.3,228.7 1362.7,226.0 1368,224.7 C1373.3,223.5 1378.7,222.8 1384,223.4 C1389.3,223.9 1394.7,225.8 1400,227.8 C1405.3,229.8 1410.7,233.0 1416,235.2 C1421.3,237.4 1426.7,239.8 1432,241.0 C1437.3,242.2 1442.7,242.5 1448,242.2 C1453.3,241.9 1458.7,240.4 1464,239.3 C1469.3,238.2 1474.7,236.5 1480,235.5 C1485.3,234.4 1490.7,233.7 1496,232.9 C1501.3,232.2 1506.7,232.1 1512,231.0 C1517.3,229.8 1522.7,228.8 1528,226.3 C1533.3,223.8 1538.7,220.4 1544,216.1 C1549.3,211.9 1554.7,206.2 1560,201.0 C1565.3,195.7 1570.7,189.5 1576,184.8 C1581.3,180.0 1586.7,175.5 1592,172.4 C1597.3,169.4 1602.7,167.6 1608,166.2 C1613.3,164.9 1618.7,165.0 1624,164.5 C1629.3,164.0 1637.3,163.5 1640,163.3 L1640,440 L-40,440 Z"/>
+        <path class="r1" d="M-40,224.7 C-37.3,223.2 -29.3,218.4 -24,216.1 C-18.7,213.8 -13.3,211.9 -8,210.9 C-2.7,209.9 2.7,209.9 8,210.1 C13.3,210.4 18.7,211.6 24,212.4 C29.3,213.3 34.7,214.6 40,215.3 C45.3,216.1 50.7,216.6 56,216.9 C61.3,217.1 66.7,216.9 72,216.9 C77.3,217.0 82.7,216.8 88,217.2 C93.3,217.6 98.7,218.2 104,219.4 C109.3,220.5 114.7,222.3 120,224.0 C125.3,225.7 130.7,228.0 136,229.6 C141.3,231.2 146.7,232.9 152,233.6 C157.3,234.4 162.7,234.5 168,234.2 C173.3,233.8 178.7,232.6 184,231.5 C189.3,230.5 194.7,228.9 200,228.1 C205.3,227.3 210.7,226.5 216,226.7 C221.3,226.8 226.7,227.7 232,229.1 C237.3,230.4 242.7,232.6 248,234.7 C253.3,236.8 258.7,239.4 264,241.5 C269.3,243.7 274.7,245.8 280,247.6 C285.3,249.4 290.7,250.8 296,252.4 C301.3,254.1 306.7,255.4 312,257.4 C317.3,259.5 322.7,261.7 328,264.6 C333.3,267.5 338.7,271.1 344,274.8 C349.3,278.4 354.7,282.8 360,286.6 C365.3,290.4 370.7,294.4 376,297.3 C381.3,300.3 386.7,302.7 392,304.2 C397.3,305.8 402.7,306.3 408,306.5 C413.3,306.7 418.7,305.9 424,305.4 C429.3,305.0 434.7,304.1 440,303.8 C445.3,303.5 450.7,303.4 456,303.6 C461.3,303.7 466.7,304.4 472,304.9 C477.3,305.3 482.7,306.0 488,306.1 C493.3,306.3 498.7,306.2 504,305.6 C509.3,305.0 514.7,303.8 520,302.7 C525.3,301.7 530.7,300.0 536,299.1 C541.3,298.1 546.7,297.2 552,297.1 C557.3,297.0 562.7,297.6 568,298.6 C573.3,299.6 578.7,301.5 584,303.1 C589.3,304.8 594.7,307.0 600,308.4 C605.3,309.8 610.7,311.1 616,311.5 C621.3,311.9 626.7,311.6 632,310.8 C637.3,310.1 642.7,308.4 648,307.0 C653.3,305.5 658.7,303.5 664,302.0 C669.3,300.5 674.7,299.1 680,298.1 C685.3,297.0 690.7,296.4 696,295.7 C701.3,294.9 706.7,294.4 712,293.4 C717.3,292.3 722.7,291.1 728,289.4 C733.3,287.6 738.7,285.2 744,282.8 C749.3,280.3 754.7,277.2 760,274.8 C765.3,272.4 770.7,269.8 776,268.3 C781.3,266.8 786.7,265.8 792,265.8 C797.3,265.7 802.7,266.7 808,267.9 C813.3,269.1 818.7,271.3 824,273.1 C829.3,274.9 834.7,277.1 840,278.7 C845.3,280.2 850.7,281.5 856,282.4 C861.3,283.3 866.7,283.7 872,284.1 C877.3,284.6 882.7,284.7 888,285.4 C893.3,286.0 898.7,286.8 904,287.9 C909.3,289.1 914.7,290.8 920,292.3 C925.3,293.8 930.7,295.7 936,296.9 C941.3,298.2 946.7,299.3 952,299.5 C957.3,299.7 962.7,299.3 968,298.3 C973.3,297.3 978.7,295.4 984,293.7 C989.3,292.0 994.7,289.7 1000,288.2 C1005.3,286.6 1010.7,285.2 1016,284.5 C1021.3,283.9 1026.7,284.0 1032,284.4 C1037.3,284.8 1042.7,286.1 1048,287.1 C1053.3,288.1 1058.7,289.6 1064,290.4 C1069.3,291.3 1074.7,292.0 1080,292.2 C1085.3,292.5 1090.7,292.2 1096,292.0 C1101.3,291.8 1106.7,291.1 1112,291.0 C1117.3,290.9 1122.7,290.8 1128,291.3 C1133.3,291.7 1138.7,292.6 1144,293.6 C1149.3,294.5 1154.7,295.9 1160,296.7 C1165.3,297.4 1170.7,298.3 1176,298.1 C1181.3,297.8 1186.7,297.0 1192,295.2 C1197.3,293.5 1202.7,290.7 1208,287.7 C1213.3,284.7 1218.7,280.7 1224,277.2 C1229.3,273.7 1234.7,269.8 1240,266.6 C1245.3,263.5 1250.7,260.6 1256,258.2 C1261.3,255.8 1266.7,254.1 1272,252.2 C1277.3,250.4 1282.7,249.0 1288,247.1 C1293.3,245.2 1298.7,243.3 1304,241.1 C1309.3,238.8 1314.7,236.1 1320,233.6 C1325.3,231.1 1330.7,228.2 1336,226.0 C1341.3,223.9 1346.7,221.9 1352,220.8 C1357.3,219.8 1362.7,219.4 1368,219.5 C1373.3,219.7 1378.7,220.8 1384,221.7 C1389.3,222.5 1394.7,224.1 1400,224.8 C1405.3,225.5 1410.7,226.1 1416,226.0 C1421.3,225.8 1426.7,224.9 1432,223.7 C1437.3,222.5 1442.7,220.5 1448,218.8 C1453.3,217.1 1458.7,214.9 1464,213.4 C1469.3,211.9 1474.7,210.6 1480,209.8 C1485.3,209.0 1490.7,208.8 1496,208.6 C1501.3,208.3 1506.7,208.6 1512,208.3 C1517.3,208.1 1522.7,207.8 1528,207.1 C1533.3,206.5 1538.7,205.3 1544,204.2 C1549.3,203.1 1554.7,201.4 1560,200.5 C1565.3,199.6 1570.7,198.6 1576,198.7 C1581.3,198.8 1586.7,199.5 1592,201.1 C1597.3,202.6 1602.7,205.2 1608,208.0 C1613.3,210.7 1618.7,214.4 1624,217.5 C1629.3,220.6 1637.3,225.1 1640,226.6 L1640,440 L-40,440 Z"/>
+        <path class="r2" d="M-40,323.7 C-36.7,323.1 -26.7,321.3 -20,320.3 C-13.3,319.2 -6.7,318.1 0,317.3 C6.7,316.4 13.3,315.7 20,315.2 C26.7,314.7 33.3,314.4 40,314.4 C46.7,314.3 53.3,314.5 60,314.9 C66.7,315.3 73.3,316.0 80,316.9 C86.7,317.7 93.3,318.8 100,320.0 C106.7,321.3 113.3,322.7 120,324.1 C126.7,325.5 133.3,327.1 140,328.6 C146.7,330.1 153.3,331.7 160,333.1 C166.7,334.5 173.3,335.9 180,337.1 C186.7,338.3 193.3,339.4 200,340.4 C206.7,341.3 213.3,342.0 220,342.6 C226.7,343.2 233.3,343.6 240,343.9 C246.7,344.1 253.3,344.2 260,344.3 C266.7,344.3 273.3,344.2 280,344.1 C286.7,344.0 293.3,343.8 300,343.7 C306.7,343.6 313.3,343.4 320,343.4 C326.7,343.4 333.3,343.4 340,343.6 C346.7,343.8 353.3,344.1 360,344.5 C366.7,344.9 373.3,345.5 380,346.1 C386.7,346.7 393.3,347.5 400,348.3 C406.7,349.2 413.3,350.1 420,351.0 C426.7,351.8 433.3,352.8 440,353.6 C446.7,354.4 453.3,355.2 460,355.7 C466.7,356.3 473.3,356.8 480,357.0 C486.7,357.2 493.3,357.2 500,357.0 C506.7,356.7 513.3,356.3 520,355.5 C526.7,354.8 533.3,353.7 540,352.5 C546.7,351.2 553.3,349.7 560,348.0 C566.7,346.4 573.3,344.4 580,342.5 C586.7,340.5 593.3,338.3 600,336.2 C606.7,334.1 613.3,331.9 620,329.7 C626.7,327.6 633.3,325.5 640,323.6 C646.7,321.6 653.3,319.8 660,318.1 C666.7,316.4 673.3,314.9 680,313.6 C686.7,312.3 693.3,311.2 700,310.3 C706.7,309.3 713.3,308.6 720,308.0 C726.7,307.4 733.3,307.0 740,306.7 C746.7,306.3 753.3,306.1 760,305.8 C766.7,305.6 773.3,305.4 780,305.2 C786.7,305.0 793.3,304.7 800,304.4 C806.7,304.0 813.3,303.6 820,303.0 C826.7,302.5 833.3,301.8 840,301.0 C846.7,300.2 853.3,299.3 860,298.3 C866.7,297.4 873.3,296.2 880,295.1 C886.7,294.0 893.3,292.8 900,291.6 C906.7,290.5 913.3,289.3 920,288.3 C926.7,287.3 933.3,286.3 940,285.5 C946.7,284.7 953.3,284.1 960,283.6 C966.7,283.2 973.3,283.0 980,283.0 C986.7,283.0 993.3,283.2 1000,283.7 C1006.7,284.1 1013.3,284.8 1020,285.7 C1026.7,286.5 1033.3,287.6 1040,288.8 C1046.7,289.9 1053.3,291.3 1060,292.6 C1066.7,293.9 1073.3,295.3 1080,296.6 C1086.7,297.9 1093.3,299.3 1100,300.4 C1106.7,301.6 1113.3,302.6 1120,303.5 C1126.7,304.3 1133.3,305.0 1140,305.5 C1146.7,305.9 1153.3,306.2 1160,306.2 C1166.7,306.2 1173.3,306.0 1180,305.6 C1186.7,305.3 1193.3,304.6 1200,303.9 C1206.7,303.2 1213.3,302.3 1220,301.3 C1226.7,300.4 1233.3,299.3 1240,298.3 C1246.7,297.2 1253.3,296.2 1260,295.2 C1266.7,294.2 1273.3,293.3 1280,292.5 C1286.7,291.7 1293.3,291.0 1300,290.4 C1306.7,289.9 1313.3,289.5 1320,289.2 C1326.7,288.9 1333.3,288.8 1340,288.8 C1346.7,288.7 1353.3,288.8 1360,289.0 C1366.7,289.1 1373.3,289.3 1380,289.5 C1386.7,289.7 1393.3,289.9 1400,290.0 C1406.7,290.1 1413.3,290.2 1420,290.1 C1426.7,290.1 1433.3,289.9 1440,289.5 C1446.7,289.2 1453.3,288.7 1460,288.0 C1466.7,287.3 1473.3,286.5 1480,285.5 C1486.7,284.5 1493.3,283.4 1500,282.2 C1506.7,281.0 1513.3,279.6 1520,278.3 C1526.7,277.0 1533.3,275.5 1540,274.3 C1546.7,273.0 1553.3,271.7 1560,270.6 C1566.7,269.5 1573.3,268.5 1580,267.7 C1586.7,267.0 1593.3,266.4 1600,266.1 C1606.7,265.8 1613.3,265.7 1620,266.0 C1626.7,266.2 1636.7,267.2 1640,267.4 L1640,440 L-40,440 Z"/>
+        <path class="r3" d="M-40,345.8 C-36.0,345.9 -24.0,346.1 -16,346.2 C-8.0,346.3 0.0,346.5 8,346.7 C16.0,346.9 24.0,347.1 32,347.4 C40.0,347.6 48.0,347.9 56,348.1 C64.0,348.4 72.0,348.7 80,349.0 C88.0,349.3 96.0,349.6 104,349.9 C112.0,350.2 120.0,350.5 128,350.9 C136.0,351.2 144.0,351.5 152,351.8 C160.0,352.1 168.0,352.5 176,352.8 C184.0,353.1 192.0,353.4 200,353.7 C208.0,354.0 216.0,354.3 224,354.5 C232.0,354.8 240.0,355.1 248,355.3 C256.0,355.6 264.0,355.8 272,356.0 C280.0,356.2 288.0,356.4 296,356.6 C304.0,356.7 312.0,356.9 320,357.0 C328.0,357.1 336.0,357.2 344,357.3 C352.0,357.4 360.0,357.5 368,357.5 C376.0,357.6 384.0,357.6 392,357.6 C400.0,357.6 408.0,357.6 416,357.5 C424.0,357.5 432.0,357.4 440,357.3 C448.0,357.3 456.0,357.2 464,357.0 C472.0,356.9 480.0,356.8 488,356.6 C496.0,356.5 504.0,356.3 512,356.2 C520.0,356.0 528.0,355.8 536,355.6 C544.0,355.5 552.0,355.3 560,355.1 C568.0,354.9 576.0,354.7 584,354.5 C592.0,354.3 600.0,354.1 608,353.9 C616.0,353.7 624.0,353.5 632,353.4 C640.0,353.2 648.0,353.0 656,352.9 C664.0,352.7 672.0,352.6 680,352.5 C688.0,352.4 696.0,352.3 704,352.2 C712.0,352.1 720.0,352.1 728,352.0 C736.0,352.0 744.0,352.0 752,352.0 C760.0,352.0 768.0,352.1 776,352.1 C784.0,352.2 792.0,352.3 800,352.5 C808.0,352.6 816.0,352.8 824,353.0 C832.0,353.2 840.0,353.4 848,353.7 C856.0,353.9 864.0,354.2 872,354.6 C880.0,354.9 888.0,355.3 896,355.7 C904.0,356.1 912.0,356.5 920,357.0 C928.0,357.4 936.0,357.9 944,358.5 C952.0,359.0 960.0,359.5 968,360.1 C976.0,360.7 984.0,361.3 992,361.9 C1000.0,362.5 1008.0,363.2 1016,363.9 C1024.0,364.5 1032.0,365.2 1040,365.9 C1048.0,366.7 1056.0,367.4 1064,368.1 C1072.0,368.9 1080.0,369.6 1088,370.4 C1096.0,371.1 1104.0,371.9 1112,372.6 C1120.0,373.4 1128.0,374.2 1136,374.9 C1144.0,375.7 1152.0,376.4 1160,377.2 C1168.0,377.9 1176.0,378.7 1184,379.4 C1192.0,380.1 1200.0,380.9 1208,381.6 C1216.0,382.3 1224.0,382.9 1232,383.6 C1240.0,384.3 1248.0,384.9 1256,385.5 C1264.0,386.1 1272.0,386.7 1280,387.3 C1288.0,387.8 1296.0,388.4 1304,388.9 C1312.0,389.4 1320.0,389.8 1328,390.3 C1336.0,390.7 1344.0,391.1 1352,391.4 C1360.0,391.8 1368.0,392.1 1376,392.4 C1384.0,392.7 1392.0,392.9 1400,393.1 C1408.0,393.3 1416.0,393.5 1424,393.6 C1432.0,393.8 1440.0,393.9 1448,393.9 C1456.0,394.0 1464.0,394.0 1472,394.0 C1480.0,393.9 1488.0,393.9 1496,393.8 C1504.0,393.7 1512.0,393.6 1520,393.4 C1528.0,393.2 1536.0,393.0 1544,392.8 C1552.0,392.6 1560.0,392.4 1568,392.1 C1576.0,391.8 1584.0,391.5 1592,391.2 C1600.0,390.9 1608.0,390.5 1616,390.2 C1624.0,389.8 1636.0,389.2 1640,389.0 L1640,440 L-40,440 Z"/>
+        <path id="road" d="M-40,345.8 C-36.0,345.9 -24.0,346.1 -16,346.2 C-8.0,346.3 0.0,346.5 8,346.7 C16.0,346.9 24.0,347.1 32,347.4 C40.0,347.6 48.0,347.9 56,348.1 C64.0,348.4 72.0,348.7 80,349.0 C88.0,349.3 96.0,349.6 104,349.9 C112.0,350.2 120.0,350.5 128,350.9 C136.0,351.2 144.0,351.5 152,351.8 C160.0,352.1 168.0,352.5 176,352.8 C184.0,353.1 192.0,353.4 200,353.7 C208.0,354.0 216.0,354.3 224,354.5 C232.0,354.8 240.0,355.1 248,355.3 C256.0,355.6 264.0,355.8 272,356.0 C280.0,356.2 288.0,356.4 296,356.6 C304.0,356.7 312.0,356.9 320,357.0 C328.0,357.1 336.0,357.2 344,357.3 C352.0,357.4 360.0,357.5 368,357.5 C376.0,357.6 384.0,357.6 392,357.6 C400.0,357.6 408.0,357.6 416,357.5 C424.0,357.5 432.0,357.4 440,357.3 C448.0,357.3 456.0,357.2 464,357.0 C472.0,356.9 480.0,356.8 488,356.6 C496.0,356.5 504.0,356.3 512,356.2 C520.0,356.0 528.0,355.8 536,355.6 C544.0,355.5 552.0,355.3 560,355.1 C568.0,354.9 576.0,354.7 584,354.5 C592.0,354.3 600.0,354.1 608,353.9 C616.0,353.7 624.0,353.5 632,353.4 C640.0,353.2 648.0,353.0 656,352.9 C664.0,352.7 672.0,352.6 680,352.5 C688.0,352.4 696.0,352.3 704,352.2 C712.0,352.1 720.0,352.1 728,352.0 C736.0,352.0 744.0,352.0 752,352.0 C760.0,352.0 768.0,352.1 776,352.1 C784.0,352.2 792.0,352.3 800,352.5 C808.0,352.6 816.0,352.8 824,353.0 C832.0,353.2 840.0,353.4 848,353.7 C856.0,353.9 864.0,354.2 872,354.6 C880.0,354.9 888.0,355.3 896,355.7 C904.0,356.1 912.0,356.5 920,357.0 C928.0,357.4 936.0,357.9 944,358.5 C952.0,359.0 960.0,359.5 968,360.1 C976.0,360.7 984.0,361.3 992,361.9 C1000.0,362.5 1008.0,363.2 1016,363.9 C1024.0,364.5 1032.0,365.2 1040,365.9 C1048.0,366.7 1056.0,367.4 1064,368.1 C1072.0,368.9 1080.0,369.6 1088,370.4 C1096.0,371.1 1104.0,371.9 1112,372.6 C1120.0,373.4 1128.0,374.2 1136,374.9 C1144.0,375.7 1152.0,376.4 1160,377.2 C1168.0,377.9 1176.0,378.7 1184,379.4 C1192.0,380.1 1200.0,380.9 1208,381.6 C1216.0,382.3 1224.0,382.9 1232,383.6 C1240.0,384.3 1248.0,384.9 1256,385.5 C1264.0,386.1 1272.0,386.7 1280,387.3 C1288.0,387.8 1296.0,388.4 1304,388.9 C1312.0,389.4 1320.0,389.8 1328,390.3 C1336.0,390.7 1344.0,391.1 1352,391.4 C1360.0,391.8 1368.0,392.1 1376,392.4 C1384.0,392.7 1392.0,392.9 1400,393.1 C1408.0,393.3 1416.0,393.5 1424,393.6 C1432.0,393.8 1440.0,393.9 1448,393.9 C1456.0,394.0 1464.0,394.0 1472,394.0 C1480.0,393.9 1488.0,393.9 1496,393.8 C1504.0,393.7 1512.0,393.6 1520,393.4 C1528.0,393.2 1536.0,393.0 1544,392.8 C1552.0,392.6 1560.0,392.4 1568,392.1 C1576.0,391.8 1584.0,391.5 1592,391.2 C1600.0,390.9 1608.0,390.5 1616,390.2 C1624.0,389.8 1636.0,389.2 1640,389.0" fill="none" stroke="none"/>
+        <g id="rider" class="rider" transform="translate(-200 400)">
+          <path class="beam" d="M18.6,-25.4 L180,-58 L180,8 Z" fill="url(#beamg)" filter="url(#beamblur)"/>
+          <circle class="lamp-dot" cx="18.6" cy="-25.4" r="2.8"/>
+          <g class="bike" transform="scale(.62)">
+          <g fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="-35" cy="-13" r="12" fill="none" stroke-width="3.6"/>
+            <circle cx="35" cy="-13" r="12" fill="none" stroke-width="3.6"/>
+            <circle cx="-35" cy="-13" r="2.6" stroke="none"/>
+            <circle cx="35" cy="-13" r="2.6" stroke="none"/>
+            <path d="M-51,-18 A16,16 0 0 1 -24,-28" fill="none" stroke-width="2.8"/>
+            <path d="M-35,-13 L-8,-20" fill="none" stroke-width="3"/>
+            <path d="M-33,-16 L-27,-34" fill="none" stroke-width="2.8"/>
+            <path d="M6,-16 L-18,-14 L-51,-22" fill="none" stroke-width="2.8"/>
+            <path d="M-10,-31 L11,-31 L13,-20 Q2,-15 -9,-18 Z" stroke-width="1.5"/>
+            <path d="M-42,-34 Q-42,-39 -36,-39 L-8,-39 L-8,-33 L-39,-32 Z" stroke-width="1.5"/>
+            <path d="M-10,-37 Q-6,-48 8,-48 Q21,-47 23,-39 Q12,-35 -10,-34 Z" stroke-width="1.5"/>
+            <path d="M25,-43 L35,-13" fill="none" stroke-width="3.4"/>
+            <path d="M25,-25 A15,15 0 0 1 48,-20" fill="none" stroke-width="2.6"/>
+            <circle cx="30" cy="-41" r="5" stroke="none"/>
+            <path d="M19,-49 L25,-46 L31,-51" fill="none" stroke-width="2.4"/>
+            <!-- rider -->
+            <path d="M-19,-39 Q-20,-52 -11,-62 Q-6,-66 0,-64 Q5,-60 4,-53 L1,-42 Z" stroke-width="2"/>
+            <circle cx="-2" cy="-74" r="7.8" stroke="none"/>
+            <path d="M-4,-69 Q2,-66 7,-71" fill="none" stroke-width="2.6"/>
+            <path d="M1,-60 L13,-52 L24,-48" fill="none" stroke-width="5.6"/>
+            <path d="M-15,-39 L8,-37 L3,-20" fill="none" stroke-width="8.5"/>
+            <path d="M1,-19 L10,-18" fill="none" stroke-width="4.5"/>
+          </g>
+          </g>
+        </g>
+      </svg>
+      <div class="rain" aria-hidden="true"></div>
+      <div class="wrap scene-ui">
+        <p class="now"><i aria-hidden="true"></i><span><b id="now-time">--:--</b> in Itanagar<span id="now-wx"></span></span></p>
+        <button type="button" class="ride-btn" id="ride-again">Ride again</button>
       </div>
+    </div>
+    <div class="intro">
+      <p class="hi">Namaste, I’m Roni.</p>
+      <h1>I own what I ship.</h1>
+      <div class="lede">
+        <p>Senior software engineer in Itanagar, Arunachal Pradesh. For five years I’ve been one of two engineers on a B2B user-research platform, so the app, the API, the billing and, lately, the AI agents and voice interviews are mine to build and mine to fix.</p>
+        <div class="btns">
+          <a class="btn fill" href="mailto:ronirajkamalpradhan1112@gmail.com">Email me</a>
+          <a class="btn line" href="assets/Roni-Pradhan-Senior-Software-Engineer.pdf" download><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8m0 0L5 7m3 3 3-3M3 12v1.5A.5.5 0 0 0 3.5 14h9a.5.5 0 0 0 .5-.5V12"/></svg>Resume (PDF)</a>
+          <a class="btn line" href="https://github.com/Roninanu777" rel="me">GitHub</a>
+        </div>
+      </div>
+      <p class="skynote">That sky is the real one over Itanagar right now, sun, stars and weather included. The first thing I ever built was a weather app, so it felt right.</p>
     </div>
   </header>
 
   <section class="work" id="work" aria-labelledby="work-h">
-    <h2 class="sh" id="work-h">Selected work</h2>
+    <h2 class="sh" id="work-h">Things I own</h2>
+    <p class="sub">Every window below works. They’re sketches of what I built and still look after at CleverX, plus one of my own.</p>
     <div class="feat">
     <article class="proj wide" style="--tint:var(--teal);--tint2:var(--sky)">
       <div class="stage">
@@ -332,37 +400,72 @@
     </div>
   </section>
 
-  <section class="plain" id="experience">
-    <h2>Experience</h2>
-    <ol class="tl">
+  <section class="ride" id="story" aria-labelledby="story-h">
+    <h2 class="sh" id="story-h">The ride so far</h2>
+    <p class="about">I’m Nepali, born and raised in Arunachal Pradesh, and I still build from here. I care most about ownership: if I ship it, it’s mine when it breaks too. Beyond that, I don’t stress too much.</p>
+    <ol class="road" id="road-list">
       <li>
-        <div class="when">2024 — now</div>
-        <div>
-          <h3>Senior Software Engineer <span>CleverX</span></h3>
-          <p>Owned platform surfaces end to end in a two-engineer team: built the AI layer and voice interviews, replaced the real-time video layer, opened a public API and webhook platform, and delivered billing and multi-seat teams. Since then: email consent across four codebases, invite delivery that scales past its old ceiling, website and prototype task scoring, hardened tenant isolation, and about 13,700 lines of legacy scheduling code retired.</p>
-          <div class="chips"><span class="chip">React 18</span><span class="chip">Node</span><span class="chip">MongoDB</span><span class="chip">AWS Lambda</span><span class="chip">SQS</span><span class="chip">LiveKit</span><span class="chip">Anthropic SDK</span><span class="chip">Langfuse</span><span class="chip">Stripe</span><span class="chip">Postmark</span></div>
-        </div>
+        <span class="km">2020</span>
+        <div><h3>A weather app, alone in a hostel room</h3><p>Covid had emptied the hostel, so I sat down and built a weather app. It was my first project, and it’s why this page shows Itanagar’s weather.</p></div>
       </li>
       <li>
-        <div class="when">2021 — 2023</div>
-        <div>
-          <h3>Software Engineer <span>CleverX</span></h3>
-          <p>Built the design system and led the React 18 migration, owned the search revamp from Algolia to Typesense, built the screener engine, and took over transactional email on MJML and Postmark.</p>
-          <div class="chips"><span class="chip">Design system</span><span class="chip">Typesense</span><span class="chip">Elasticsearch</span><span class="chip">MJML</span><span class="chip">Postmark</span></div>
-        </div>
+        <span class="km">2021</span>
+        <div><h3>NIT Arunachal Pradesh, then CleverX</h3><p>Finished my B.Tech in computer science and joined a B2B user-research startup as one of its two engineers. Built the design system, led the React 18 migration, moved search from Algolia to Typesense, built the screener engine and took over transactional email.</p></div>
       </li>
-      <li class="edu">
-        <div class="when">2021</div>
-        <div>
-          <h3>B.Tech, Computer Science &amp; Engineering</h3>
-          <p>National Institute of Technology, Arunachal Pradesh</p>
-        </div>
+      <li class="side">
+        <span class="km">Side roads</span>
+        <div><h3>Meypato and My Health Ajin</h3><p>Meypato, a rental booking app. My Health Ajin, which never made it to market. Not every road goes through.</p></div>
+      </li>
+      <li>
+        <span class="km">2024</span>
+        <div><h3>Senior Software Engineer</h3><p>Took the platform’s AI and real-time work end to end: the study-builder agent, AI voice interviews, the Twilio to LiveKit migration, a public API, billing and multi-seat teams. Since then, email consent, invite delivery at scale and a lot of legacy code retired.</p></div>
+      </li>
+      <li>
+        <span class="km">2026</span>
+        <div><h3>Two things of my own</h3><p><a href="https://github.com/Roninanu777/codebase-archaeology">Codebase Archaeology</a>, which explains why code exists from its git history, and <a href="https://year-progress-wallpaper-tau.vercel.app">Year Progress Wallpaper</a>, which puts the year’s progress on your lock screen.</p></div>
+      </li>
+      <li class="now-stop">
+        <span class="km">Now</span>
+        <div><h3>Still riding</h3><p>Owning the AI layer at CleverX, football every other day, and the bike whenever the weather allows.</p></div>
       </li>
     </ol>
   </section>
 
+  <section class="off" id="off" aria-labelledby="off-h">
+    <h2 class="sh" id="off-h">Off the clock</h2>
+    <div class="off-grid">
+      <article class="panel moto">
+        <div class="play">
+          <svg class="gauge" viewBox="-110 -110 220 180" aria-hidden="true">
+            <path class="track" d="M-83.9,54.5 A100,100 0 1 1 83.9,54.5"/>
+            <path class="red" d="M52.6,-85.1 A100,100 0 0 1 83.9,54.5"/>
+            <g class="ticks"></g>
+            <g class="needle"><path d="M-3,6 L0,-86 L3,6 Z"/><circle r="7"/></g>
+            <text class="rpm" y="46" text-anchor="middle">idle</text>
+            <text class="unit" y="62" text-anchor="middle">×1000 r/min</text>
+          </svg>
+          <button type="button" class="throttle" id="throttle">Hold to rev</button>
+          <p class="say" aria-live="polite"></p>
+        </div>
+        <h3>Royal Enfield Interceptor 650</h3>
+        <p>Most of my travelling happens on this: a 648 cc parallel twin and whatever road the hills offer.</p>
+      </article>
+      <article class="panel fball">
+        <div class="play pitch" id="pitch">
+          <p class="score"><span>Keepy-uppies <b id="kc">0</b></span><span>Best <b id="kb">0</b></span></p>
+          <button type="button" class="ball" id="ball" aria-label="Kick the ball">
+            <svg viewBox="-50 -50 100 100" aria-hidden="true"><circle r="47" class="leather"/><path class="patch" d="M0,-16 L15.2,-4.9 L9.4,12.9 L-9.4,12.9 L-15.2,-4.9 Z"/><path class="seam" d="M0,-16 L0,-34 M15.2,-4.9 L32,-11 M9.4,12.9 L20,28 M-9.4,12.9 L-20,28 M-15.2,-4.9 L-32,-11"/><path class="patch" d="M-8,-47 L8,-47 L0,-34 Z M47,-6 L41,12 L32,-11 Z M30,38 L12,46 L20,28 Z M-30,38 L-12,46 L-20,28 Z M-47,-6 L-41,12 L-32,-11 Z"/></svg>
+          </button>
+          <p class="say" id="kick-say" aria-live="polite">Tap the ball to keep it up.</p>
+        </div>
+        <h3>Football every other day</h3>
+        <p>I play every other day and support Barça, win or lose. Visca el Barça.</p>
+      </article>
+    </div>
+  </section>
+
   <section class="plain" id="stack">
-    <h2>Stack</h2>
+    <h2 class="sh">Stack</h2>
     <dl class="stack">
       <div><dt>Frontend</dt><dd>React 18, TypeScript, MobX, Tailwind, Radix UI, Vite, webpack, Framer Motion, TipTap, Recharts, Stripe Elements</dd></div>
       <div><dt>Backend</dt><dd>Node.js, Express, MongoDB, Mongoose, Jest + Supertest, Typesense, Elasticsearch, Stripe, MJML, Postmark, Resend</dd></div>
@@ -374,7 +477,7 @@
   <section class="contact" id="contact">
     <div>
       <h2>Say hello.</h2>
-      <p>Email is the fastest way to reach me. I work from Itanagar, India, and my day overlaps with European and US East Coast hours.</p>
+      <p>Email is the fastest way to reach me. I work from Itanagar, and my day overlaps with European and US East Coast hours. Unless I’m out on the bike.</p>
       <div class="btns">
         <a class="btn fill" href="mailto:ronirajkamalpradhan1112@gmail.com">Email me</a>
         <button class="btn line" type="button" id="copy-email" data-email="ronirajkamalpradhan1112@gmail.com">Copy email address</button>
@@ -388,9 +491,9 @@
   </section>
 
   <footer class="foot">
-    <span>Roni Raj Kamal Pradhan</span>
+    <span>Roni Raj Kamal Pradhan · made in Itanagar</span>
     <span><a href="https://github.com/Roninanu777" rel="me">GitHub</a> · <a href="https://www.linkedin.com/in/roni-r-k-pradhan-279b06436/" rel="me">LinkedIn</a> · <a href="mailto:ronirajkamalpradhan1112@gmail.com">Email</a> · <a href="assets/Roni-Pradhan-Senior-Software-Engineer.pdf" download>Resume (PDF)</a></span>
-    <span>Built by hand · <span id="year">2026</span></span>
+    <span>Visca Barça · <span id="year">2026</span></span>
   </footer>
 </main>
 

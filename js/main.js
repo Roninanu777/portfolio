@@ -1,5 +1,5 @@
-// Every window in the bento is a small working sketch. Each block below
-// wires up one card and bails out quietly if its markup is missing.
+// The hero sky, the rider, the story road and the off-the-clock toys come first,
+// then one block per work window. Each block bails out quietly if its markup is missing.
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -15,6 +15,323 @@ function watch(node, { once, enter, leave } = {}) {
     else if (seen && leave) leave();
   }, { threshold: 0.45 }).observe(node);
 }
+
+// Hero: the sky over Itanagar right now. Sun position comes from the NOAA
+// solar equations, weather from Open-Meteo (no key). Everything degrades to
+// a plain dusk sky if either is unavailable.
+const ITANAGAR = { lat: 27.0844, lon: 93.6053 };
+const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const mix = (a, b, t) => { const A = hex(a), B = hex(b); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+function sunAt(date) {
+  const rad = Math.PI / 180;
+  const start = Date.UTC(date.getUTCFullYear(), 0, 0);
+  const doy = (date - start) / 864e5;
+  const g = (2 * Math.PI / 365) * (doy - 1 + (date.getUTCHours() - 12) / 24);
+  const eq = 229.18 * (0.000075 + 0.001868 * Math.cos(g) - 0.032077 * Math.sin(g) - 0.014615 * Math.cos(2 * g) - 0.040849 * Math.sin(2 * g));
+  const decl = 0.006918 - 0.399912 * Math.cos(g) + 0.070257 * Math.sin(g) - 0.006758 * Math.cos(2 * g) + 0.000907 * Math.sin(2 * g) - 0.002697 * Math.cos(3 * g) + 0.00148 * Math.sin(3 * g);
+  const mins = date.getUTCHours() * 60 + date.getUTCMinutes() + date.getUTCSeconds() / 60;
+  let ha = (mins + eq + 4 * ITANAGAR.lon) / 4 - 180;
+  ha = ((ha + 540) % 360) - 180;
+  const lat = ITANAGAR.lat * rad;
+  const cz = Math.sin(lat) * Math.sin(decl) + Math.cos(lat) * Math.cos(decl) * Math.cos(ha * rad);
+  return { alt: 90 - Math.acos(clamp(cz, -1, 1)) / rad, ha };
+}
+
+// Sky colours by sun altitude: [altitude, top, horizon]
+const SKY = [
+  [-18, '#05070F', '#0D1226'], [-10, '#0A1030', '#232A55'], [-5, '#18214F', '#6A4B7E'],
+  [-1, '#2E3C77', '#E0795F'], [4, '#4A71BA', '#F4AE72'], [12, '#5690D6', '#EBD7B8'], [30, '#3F86D8', '#A8D1F3'],
+];
+function skyFor(alt) {
+  if (alt <= SKY[0][0]) return SKY[0].slice(1);
+  for (let i = 1; i < SKY.length; i++) {
+    if (alt <= SKY[i][0]) {
+      const [a0, t0, h0] = SKY[i - 1], [a1, t1, h1] = SKY[i];
+      const t = (alt - a0) / (a1 - a0);
+      return [mix(t0, t1, t), mix(h0, h1, t)];
+    }
+  }
+  return SKY[SKY.length - 1].slice(1);
+}
+
+const WX = (code) => {
+  if (code === 0) return ['clear', 'clear skies'];
+  if (code <= 2) return ['clear', 'a few clouds'];
+  if (code === 3) return ['cloudy', 'overcast'];
+  if (code === 45 || code === 48) return ['fog', 'fog'];
+  if (code >= 51 && code <= 57) return ['rain', 'drizzle'];
+  if ((code >= 61 && code <= 67) || (code >= 80 && code <= 82)) return ['rain', 'rain'];
+  if (code >= 71 && code <= 77) return ['cloudy', 'snow somewhere up high'];
+  if (code >= 95) return ['storm', 'a thunderstorm'];
+  return ['cloudy', 'clouds'];
+};
+
+(function sky() {
+  const scene = $('#scene');
+  if (!scene) return;
+  const svg = $('.land', scene), top = $('.s-top', svg), hor = $('.s-hor', svg);
+  const sun = $('.sun', svg), glow = $('.glow', svg), moon = $('.moon', svg), stars = $('.stars', svg), clouds = $('.clouds', svg);
+  const ridges = ['.r0', '.r1', '.r2'].map((s) => $(s, svg));
+  const timeEl = $('#now-time'), wxEl = $('#now-wx');
+  const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#0F1013';
+  let cloudCover = 0.25;
+
+  // a fixed, seeded starfield so it doesn't reshuffle between visits
+  let seed = 7;
+  const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+  for (let i = 0; i < 90; i++) {
+    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('cx', (rnd() * 1600).toFixed(1));
+    c.setAttribute('cy', (rnd() * 250).toFixed(1));
+    c.setAttribute('r', (0.6 + rnd() * 1.3).toFixed(2));
+    c.setAttribute('opacity', (0.35 + rnd() * 0.65).toFixed(2));
+    if (i % 3 === 0) { c.classList.add('tw'); c.style.animationDelay = `${(rnd() * -3).toFixed(2)}s`; }
+    stars.append(c);
+  }
+
+  const time = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: '2-digit' });
+
+  function paint() {
+    const now = new Date();
+    const { alt, ha } = sunAt(now);
+    const [t, h] = skyFor(alt);
+    top.setAttribute('stop-color', t); hor.setAttribute('stop-color', h);
+    scene.style.setProperty('--s-top', t); scene.style.setProperty('--s-hor', h);
+    // hills fade from the horizon colour into the page, nearest darkest
+    // at night the hills are moonlit blue instead of fading into black
+    const base = alt < -6 ? mix(t, '#3E4A74', 0.45) : h;
+    const ks = alt < -6 ? [0.18, 0.45, 0.7] : [0.5, 0.7, 0.86];
+    ks.forEach((k, i) => ridges[i].setAttribute('fill', mix(base, bg, k)));
+    const night = alt < -4;
+    scene.classList.toggle('night', night);
+    // sun: across the sky with the hour angle, height with altitude
+    const sx = 800 + clamp(ha / 100, -1.1, 1.1) * 680, sy = 300 - alt * 7;
+    sun.setAttribute('cx', sx); sun.setAttribute('cy', sy); glow.setAttribute('cx', sx); glow.setAttribute('cy', Math.min(sy, 330));
+    sun.style.opacity = alt > -3 ? 1 : 0;
+    glow.setAttribute('opacity', (clamp(1 - Math.abs(alt) / 25, 0, 1) * 0.55 + (alt > 0 ? 0.08 : 0)).toFixed(2));
+    $('#glowg stop', svg).setAttribute('stop-color', mix(h, '#FFE2B0', 0.5));
+    moon.style.opacity = night ? 1 : 0;
+    stars.style.opacity = clamp((-alt - 3) / 10, 0, 1) * (1 - cloudCover * 0.8);
+    clouds.setAttribute('fill', night ? mix(t, '#8C98B8', 0.25) : mix(h, '#FFFFFF', 0.55));
+    clouds.setAttribute('opacity', (0.15 + cloudCover * 0.75).toFixed(2));
+    timeEl.textContent = time.format(now).toLowerCase();
+  }
+
+  async function weather() {
+    try {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${ITANAGAR.lat}&longitude=${ITANAGAR.lon}&current=temperature_2m,weather_code,cloud_cover&timezone=Asia%2FKolkata`;
+      const r = await fetch(url);
+      if (!r.ok) throw new Error(r.status);
+      const { current } = await r.json();
+      const [kind, words] = WX(current.weather_code);
+      scene.dataset.wx = kind;
+      cloudCover = clamp((current.cloud_cover ?? 30) / 100, 0, 1);
+      wxEl.textContent = ` · ${Math.round(current.temperature_2m)}°, ${words}`;
+      paint();
+    } catch { wxEl.textContent = ''; }
+  }
+
+  paint();
+  weather();
+  setInterval(paint, 30000);
+  setInterval(weather, 15 * 60000);
+})();
+
+// Hero: me on the Interceptor, riding the front ridge. Rides in on load;
+// "Ride again" (or clicking the bike) sends it off and back.
+(function rider() {
+  const scene = $('#scene');
+  if (!scene) return;
+  const svg = $('.land', scene), road = $('#road', svg), bike = $('#rider', svg), btn = $('#ride-again');
+  const L = road.getTotalLength();
+  const W = 1600, H = 440;
+  let s = 0, busy = false;
+
+  function visible() {
+    const r = svg.getBoundingClientRect();
+    const k = Math.max(r.width / W, r.height / H);
+    const vw = r.width / k;
+    return [W / 2 - vw / 2, W / 2 + vw / 2];
+  }
+  function lengthAtX(x) {
+    let lo = 0, hi = L;
+    for (let i = 0; i < 30; i++) { const m = (lo + hi) / 2; if (road.getPointAtLength(m).x < x) lo = m; else hi = m; }
+    return lo;
+  }
+  function place(len) {
+    s = len;
+    const p = road.getPointAtLength(clamp(len, 0, L));
+    const q = road.getPointAtLength(clamp(len + 8, 0, L));
+    const a = Math.atan2(q.y - p.y, q.x - p.x) * 180 / Math.PI;
+    bike.setAttribute('transform', `translate(${p.x.toFixed(1)} ${(p.y + 1).toFixed(1)}) rotate(${a.toFixed(1)})`);
+  }
+  const ease = (t) => 1 - Math.pow(1 - t, 3);
+  const easeIn = (t) => t * t;
+  function go(from, to, ms, fn) {
+    return new Promise((res) => {
+      const t0 = performance.now();
+      const step = (now) => {
+        const t = clamp((now - t0) / ms, 0, 1);
+        place(from + (to - from) * fn(t));
+        t < 1 ? requestAnimationFrame(step) : res();
+      };
+      requestAnimationFrame(step);
+    });
+  }
+  const rest = () => { const [a, b] = visible(); return lengthAtX(a + (b - a) * 0.7); };
+
+  async function arrive() {
+    const [a] = visible();
+    if (reduceMotion) { place(rest()); return; }
+    await go(lengthAtX(a - 80), rest(), 3600, ease);
+  }
+  async function again() {
+    if (busy) return;
+    busy = true;
+    const [a, b] = visible();
+    if (!reduceMotion) {
+      await go(s, lengthAtX(b + 90), 1100, easeIn);
+      await go(lengthAtX(a - 80), rest(), 2600, ease);
+    }
+    busy = false;
+  }
+  place(lengthAtX(-200));
+  arrive();
+  btn.addEventListener('click', again);
+  bike.addEventListener('click', again);
+  let wait;
+  addEventListener('resize', () => { clearTimeout(wait); wait = setTimeout(() => { if (!busy) place(rest()); }, 150); });
+})();
+
+// Story: a headlight rides down the road as you scroll; waypoints light up once passed.
+(function roadLamp() {
+  const list = $('#road-list');
+  if (!list) return;
+  const lamp = el('span', 'lamp'); lamp.setAttribute('aria-hidden', 'true');
+  list.prepend(lamp);
+  const stops = $$('li', list);
+  let ticking = false;
+  function update() {
+    ticking = false;
+    const r = list.getBoundingClientRect();
+    const y = clamp(innerHeight * 0.55 - r.top, 0, r.height - 30);
+    lamp.style.top = `${y + 6}px`;
+    stops.forEach((li) => li.classList.toggle('passed', li.offsetTop + 10 <= y));
+  }
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
+})();
+
+// Off the clock: hold the button to rev the Interceptor. Redline at 7,000.
+(function rev() {
+  const panel = $('.moto');
+  if (!panel) return;
+  const svg = $('.gauge', panel), needle = $('.needle', svg), rpmEl = $('.rpm', svg), ticks = $('.ticks', svg);
+  const btn = $('#throttle'), say = $('.say', panel);
+  const MAX = 8000, SWEEP = 120, ns = 'http://www.w3.org/2000/svg';
+  const pt = (deg, r) => [Math.sin(deg * Math.PI / 180) * r, -Math.cos(deg * Math.PI / 180) * r];
+  const ang = (rpm) => -SWEEP + (2 * SWEEP * rpm) / MAX;
+  const [sx, sy] = pt(-SWEEP, 100), [ex, ey] = pt(SWEEP, 100), [rx, ry] = pt(ang(7000), 100);
+  $('.track', svg).setAttribute('d', `M${sx},${sy} A100,100 0 1 1 ${ex},${ey}`);
+  $('.red', svg).setAttribute('d', `M${rx},${ry} A100,100 0 0 1 ${ex},${ey}`);
+  for (let k = 0; k <= 16; k++) {
+    const a = ang(k * 500), major = k % 2 === 0;
+    const [x1, y1] = pt(a, 88), [x2, y2] = pt(a, major ? 76 : 82);
+    const l = document.createElementNS(ns, 'line');
+    l.setAttribute('x1', x1); l.setAttribute('y1', y1); l.setAttribute('x2', x2); l.setAttribute('y2', y2);
+    if (major) {
+      l.classList.add('major');
+      const [tx, ty] = pt(a, 62);
+      const t = document.createElementNS(ns, 'text');
+      t.setAttribute('x', tx); t.setAttribute('y', ty + 4.5); t.setAttribute('text-anchor', 'middle');
+      t.textContent = k / 2;
+      ticks.append(t);
+    }
+    ticks.append(l);
+  }
+  const IDLE = 1000;
+  let rpm = 0, held = false, last = 0, running = false, peaked = false;
+  function frame(now) {
+    const dt = Math.min((now - last) / 1000, 0.05); last = now;
+    const target = held ? MAX - 150 : IDLE;
+    rpm += (target - rpm) * (held ? 2.2 : 3.2) * dt + (Math.random() - 0.5) * 60;
+    rpm = clamp(rpm, 0, MAX);
+    needle.setAttribute('transform', `rotate(${ang(rpm).toFixed(2)})`);
+    rpmEl.textContent = (rpm / 1000).toFixed(1);
+    panel.classList.toggle('shake', rpm > 5500);
+    if (rpm > 7000 && !peaked) { peaked = true; say.textContent = 'Easy. No need to redline it.'; }
+    if (rpm < 2500 && peaked) { peaked = false; say.textContent = 'That’s better. Nice and calm.'; }
+    if (held || Math.abs(rpm - IDLE) > 40) requestAnimationFrame(frame);
+    else { running = false; panel.classList.remove('shake'); }
+  }
+  function kick() { if (!running) { running = true; last = performance.now(); requestAnimationFrame(frame); } }
+  function start(e) { e.preventDefault(); held = true; btn.classList.add('on'); btn.textContent = 'Revving…'; if (rpm < IDLE) rpm = IDLE; kick(); }
+  function stop() { if (!held) return; held = false; btn.classList.remove('on'); btn.textContent = 'Hold to rev'; kick(); }
+  btn.addEventListener('pointerdown', start);
+  ['pointerup', 'pointerleave', 'pointercancel', 'blur'].forEach((ev) => btn.addEventListener(ev, stop));
+  btn.addEventListener('keydown', (e) => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) start(e); });
+  btn.addEventListener('keyup', (e) => { if (e.key === ' ' || e.key === 'Enter') stop(); });
+  btn.addEventListener('contextmenu', (e) => e.preventDefault());
+  needle.setAttribute('transform', `rotate(${ang(0)})`);
+  rpmEl.textContent = 'off';
+})();
+
+// Off the clock: keepy-uppy. Tap the ball before it hits the ground.
+(function keepyUppy() {
+  const pitch = $('#pitch');
+  if (!pitch) return;
+  const ball = $('#ball'), kc = $('#kc'), kb = $('#kb'), say = $('#kick-say');
+  const R = 28, G = 2100;
+  let best = 0;
+  try { best = +localStorage.getItem('keepy-best') || 0; } catch {}
+  kb.textContent = best;
+  let x = 0, y = 0, vx = 0, vy = 0, spin = 0, count = 0, airborne = false, last = 0, raf = 0;
+  const size = () => [pitch.clientWidth, pitch.clientHeight - 40];
+  function rest() { const [w, h] = size(); x = w / 2 - R; y = h - 2 * R; draw(); }
+  function draw() { ball.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) rotate(${spin.toFixed(0)}deg)`; }
+  function frame(now) {
+    const dt = Math.min((now - last) / 1000, 0.033); last = now;
+    const [w, h] = size();
+    vy += G * dt; x += vx * dt; y += vy * dt; spin += vx * dt * 3;
+    if (x < 0) { x = 0; vx = Math.abs(vx) * 0.7; }
+    if (x > w - 2 * R) { x = w - 2 * R; vx = -Math.abs(vx) * 0.7; }
+    if (y < 44) { y = 44; vy = Math.abs(vy) * 0.3; }
+    if (y >= h - 2 * R) {
+      y = h - 2 * R;
+      if (airborne) {
+        airborne = false;
+        if (count > 0) say.textContent = count >= best && count > 1 ? `New best: ${count}. Not bad.` : `Dropped it at ${count}. Go again.`;
+        count = 0; kc.textContent = 0; say.classList.remove('cheer');
+      }
+      vy = -vy * 0.35; vx *= 0.8;
+      if (Math.abs(vy) < 60) { vy = 0; if (Math.abs(vx) < 8) { draw(); raf = 0; return; } }
+    }
+    draw();
+    raf = requestAnimationFrame(frame);
+  }
+  ball.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    const r = ball.getBoundingClientRect();
+    const off = e.clientX ? (e.clientX - (r.left + r.width / 2)) / R : (Math.random() - 0.5) * 0.6;
+    kick(off);
+  });
+  ball.addEventListener('keydown', (e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); kick((Math.random() - 0.5) * 0.6); } });
+  function kick(off) {
+    vy = -(820 + Math.random() * 140);
+    vx = vx * 0.4 - off * 260 + (Math.random() - 0.5) * 120;
+    airborne = true; count++;
+    kc.textContent = count;
+    if (count > best) { best = count; kb.textContent = best; try { localStorage.setItem('keepy-best', best); } catch {} }
+    if (count === 10) { say.textContent = 'Visca el Barça!'; say.classList.add('cheer'); }
+    else if (count < 10) say.textContent = count === 1 ? 'Keep it up…' : '';
+    if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
+  }
+  rest();
+  let wait;
+  addEventListener('resize', () => { clearTimeout(wait); wait = setTimeout(() => { if (!raf) rest(); }, 150); });
+})();
 
 // a. Voice interview: plays a scripted conversation; "Drop" simulates a reconnect.
 (function voice() {
