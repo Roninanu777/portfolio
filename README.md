@@ -2,14 +2,14 @@
 
 A single-page portfolio for Roni Raj Kamal Pradhan, Senior Software Engineer. Static HTML, CSS and a few lines of vanilla JS. No build step, no framework, no dependencies beyond two Google Fonts.
 
-Design direction: **"Surfaces"** — a bento grid where every card is a working-looking miniature of a product surface actually shipped (voice interview, agent tool-call DAG, spend sparkline, API request, billing seats, search, heatmap). The three alternative directions explored before choosing this one are parked in `explorations/`.
+Design direction: **"Surfaces"** — a bento grid where every card holds a small working window of a product surface actually shipped. The windows are interactive: play the voice interview (and drop the participant), replay the agent run, scrub the spend chart, ship the LiveKit release, send the API request, flip billing roles, search participants, switch research methods, run the old and new invite delivery, and ask Codebase Archaeology a question. The three alternative directions explored before choosing this one are parked in `explorations/`.
 
 ## Layout
 
 ```
 index.html          the page (all content lives here)
 css/styles.css      tokens, layout, one block per card
-js/main.js          IST clock, year-progress dots, copy-email button, footer year
+js/main.js          one small block per interactive window, plus the IST clock, copy-email button, footer year
 assets/favicon.svg
 assets/og.html      source for the social preview image
 assets/og.png       rendered 1200×630 social preview
@@ -46,12 +46,12 @@ python3 -m http.server 8080
 Everything is plain HTML in `index.html`:
 
 - **Hero copy and buttons**: the `<header class="hero">` block.
-- **Cards**: each `<article class="card">` has an eyebrow, a title, a mini UI (`.ui`), and a caption (`.cap`). Card size is set by the `c3`…`c7` and `r2` classes on a 12-column grid, so each row should add up to 12. The tint is the inline `--tint` variable.
-- **Timezone line**: the caption of the "Where I work" card. Keep availability and notice-period details off the public site.
+- **Cards**: each `<article class="card">` has an eyebrow, a title, a caption (`.cap`), then a window (`.ui.win`) with a title bar (`.hd`) that is pinned to the card's bottom-right edge. Interactive windows have an `id` that `js/main.js` looks up; each block there returns early if its markup is missing. Card size is set by the `c3`…`c7` and `r2` classes on a 12-column grid, so each row should add up to 12. The tint is the inline `--tint` variable.
+- **Timezone line**: the paragraph and live clock in the "Say hello" block (`#contact`). Keep availability and notice-period details off the public site.
 - **Experience, Stack, Education**: the `section.plain` blocks.
 - **Domain**: the canonical and Open Graph URLs in `<head>` point at https://ronipradhan.dev/.
 
-Mini-UI data (names, scores, run numbers, the cited commit) is illustrative, not real customer data.
+Mini-UI data (names, scores, run numbers, the cited commits, the search index, the spend curve) is illustrative, not real customer data. The spend chart's scrubber narrates events rather than numbers on purpose, so the only figure it states is the real −16%.
 
 ## Regenerate the social preview
 

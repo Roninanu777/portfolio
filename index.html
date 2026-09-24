@@ -9,7 +9,7 @@
 <!--
   Things you will want to edit over time:
   · the canonical / Open Graph / JSON-LD URLs below if the domain ever changes
-  · the timezone line in the "Where I work" card (keep availability details off the site)
+  · the timezone line in the "Say hello" block (keep availability details off the site)
   · experience rows and the Codebase Archaeology card
   · the resume PDF is generated, see README
 -->
@@ -64,248 +64,297 @@
       <a class="in" href="#work">Work</a>
       <a class="in" href="#experience">Experience</a>
       <a class="in" href="#stack">Stack</a>
+      <a class="in" href="#contact">Contact</a>
       <a href="assets/Roni-Pradhan-Senior-Software-Engineer.pdf" download>Resume</a>
       <span class="sep" aria-hidden="true"></span>
       <a href="https://github.com/Roninanu777" rel="me">GitHub</a>
       <a href="https://www.linkedin.com/in/roni-r-k-pradhan-279b06436/" rel="me">LinkedIn</a>
-      <a href="mailto:ronirajkamalpradhan1112@gmail.com">Email</a>
     </div>
   </div>
 </nav>
 
 <main class="wrap" id="main">
   <header class="hero" id="top">
-    <div class="eyebrow">Senior Software Engineer · Itanagar, IST · remote</div>
+    <div class="meta"><span class="role"><i aria-hidden="true"></i>Senior Software Engineer</span><span>Itanagar, India · remote</span></div>
     <h1>I build the surfaces users touch and the systems under them.</h1>
-    <p>Five years as one of two engineers on a B2B user-research platform: the <b>React app, Node API, AWS serverless layer and Stripe billing</b>, then its <b>LLM agents and real-time voice interviews</b>. Below is a working sketch of each thing I shipped.</p>
-    <div class="btns">
-      <a class="btn fill" href="mailto:ronirajkamalpradhan1112@gmail.com">Email me</a>
-      <button class="btn line" type="button" id="copy-email" data-email="ronirajkamalpradhan1112@gmail.com">Copy email</button>
-      <a class="btn line" href="assets/Roni-Pradhan-Senior-Software-Engineer.pdf" download><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8m0 0L5 7m3 3 3-3M3 12v1.5A.5.5 0 0 0 3.5 14h9a.5.5 0 0 0 .5-.5V12"/></svg>Resume (PDF)</a>
-      <a class="btn line" href="https://github.com/Roninanu777" rel="me">GitHub</a>
+    <div class="lede">
+      <p>Five years as one of two engineers on a B2B user-research platform: the <b>React app, Node API, AWS serverless layer and Stripe billing</b>, then its <b>LLM agents and real-time voice interviews</b>. Every window below is a working sketch of something I shipped. Click around.</p>
+      <div class="btns">
+        <a class="btn fill" href="mailto:ronirajkamalpradhan1112@gmail.com">Email me</a>
+        <a class="btn line" href="assets/Roni-Pradhan-Senior-Software-Engineer.pdf" download><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8m0 0L5 7m3 3 3-3M3 12v1.5A.5.5 0 0 0 3.5 14h9a.5.5 0 0 0 .5-.5V12"/></svg>Resume (PDF)</a>
+        <a class="btn line" href="https://github.com/Roninanu777" rel="me">GitHub</a>
+      </div>
     </div>
   </header>
 
   <section class="bento" id="work" aria-label="Things I shipped">
 
-    <!-- a. voice interviews -->
+    <!-- a. voice interviews: plays a scripted interview, can simulate a dropped connection -->
     <article class="card c7 r2" style="--tint:var(--teal)">
       <div class="eyebrow"><i></i>Real-time · CleverX</div>
       <h3>AI voice interviews</h3>
-      <div class="ui grow voice" aria-label="Illustration of a live AI interview session">
-        <div class="hd"><span class="live">Interview · Q3 of 8</span><span>04:12</span></div>
-        <div class="wave" aria-hidden="true">
-          <i style="--h:0.35;animation-delay:0s"></i><i style="--h:0.6;animation-delay:-.1s"></i><i style="--h:0.9;animation-delay:-.35s"></i><i style="--h:0.5;animation-delay:-.5s"></i><i style="--h:1;animation-delay:-.2s"></i><i style="--h:0.7;animation-delay:-.8s"></i><i style="--h:0.45;animation-delay:-.6s"></i>
-          <i style="--h:0.8;animation-delay:-.15s"></i><i style="--h:0.3;animation-delay:-.9s"></i><i style="--h:0.95;animation-delay:-.4s"></i><i style="--h:0.6;animation-delay:-.7s"></i><i style="--h:0.4;animation-delay:-.05s"></i><i style="--h:0.85;animation-delay:-.55s"></i><i style="--h:0.55;animation-delay:-.3s"></i>
-          <i style="--h:0.3;animation-delay:-.95s"></i><i style="--h:0.75;animation-delay:-.25s"></i><i style="--h:1;animation-delay:-.65s"></i><i style="--h:0.5;animation-delay:-.45s"></i><i style="--h:0.65;animation-delay:-.1s"></i><i style="--h:0.9;animation-delay:-.85s"></i><i style="--h:0.4;animation-delay:-.2s"></i>
-          <i style="--h:0.7;animation-delay:-.6s"></i><i style="--h:0.35;animation-delay:-.35s"></i><i style="--h:0.8;animation-delay:-.75s"></i><i style="--h:0.6;animation-delay:-.5s"></i><i style="--h:0.95;animation-delay:-.15s"></i><i style="--h:0.45;animation-delay:-.9s"></i><i style="--h:0.3;animation-delay:-.4s"></i>
-        </div>
-        <div class="tr">
-          <b>AI interviewer</b><span>What made you switch tools last quarter?</span>
-          <b>Participant</b><span>Mostly the export limits. We hit them every sprint, so…</span>
-          <b>AI interviewer</b><span>Walk me through the last time that happened.</span>
-        </div>
-        <div class="sess"><span>participant reconnected · 0:03 gap</span><span>persona: “curious, neutral” · voice: cartesia/sonic</span></div>
-        <div class="chips"><span class="chip on">LiveKit agents</span><span class="chip">AssemblyAI</span><span class="chip">Cartesia</span><span class="chip">server-side completion</span></div>
-      </div>
       <p class="cap">Persona and voice come from the study config. Live transcription through AssemblyAI and Cartesia, participant reconnection, and server-side session completion.</p>
+      <div class="ui win voice" id="voice" data-state="idle">
+        <div class="hd"><span class="live">Interview · Q3 of 8</span><span class="timer">04:12</span></div>
+        <div class="wave" aria-hidden="true"></div>
+        <div class="tr" aria-live="polite"></div>
+        <div class="sess"><span class="net">connected · 38 ms</span><span>persona: “curious, neutral” · voice: cartesia/sonic</span></div>
+        <div class="ctl">
+          <button type="button" class="tbtn on" data-act="play" aria-pressed="false"><svg viewBox="0 0 12 12" aria-hidden="true"><path class="p1" d="M3 2l7 4-7 4z"/><path class="p2" d="M3 2h2v8H3zM7 2h2v8H7z"/></svg><span>Play</span></button>
+          <button type="button" class="tbtn" data-act="drop">Drop the participant</button>
+          <span class="chips"><span class="chip on">LiveKit agents</span><span class="chip">AssemblyAI</span><span class="chip">Cartesia</span></span>
+        </div>
+      </div>
     </article>
 
-    <!-- b. study-builder agent -->
+    <!-- b. study-builder agent: replays a run; the scheduler releases each call once its reads exist -->
     <article class="card c5 r2" style="--tint:var(--violet)">
       <div class="eyebrow"><i></i>AI layer · CleverX</div>
       <h3>LLM study-builder agent</h3>
-      <div class="ui grow" aria-label="Illustration of an agent run with ordered tool calls">
-        <div class="hd"><span>study-builder · run #4821</span><span>langfuse</span></div>
+      <p class="cap">A tool-call dependency scheduler orders calls by declared reads and writes, so a step never references something that isn't written yet. Anthropic and OpenAI, Langfuse-traced.</p>
+      <div class="ui win" id="agent">
+        <div class="hd"><span>study-builder · run #<b class="run">4821</b></span><span class="tot">1.9s</span></div>
         <div class="dag">
           <div class="node done"><span>create_study</span><small>writes: study</small></div>
-          <div class="edge">reads study</div>
+          <div class="edge on">reads study</div>
           <div class="node done"><span>add_screener</span><small>writes: screener</small></div>
-          <div class="edge">reads study</div>
+          <div class="edge on">reads study</div>
           <div class="node done"><span>add_task ×4</span><small>writes: tasks</small></div>
-          <div class="edge">reads screener, tasks</div>
+          <div class="edge on">reads screener, tasks</div>
           <div class="node done"><span>set_skip_logic</span><small>writes: rules</small></div>
-          <div class="edge">reads all</div>
-          <div class="node"><span>publish</span><span class="st">ok · 1.9s</span></div>
+          <div class="edge on">reads all</div>
+          <div class="node done"><span>publish</span><small>ok</small></div>
         </div>
+        <div class="ctl"><button type="button" class="tbtn on" data-act="run">Run the agent</button><span class="note">prompt: “8-task onboarding study for fintech PMs”</span></div>
       </div>
-      <p class="cap">A tool-call dependency scheduler orders calls by declared reads and writes, so a step never references something that isn't written yet. Anthropic and OpenAI, Langfuse-traced.</p>
     </article>
 
-    <!-- c. cost -->
+    <!-- c. cost: scrub the chart; toggle the counterfactual -->
     <article class="card c4" style="--tint:var(--amber)">
       <div class="eyebrow"><i></i>Cost control</div>
       <h3>−16% monthly LLM spend</h3>
-      <div class="ui">
-        <div class="big">−16%<small>after audit</small></div>
-        <svg class="spark" viewBox="0 0 300 80" aria-hidden="true">
-          <defs><linearGradient id="ag" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FBBF24" stop-opacity=".25"/><stop offset="1" stop-color="#FBBF24" stop-opacity="0"/></linearGradient></defs>
-          <path class="a" d="M0,52 L30,50 L60,48 L90,44 L120,30 L150,18 L180,20 L200,24 L215,44 L240,50 L270,52 L300,54 L300,80 L0,80 Z"/>
-          <path class="l" d="M0,52 L30,50 L60,48 L90,44 L120,30 L150,18 L180,20 L200,24 L215,44 L240,50 L270,52 L300,54"/>
-          <line x1="200" y1="8" x2="200" y2="72" stroke="#5B606B" stroke-dasharray="3 3"/>
-          <text x="196" y="10" fill="#9A9EA8" font-size="9" text-anchor="end" font-family="DM Mono, monospace">audit</text>
-        </svg>
+      <p class="cap">Traced a spike to low-cache-hit LLM-as-a-judge eval rules and fixed it with request sampling and model selection. Later moved tracing to Langfuse v4 and fixed agent traces that were reporting zero cost.</p>
+      <div class="ui win" id="cost">
+        <div class="hd"><span>LLM spend · monthly</span><span class="read">hover the line</span></div>
+        <div class="big"><span class="val">−16%</span><small class="what">after the audit</small></div>
+        <div class="plot">
+          <svg class="spark" viewBox="0 0 300 90" role="img" aria-label="Illustrative monthly LLM spend: rises after judge evals are added, then drops 16% below the old baseline after the audit">
+            <defs><linearGradient id="ag" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FBBF24" stop-opacity=".28"/><stop offset="1" stop-color="#FBBF24" stop-opacity="0"/></linearGradient></defs>
+            <path class="a" d="M0,56 L27.3,55 L54.5,53 L81.8,49 L109.1,38 L136.4,24 L163.6,20 L190.9,23 L218.2,46 L245.5,58 L272.7,60 L300,61.4 L300,90 L0,90 Z"/>
+            <path class="ghost" d="M190.9,23 L218.2,21 L245.5,19 L272.7,17 L300,15"/>
+            <path class="l" d="M0,56 L27.3,55 L54.5,53 L81.8,49 L109.1,38 L136.4,24 L163.6,20 L190.9,23 L218.2,46 L245.5,58 L272.7,60 L300,61.4"/>
+            <line x1="190.9" y1="8" x2="190.9" y2="84" class="mark"/>
+            <text x="186.9" y="12" text-anchor="end">audit</text>
+            <line class="scrub" x1="0" y1="0" x2="0" y2="90"/>
+            <circle class="dot" r="3.5" cx="-10" cy="-10"/>
+          </svg>
+        </div>
+        <label class="sw"><input type="checkbox" id="ghost"><i aria-hidden="true"></i>Show spend without the fix</label>
       </div>
-      <p class="cap">Traced a spike to low-cache-hit LLM-as-a-judge eval rules and fixed it with request sampling and model selection. Later moved tracing to Langfuse v4 ahead of its Cloud cutover and fixed agent traces that were reporting zero cost.</p>
     </article>
 
-    <!-- d. migration -->
+    <!-- d. migration: ship the release repo by repo -->
     <article class="card c4" style="--tint:var(--teal)">
       <div class="eyebrow"><i></i>Real-time video</div>
       <h3>Twilio → LiveKit</h3>
-      <div class="ui">
+      <p class="cap">Migrated the live video layer as one coordinated release across four repositories: room and token management, multi-egress recording, per-question highlight clips, observer mode, reconnect handling.</p>
+      <div class="ui win" id="mig" data-state="shipped">
+        <div class="hd"><span>release/livekit</span><span class="st">shipped</span></div>
         <div class="mig">
           <div class="repos">
-            <div class="repo"><span>api</span><small>rooms · tokens</small></div>
-            <div class="repo"><span>web</span><small>observer · reconnect</small></div>
-            <div class="repo"><span>recording</span><small>multi-egress</small></div>
-            <div class="repo"><span>archive</span><small>pipeline</small></div>
+            <div class="repo ok"><span>api</span><small>rooms · tokens</small></div>
+            <div class="repo ok"><span>web</span><small>observer · reconnect</small></div>
+            <div class="repo ok"><span>recording</span><small>multi-egress</small></div>
+            <div class="repo ok"><span>archive</span><small>pipeline</small></div>
           </div>
-          <svg viewBox="0 0 44 110" aria-hidden="true">
-            <path d="M0,12 C22,12 22,55 44,55"/><path d="M0,41 C22,41 22,55 44,55"/><path d="M0,69 C22,69 22,55 44,55"/><path d="M0,98 C22,98 22,55 44,55"/>
+          <svg viewBox="0 0 36 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0,10.5 C18,10.5 18,50 36,50"/><path d="M0,36.8 C18,36.8 18,50 36,50"/><path d="M0,63.2 C18,63.2 18,50 36,50"/><path d="M0,89.5 C18,89.5 18,50 36,50"/>
           </svg>
           <div class="rel">1 release<small>4 repos</small></div>
         </div>
+        <div class="ctl"><button type="button" class="tbtn on" data-act="ship">Ship it again</button></div>
       </div>
-      <p class="cap">Migrated the live video layer as one coordinated release across four repositories: room and token management, multi-egress recording, per-question highlight clips, observer mode, reconnect handling.</p>
     </article>
 
-    <!-- e. public api -->
+    <!-- e. public api: send a request, watch the webhook fire -->
     <article class="card c4" style="--tint:var(--sky)">
       <div class="eyebrow"><i></i>Platform</div>
       <h3>Public API + webhooks</h3>
-      <div class="ui">
+      <p class="cap">v1 study and participant endpoints, API-key management with superadmin access control, developer dashboard, published docs.</p>
+      <div class="ui win" id="api">
+        <div class="hd"><span>public API</span><span>v1</span></div>
 <pre class="code"><span class="k">POST</span> /v1/studies
-<span class="s">Authorization:</span> Bearer cx_live_••••
+<span class="s">Authorization:</span> Bearer <button type="button" class="key" aria-label="Reveal the demo API key">cx_live_••••</button>
 { <span class="g">"title"</span>: "Onboarding study",
   <span class="g">"screener"</span>: "scr_9f2",
   <span class="g">"seats"</span>: 12 }</pre>
-        <div class="evt"><span><b>study.completed</b> → https://…/hooks</span><span>200</span></div>
+        <div class="resp" aria-live="polite"><span class="code-st">—</span><span class="body">not sent yet</span></div>
+        <div class="evt"><span><b>study.completed</b> → https://…/hooks</span><span class="code-ev">idle</span></div>
+        <div class="ctl"><button type="button" class="tbtn on" data-act="send">Send request</button></div>
       </div>
-      <p class="cap">v1 study and participant endpoints, API-key management with superadmin access control, developer dashboard, published docs.</p>
     </article>
 
-    <!-- f. billing -->
+    <!-- f. billing: flip roles, observers are not billed -->
     <article class="card c4" style="--tint:var(--coral)">
       <div class="eyebrow"><i></i>Billing</div>
       <h3>Billing + multi-seat teams</h3>
-      <div class="ui" aria-label="Illustration of a team's seats and billing">
-        <div class="seat"><span class="av">AK</span><span class="nm">Anika K.</span><span class="role">Owner</span></div>
-        <div class="seat"><span class="av">JM</span><span class="nm">Jonas M.</span><span class="role">Editor</span></div>
-        <div class="seat"><span class="av">PR</span><span class="nm">Priya R.</span><span class="role x">Observer · not billed</span></div>
-        <div class="bill"><span class="tog"><i aria-hidden="true"></i>Autocharge on</span><span>Credits <b>1,250</b></span></div>
+      <p class="cap">Roles, ownership transfer, billing-excluded observer seats, Stripe autocharge, credits, and off-platform payment tracking. Click a role to change it.</p>
+      <div class="ui win" id="bill">
+        <div class="hd"><span>Team · 3 seats</span><span class="billed">2 billed</span></div>
+        <div class="seat"><span class="av">AK</span><span class="nm">Anika K.</span><span class="role own">Owner</span></div>
+        <div class="seat"><span class="av">JM</span><span class="nm">Jonas M.</span><button type="button" class="role" data-role="Editor">Editor</button></div>
+        <div class="seat"><span class="av">PR</span><span class="nm">Priya R.</span><button type="button" class="role x" data-role="Observer">Observer · not billed</button></div>
+        <div class="bill">
+          <button type="button" class="tog" role="switch" aria-checked="true"><i aria-hidden="true"></i><span>Autocharge on</span></button>
+          <span>Credits <b class="credits">1,250</b></span>
+        </div>
       </div>
-      <p class="cap">Roles, ownership transfer, billing-excluded observer seats, Stripe autocharge, credits, and off-platform payment tracking.</p>
     </article>
 
-    <!-- g. search -->
+    <!-- g. search: type and toggle filters over a small fake index -->
     <article class="card c4" style="--tint:var(--lime)">
       <div class="eyebrow"><i></i>Search</div>
       <h3>Search + matching</h3>
-      <div class="ui" aria-label="Illustration of a participant search with filters">
-        <div class="q"><span>product managers in fintech, Berlin</span><span class="cur" aria-hidden="true"></span></div>
-        <div class="chips" style="margin:8px 0"><span class="chip on">job function</span><span class="chip on">job level</span><span class="chip">company size</span><span class="chip on">geo</span></div>
-        <div class="res"><span>Senior PM · N26 · Berlin</span><span class="sc">0.94</span></div>
-        <div class="res"><span>Product lead · Trade Republic · Berlin</span><span class="sc">0.91</span></div>
-        <div class="res"><span>PM · Solaris · remote (DE)</span><span class="sc">0.82</span></div>
-      </div>
       <p class="cap">Migrated Algolia to Typesense with geo indexing and relevance tuning; rewrote participant–study matching with search scoring, location weighting and exclusion filters.</p>
+      <div class="ui win" id="search">
+        <div class="hd"><span>participant search</span><span class="took">3 hits · 4 ms</span></div>
+        <label class="q"><span class="sr">Search participants</span><input type="search" value="product fintech" autocomplete="off" spellcheck="false"></label>
+        <div class="chips filt" role="group" aria-label="Filters">
+          <button type="button" class="chip on" data-f="senior" aria-pressed="true">senior+</button>
+          <button type="button" class="chip on" data-f="berlin" aria-pressed="true">near Berlin</button>
+          <button type="button" class="chip" data-f="exclude" aria-pressed="false">exclude past participants</button>
+        </div>
+        <div class="results" aria-live="polite"></div>
+      </div>
     </article>
 
-    <!-- h. unmoderated research -->
+    <!-- h. unmoderated research: three methods as working tabs -->
     <article class="card c4" style="--tint:var(--amber)">
       <div class="eyebrow"><i></i>Research methods</div>
       <h3>Unmoderated research</h3>
-      <div class="ui" aria-label="Illustration of website-test sessions graded against a goal page">
-        <div class="tabs"><span>Diary</span><span class="on">Website test</span><span>Figma prototype</span></div>
-        <div class="verdict"><span class="pid">P-07</span><span class="path">home › pricing › signup</span><span class="v d">Direct</span></div>
-        <div class="verdict"><span class="pid">P-12</span><span class="path">home › blog › pricing › signup</span><span class="v i">Indirect</span></div>
-        <div class="verdict"><span class="pid">P-19</span><span class="path">home › docs › contact</span><span class="v f">Failed</span></div>
-        <div class="quote">“I expected the plans under Product, not in the footer.”<small>think-aloud · transcribed</small></div>
+      <p class="cap">Video diaries, website tests with interaction heatmaps, and Figma prototype testing. Sessions are graded against the researcher's goal page and re-scored whenever the goal changes. Took the Figma OAuth app through vendor review to general availability.</p>
+      <div class="ui win" id="research">
+        <div class="hd tabs" role="tablist" aria-label="Research method">
+          <button type="button" role="tab" id="rt-web" aria-controls="rp-web" aria-selected="true">Website test</button>
+          <button type="button" role="tab" id="rt-fig" aria-controls="rp-fig" aria-selected="false" tabindex="-1">Figma prototype</button>
+          <button type="button" role="tab" id="rt-dia" aria-controls="rp-dia" aria-selected="false" tabindex="-1">Diary</button>
+        </div>
+        <div class="pane" role="tabpanel" id="rp-web" aria-labelledby="rt-web">
+          <div class="verdict"><span class="pid">P-07</span><span class="path">home › pricing › signup</span><span class="v d">Direct</span></div>
+          <div class="verdict"><span class="pid">P-12</span><span class="path">home › blog › pricing › signup</span><span class="v i">Indirect</span></div>
+          <div class="verdict"><span class="pid">P-19</span><span class="path">home › docs › contact</span><span class="v f">Failed</span></div>
+          <div class="quote">“I expected the plans under Product, not in the footer.”<small>think-aloud · transcribed</small></div>
+        </div>
+        <div class="pane" role="tabpanel" id="rp-fig" aria-labelledby="rt-fig" hidden>
+          <div class="heat" aria-hidden="true"><i style="--x:22%;--y:30%;--s:1"></i><i style="--x:70%;--y:64%;--s:1.5"></i><i style="--x:76%;--y:70%;--s:.8"></i><i style="--x:48%;--y:42%;--s:.6"></i><span class="frm">Checkout · frame 3 of 5</span></div>
+          <div class="kv"><span>completed</span><b>9 / 12</b></div>
+          <div class="kv"><span>misclicks on “Continue”</span><b>31%</b></div>
+        </div>
+        <div class="pane" role="tabpanel" id="rp-dia" aria-labelledby="rt-dia" hidden>
+          <div class="entry"><span class="pid">Day 1</span><span class="path">Set up the budget app</span><span class="len">1:12</span></div>
+          <div class="entry"><span class="pid">Day 3</span><span class="path">Forgot to log lunch again</span><span class="len">0:48</span></div>
+          <div class="entry"><span class="pid">Day 5</span><span class="path">Exported to a spreadsheet</span><span class="len">2:05</span></div>
+          <div class="quote">“By Friday I stopped opening it.”<small>video diary · transcribed</small></div>
+        </div>
       </div>
-      <p class="cap">Video diaries, website tests with interaction heatmaps, and Figma prototype testing. Sessions are graded against the researcher's goal page and re-scored whenever the goal changes, and think-aloud narration is transcribed. Took the Figma OAuth app through vendor review to general availability.</p>
     </article>
 
-    <!-- m. reliability and consent -->
-    <article class="card c4" style="--tint:var(--lime)">
+    <!-- m. reliability: run the old and the new invite delivery side by side -->
+    <article class="card c5" style="--tint:var(--lime)">
       <div class="eyebrow"><i></i>Reliability</div>
       <h3>Delivery at scale, consent enforced</h3>
-      <div class="ui" aria-label="Illustration of study invites delivered in batches until the queue drains">
-        <div class="hd"><span>deliver invites · live study</span><span>drained</span></div>
-        <div class="batch"><span>batch 1</span><span class="bar"><i style="--w:100%"></i></span><b>200</b></div>
-        <div class="batch gap"><span>2 – 6</span><span class="bar"><i style="--w:100%"></i></span><b>1000</b></div>
-        <div class="batch"><span>batch 7</span><span class="bar"><i style="--w:72%"></i></span><b>143</b></div>
-        <div class="sweep"><span>recovery sweep · every 15 min</span><span>alerts → Slack</span></div>
-        <div class="chips" style="margin-top:8px"><span class="chip on">unsubscribe in every email</span><span class="chip">110 templates</span></div>
-      </div>
       <p class="cap">Invites used to stop at 1,000 per run and never resume; they now run in batches until the queue drains, with a sweep that recovers stranded ones. One-click unsubscribe and opt-out enforcement reach the API, the mail Lambda and all 110 templates.</p>
+      <div class="ui win" id="deliver" data-mode="new">
+        <div class="hd"><span>deliver invites · 1,343 queued</span><span class="st">drained</span></div>
+        <div class="meter"><span class="bar"><i style="--w:100%"></i><em class="wall" aria-hidden="true"></em></span><b class="n">1,343</b></div>
+        <div class="cells" aria-hidden="true"><i class="sent"></i><i class="sent"></i><i class="sent"></i><i class="sent"></i><i class="sent"></i><i class="sent"></i><i class="sent"></i></div>
+        <div class="log" aria-live="polite">7 batches · 0 stranded · sweep idle</div>
+        <div class="ctl">
+          <button type="button" class="tbtn" data-act="old">Run the old version</button>
+          <button type="button" class="tbtn on" data-act="new">Run the new version</button>
+        </div>
+      </div>
     </article>
 
-    <!-- i. codebase archaeology -->
-    <article class="card c5" style="--tint:var(--violet)">
+    <!-- i. codebase archaeology: ask one of three questions -->
+    <article class="card c7" style="--tint:var(--violet)">
       <div class="eyebrow"><i></i>Open source · 2026</div>
       <h3>Codebase Archaeology</h3>
-      <div class="ui chat" aria-label="Illustration of a cited answer from Codebase Archaeology">
-        <div class="bub q">why does retry_backoff exist?</div>
-        <div class="bub a">Added after a Postmark outage caused duplicate sends. Backoff is capped at five tries because the queue re-enqueues on failure.<span class="cite">cited: commit 7fd44e2 · PR #212 comment</span></div>
-        <div class="chips" style="margin-top:4px"><span class="chip">pgvector + BM25 → RRF</span><span class="chip">tree-sitter</span><span class="chip">MCP server</span><span class="chip">REST API</span></div>
-      </div>
-      <p class="cap">Answers “why does this code exist” from git history, PR discussions and linked issues, with every claim cited to a commit or comment, and abstains when evidence is thin. Python, Postgres 16 + pgvector.</p>
+      <p class="cap">Answers “why does this code exist” from git history, PR discussions and linked issues, with every claim cited to a commit or comment, and abstains when evidence is thin. Python, Postgres 16 + pgvector, served over MCP and REST.</p>
       <div class="out"><a href="https://github.com/Roninanu777/codebase-archaeology">GitHub</a><a href="https://codebase-archaeology.pages.dev">Live demo</a></div>
-    </article>
-
-    <!-- k. clock -->
-    <article class="card c3" style="--tint:var(--teal)">
-      <div class="eyebrow"><i></i>Where I work</div>
-      <h3>Itanagar, IST</h3>
-      <div class="grow" style="display:flex;align-items:center">
-        <div class="clock"><span id="clock">--:--:--</span><small id="dateline">UTC+5:30</small></div>
+      <div class="ui win chat" id="arch">
+        <div class="hd"><span>archaeology · ask</span><span>pgvector + BM25 → RRF</span></div>
+        <div class="thread" aria-live="polite">
+          <div class="bub q">why does retry_backoff exist?</div>
+          <div class="bub a">Added after a Postmark outage caused duplicate sends. Backoff is capped at five tries because the queue re-enqueues on failure.<span class="cite">cited: commit 7fd44e2 · PR #212 comment</span></div>
+        </div>
+        <div class="asks" role="group" aria-label="Ask a question">
+          <button type="button" class="chip" data-q="0">why does retry_backoff exist?</button>
+          <button type="button" class="chip" data-q="1">why is sharp pinned to 0.32?</button>
+          <button type="button" class="chip" data-q="2">why is legacy_scheduler still here?</button>
+        </div>
       </div>
-      <p class="cap">UTC+5:30 · remote-first · working overlap with Europe and the US East Coast.</p>
     </article>
 
   </section>
 
   <section class="plain" id="experience">
     <h2>Experience</h2>
-    <div class="row">
-      <div class="when">Jan 2024 → present</div>
-      <div>
-        <h3>Senior Software Engineer <span>· CleverX</span></h3>
-        <p>Owned platform surfaces end to end in a two-engineer team: built the AI layer and voice interviews, replaced the real-time video layer, opened a public API and webhook platform, and delivered billing and multi-seat teams. Since then: email consent across four codebases, invite delivery that scales past its old ceiling, website and prototype task scoring, hardened tenant isolation, and about 13,700 lines of legacy scheduling code retired.</p>
-        <div class="chips"><span class="chip">React 18</span><span class="chip">Node</span><span class="chip">MongoDB</span><span class="chip">AWS Lambda</span><span class="chip">SQS</span><span class="chip">LiveKit</span><span class="chip">Anthropic SDK</span><span class="chip">Langfuse</span><span class="chip">Stripe</span><span class="chip">Postmark</span></div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="when">Mar 2021 → Dec 2023</div>
-      <div>
-        <h3>Software Engineer <span>· CleverX</span></h3>
-        <p>Built the design system and led the React 18 migration, owned the search revamp from Algolia to Typesense, built the screener engine, and took over transactional email on MJML and Postmark.</p>
-        <div class="chips"><span class="chip">Design system</span><span class="chip">Typesense</span><span class="chip">Elasticsearch</span><span class="chip">MJML</span><span class="chip">Postmark</span></div>
-      </div>
-    </div>
+    <ol class="tl">
+      <li>
+        <div class="when">2024 — now</div>
+        <div>
+          <h3>Senior Software Engineer <span>CleverX</span></h3>
+          <p>Owned platform surfaces end to end in a two-engineer team: built the AI layer and voice interviews, replaced the real-time video layer, opened a public API and webhook platform, and delivered billing and multi-seat teams. Since then: email consent across four codebases, invite delivery that scales past its old ceiling, website and prototype task scoring, hardened tenant isolation, and about 13,700 lines of legacy scheduling code retired.</p>
+          <div class="chips"><span class="chip">React 18</span><span class="chip">Node</span><span class="chip">MongoDB</span><span class="chip">AWS Lambda</span><span class="chip">SQS</span><span class="chip">LiveKit</span><span class="chip">Anthropic SDK</span><span class="chip">Langfuse</span><span class="chip">Stripe</span><span class="chip">Postmark</span></div>
+        </div>
+      </li>
+      <li>
+        <div class="when">2021 — 2023</div>
+        <div>
+          <h3>Software Engineer <span>CleverX</span></h3>
+          <p>Built the design system and led the React 18 migration, owned the search revamp from Algolia to Typesense, built the screener engine, and took over transactional email on MJML and Postmark.</p>
+          <div class="chips"><span class="chip">Design system</span><span class="chip">Typesense</span><span class="chip">Elasticsearch</span><span class="chip">MJML</span><span class="chip">Postmark</span></div>
+        </div>
+      </li>
+      <li class="edu">
+        <div class="when">2021</div>
+        <div>
+          <h3>B.Tech, Computer Science &amp; Engineering</h3>
+          <p>National Institute of Technology, Arunachal Pradesh</p>
+        </div>
+      </li>
+    </ol>
   </section>
 
   <section class="plain" id="stack">
     <h2>Stack</h2>
-    <div class="stack">
-      <div class="grp"><h3>Frontend</h3><div class="chips"><span class="chip">React 18</span><span class="chip">TypeScript</span><span class="chip">MobX</span><span class="chip">Tailwind</span><span class="chip">Radix UI</span><span class="chip">Vite</span><span class="chip">webpack</span><span class="chip">Framer Motion</span><span class="chip">TipTap</span><span class="chip">Recharts</span><span class="chip">Stripe Elements</span></div></div>
-      <div class="grp"><h3>Backend</h3><div class="chips"><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">MongoDB</span><span class="chip">Mongoose</span><span class="chip">Jest + Supertest</span><span class="chip">Typesense</span><span class="chip">Elasticsearch</span><span class="chip">Stripe</span><span class="chip">MJML</span><span class="chip">Postmark</span><span class="chip">Resend</span></div></div>
-      <div class="grp"><h3>AI &amp; real-time</h3><div class="chips"><span class="chip">Anthropic SDK</span><span class="chip">OpenAI SDK</span><span class="chip">Langfuse</span><span class="chip">LiveKit agents</span><span class="chip">AssemblyAI</span><span class="chip">Cartesia</span><span class="chip">ffmpeg</span><span class="chip">MCP</span><span class="chip">pgvector</span><span class="chip">tree-sitter</span></div></div>
-      <div class="grp"><h3>Infrastructure</h3><div class="chips"><span class="chip">AWS Lambda</span><span class="chip">CDK</span><span class="chip">S3</span><span class="chip">SQS</span><span class="chip">DynamoDB</span><span class="chip">CloudFront</span><span class="chip">GitHub Actions</span><span class="chip">Cloudflare Workers</span><span class="chip">PostHog</span></div></div>
-    </div>
+    <dl class="stack">
+      <div><dt>Frontend</dt><dd>React 18, TypeScript, MobX, Tailwind, Radix UI, Vite, webpack, Framer Motion, TipTap, Recharts, Stripe Elements</dd></div>
+      <div><dt>Backend</dt><dd>Node.js, Express, MongoDB, Mongoose, Jest + Supertest, Typesense, Elasticsearch, Stripe, MJML, Postmark, Resend</dd></div>
+      <div><dt>AI &amp; real-time</dt><dd>Anthropic SDK, OpenAI SDK, Langfuse, LiveKit agents, AssemblyAI, Cartesia, ffmpeg, MCP, pgvector, tree-sitter</dd></div>
+      <div><dt>Infrastructure</dt><dd>AWS Lambda, CDK, S3, SQS, DynamoDB, CloudFront, GitHub Actions, Cloudflare Workers, PostHog</dd></div>
+    </dl>
   </section>
 
-  <section class="plain" id="education">
-    <h2>Education</h2>
-    <div class="row">
-      <div class="when">2021</div>
-      <div><h3>B.Tech, Computer Science &amp; Engineering</h3><p>National Institute of Technology, Arunachal Pradesh</p></div>
+  <section class="contact" id="contact">
+    <div>
+      <h2>Say hello.</h2>
+      <p>Email is the fastest way to reach me. I work from Itanagar, India, and my day overlaps with European and US East Coast hours.</p>
+      <div class="btns">
+        <a class="btn fill" href="mailto:ronirajkamalpradhan1112@gmail.com">Email me</a>
+        <button class="btn line" type="button" id="copy-email" data-email="ronirajkamalpradhan1112@gmail.com">Copy email address</button>
+        <a class="btn line" href="https://www.linkedin.com/in/roni-r-k-pradhan-279b06436/" rel="me">LinkedIn</a>
+      </div>
+    </div>
+    <div class="clock" aria-label="Current time in Itanagar">
+      <span id="clock">--:--:--</span>
+      <small id="dateline">UTC+5:30</small>
     </div>
   </section>
 
   <footer class="foot">
-    <span>Roni Raj Kamal Pradhan · Senior Software Engineer</span>
+    <span>Roni Raj Kamal Pradhan</span>
     <span><a href="https://github.com/Roninanu777" rel="me">GitHub</a> · <a href="https://www.linkedin.com/in/roni-r-k-pradhan-279b06436/" rel="me">LinkedIn</a> · <a href="mailto:ronirajkamalpradhan1112@gmail.com">Email</a> · <a href="assets/Roni-Pradhan-Senior-Software-Engineer.pdf" download>Resume (PDF)</a></span>
     <span>Built by hand · <span id="year">2026</span></span>
   </footer>
