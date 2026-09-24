@@ -33,7 +33,7 @@ resume/             resume source (resume.html), local IBM Plex fonts, build scr
 
 ## The Interceptor model
 
-`blender/interceptor.py` builds a Royal Enfield Interceptor 650 in the Black Ray colours from primitives and renders it with Cycles. Blender 5.2 is at `/Applications/Blender.app`. EEVEE renders black in headless sessions here, so the script uses Cycles on the CPU.
+`blender/interceptor.py` builds a Royal Enfield Interceptor 650 in the Black Ray colours and renders it with Cycles. The tank and seat are lofted from cross-sections, and every part's side profile was traced from two CC BY-SA 4.0 photos on Wikimedia Commons by Auge=mit ("Royal Enfield 650 Interceptor A-Seite noBG" and "B-Seite noBG"), scaled to the bike's 1,400 mm wheelbase. The photos were used only as modelling reference and are not published on the site. The `overlay` view renders at the photo's scale (660 px/m, rear axle at 353, 833 in a 1600 px frame) so the model can be checked against it. Blender 5.2 is at `/Applications/Blender.app`. EEVEE renders black in headless sessions here, so the script uses Cycles on the CPU.
 
 ```sh
 B=/Applications/Blender.app/Contents/MacOS/Blender

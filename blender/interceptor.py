@@ -27,6 +27,7 @@ def make_materials():
     M['black'] = material('satin black', (0.02, 0.02, 0.022), 0.6, 0.42)
     M['engine'] = material('engine', (0.03, 0.03, 0.032), 0.8, 0.38)
     M['fin'] = material('fin edge', (0.35, 0.35, 0.36), 1.0, 0.25)
+    M['disc'] = material('disc', (0.16, 0.16, 0.17), 1.0, 0.38)
     M['chrome'] = material('chrome', (0.9, 0.9, 0.92), 1.0, 0.06)
     M['rubber'] = material('rubber', (0.006, 0.006, 0.006), 0.0, 0.9)
     M['seat'] = material('seat', (0.012, 0.011, 0.011), 0.0, 0.6)
@@ -97,6 +98,11 @@ def tube(pts, r, m, res=12):
     cu.materials.append(m)
     return o
 
+def fender(center, R, width, a0, a1, m, skirt=0.04):
+    band(center, R, width, a0, a1, 0.006, m)
+    for y in (-width / 2, width / 2 - 0.004):
+        band((center[0], center[1] + y + 0.002, center[2]), R - skirt, 0.004, a0, a1, skirt, m)
+
 def band(center, R, width, a0, a1, thick, m, seg=40):
     """Curved fender: a strip of a cylinder around a wheel axle (XZ plane)."""
     bm = bmesh.new(); cx, cy, cz = center
@@ -116,7 +122,41 @@ def band(center, R, width, a0, a1, thick, m, seg=40):
     o = bpy.data.objects.new('band', me); bpy.context.collection.objects.link(o)
     return finish(o, m)
 
-# ---------- the bike
+def loft(stations, m, n=48, p=2.6, name='loft'):
+    """Skin superellipse cross-sections. Each station: (x, z_bottom, z_top, half_width)."""
+    bm = bmesh.new(); rings = []
+    for x, zb, zt, hw in stations:
+        zc, hz = (zb + zt) / 2, (zt - zb) / 2
+        ring = []
+        for k in range(n):
+            t = 2 * math.pi * k / n; c, s_ = math.cos(t), math.sin(t)
+            y = hw * math.copysign(abs(c) ** (2 / p), c); z = zc + hz * math.copysign(abs(s_) ** (2 / p), s_)
+            ring.append(bm.verts.new((x, y, z)))
+        rings.append(ring)
+    for a, b in zip(rings, rings[1:]):
+        for k in range(n):
+            bm.faces.new((a[k], a[(k + 1) % n], b[(k + 1) % n], b[k]))
+    bm.faces.new(rings[0][::-1]); bm.faces.new(rings[-1])
+    me = bpy.data.meshes.new(name); bm.to_mesh(me); bm.free()
+    o = bpy.data.objects.new(name, me); bpy.context.collection.objects.link(o)
+    o.modifiers.new('s', 'SUBSURF').levels = 2
+    return finish(o, m)
+
+def prism(pts, y0, y1, m, bevel=0.02, name='prism'):
+    """Extrude a side-view outline (x, z) between y0 and y1."""
+    bm = bmesh.new()
+    a = [bm.verts.new((x, y0, z)) for x, z in pts]; b = [bm.verts.new((x, y1, z)) for x, z in pts]
+    bm.faces.new(a[::-1]); bm.faces.new(b)
+    for i in range(len(pts)):
+        j = (i + 1) % len(pts); bm.faces.new((a[i], a[j], b[j], b[i]))
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    me = bpy.data.meshes.new(name); bm.to_mesh(me); bm.free()
+    o = bpy.data.objects.new(name, me); bpy.context.collection.objects.link(o)
+    if bevel:
+        mod = o.modifiers.new('b', 'BEVEL'); mod.width = bevel; mod.segments = 5; mod.limit_method = 'ANGLE'
+    return finish(o, m)
+
+# ---------- the bike (profiles traced from Wikimedia Commons side photos, 660 px/m)
 RA = Vector((0.0, 0, 0.315))    # rear axle
 FA = Vector((1.40, 0, 0.315))   # front axle
 HEAD = Vector((1.12, 0, 0.93))  # top of the steering head
@@ -132,9 +172,12 @@ def wheel(c, tire_r, tire_w, front):
         p2 = c + Vector((0.222 * math.cos(a + (0.06 if k % 2 else -0.06)), 0, 0.222 * math.sin(a + (0.06 if k % 2 else -0.06))))
         cyl(p1, p2, 0.0085, M['black'], 12)
     # brake disc
-    side = 0.085 if front else -0.075
-    cyl(c + Vector((0, side - 0.003, 0)), c + Vector((0, side + 0.003, 0)), 0.16 if front else 0.13, M['fin'], 48)
-    cyl(c + Vector((0, side - 0.004, 0)), c + Vector((0, side + 0.004, 0)), 0.07, M['black'], 32)
+    side = -0.085 if front else -0.075
+    R = 0.16 if front else 0.135
+    torus(c + Vector((0, side, 0)), R - 0.022, 0.022, M['disc'], 'Y', 64, 6).scale = (1, 1, 0.14)   # annular rotor
+    for k in range(6):                                                                              # carrier arms
+        a = 2 * math.pi * k / 6
+        cyl(c + Vector((0.06 * math.cos(a), side, 0.06 * math.sin(a))), c + Vector(((R - 0.03) * math.cos(a), side, (R - 0.03) * math.sin(a))), 0.008, M['black'], 8)
 
 def sidecover(s):
     pts = [(0.30, 0.79), (0.60, 0.79), (0.58, 0.60), (0.46, 0.50), (0.33, 0.55)]
@@ -154,127 +197,132 @@ def sidecover(s):
     sphere((0.45, s * 0.147, 0.66), (0.05, 0.004, 0.017), M['chrome'], 20, 8)
 
 def build_bike():
+    # camera side (-Y) is the bike's right side: clutch cover, rear disc
     wheel(RA, 0.315, 0.13, False)
     wheel(FA, 0.31, 0.10, True)
 
-    # front fork (raked), black lowers, chrome stanchions
-    fork_dir = (HEAD - FA).normalized()
+    # front fork at 24 deg rake, gaiters, clamps
+    fork_dir = Vector((-math.sin(math.radians(24)), 0, math.cos(math.radians(24))))
     for y in (-0.095, 0.095):
-        low = FA + Vector((0, y, 0)); mid = FA + fork_dir * 0.30 + Vector((0, y, 0)); top = FA + fork_dir * 0.72 + Vector((0, y, 0))
-        cyl(low, mid, 0.028, M['black'], 24)
-        cyl(mid, top, 0.021, M['chrome'], 24)
-    cyl(FA + Vector((0, -0.1, 0)), FA + Vector((0, 0.1, 0)), 0.014, M['chrome'], 16)  # axle
-    # triple clamps
-    for t in (0.60, 0.72):
-        p = FA + fork_dir * t
-        box(p, (0.08, 0.26, 0.025), M['black'], 0.008)
-    # front fender
-    band(FA, 0.35, 0.12, 20, 135, 0.006, M['paint'])
-    # brake caliper
-    box(FA + Vector((-0.1, 0.09, 0.1)), (0.07, 0.03, 0.05), M['black'], 0.01)
+        low = FA + Vector((0, y, 0)); mid = FA + fork_dir * 0.28 + Vector((0, y, 0)); top = FA + fork_dir * 0.70 + Vector((0, y, 0))
+        cyl(low, mid, 0.03, M['black'], 24)
+        cyl(mid, mid + fork_dir * 0.2, 0.034, M['rubber'], 24)                 # gaiter
+        cyl(mid + fork_dir * 0.2, top, 0.022, M['black'], 24)
+    cyl(FA + Vector((0, -0.1, 0)), FA + Vector((0, 0.1, 0)), 0.014, M['fin'], 16)
+    for t in (0.58, 0.70):
+        box(FA + fork_dir * t, (0.08, 0.26, 0.025), M['black'], 0.008)
+    fender(FA, 0.35, 0.13, 32, 122, M['black'])                                     # short front fender
+    box(FA + Vector((-0.1, -0.09, 0.1)), (0.07, 0.03, 0.05), M['black'], 0.01)
 
-    # headlamp with chrome bezel, twin pods, bars
-    hl = FA + fork_dir * 0.64 + Vector((0.09, 0, 0.05))
-    sphere(hl, (0.085, 0.085, 0.085), M['black'])
-    torus(hl + Vector((0.07, 0, 0)), 0.078, 0.009, M['chrome'], 'X', 48, 10)
-    lens = sphere(hl + Vector((0.068, 0, 0)), (0.012, 0.074, 0.074), M['glass'], 32, 12)
-    lens.name = 'headlamp_lens'
-    for y in (-0.07, 0.07):
-        pod = HEAD + Vector((-0.04, y, 0.075))
-        cyl(pod + Vector((0.02, 0, -0.03)), pod + Vector((-0.01, 0, 0.02)), 0.046, M['black'], 32)
-        cyl(pod + Vector((-0.008, 0, 0.018)), pod + Vector((-0.012, 0, 0.024)), 0.04, M['dial'], 32)
-    bar = [(1.03, -0.39, 1.10), (1.08, -0.30, 1.08), (1.12, -0.15, 1.04), (1.13, 0, 1.03), (1.12, 0.15, 1.04), (1.08, 0.30, 1.08), (1.03, 0.39, 1.10)]
-    tube(bar, 0.011, M['black'])
-    for s in (-1, 1):
-        cyl((1.04, s * 0.30, 1.095), (1.025, s * 0.41, 1.105), 0.017, M['rubber'], 16)   # grips
-        tube([(1.07, s * 0.25, 1.09), (1.08, s * 0.28, 1.16), (1.06, s * 0.31, 1.22)], 0.005, M['black'])  # mirror stalk
-        cyl((1.06, s * 0.31, 1.22), (1.045, s * 0.31, 1.22), 0.042, M['black'], 32)
-        box((1.3, s * 0.13, 0.86), (0.05, 0.02, 0.02), M['amber'], 0.006)  # indicators
-
-    # frame: double cradle + spine + subframe
-    for y in (-0.075, 0.075):
-        tube([tuple(HEAD + Vector((0, y * 0.3, -0.05))), (1.02, y, 0.62), (0.98, y, 0.34), (0.90, y, 0.20), (0.62, y, 0.20), (0.52, y, 0.34), (0.50, y, 0.55)], 0.016, M['black'])
-        tube([(0.50, y, 0.55), (0.40, y * 1.3, 0.74), (0.05, y * 1.4, 0.78), (-0.12, y * 1.2, 0.76)], 0.014, M['black'])
-    tube([tuple(HEAD), (0.95, 0, 0.86), (0.60, 0, 0.80), (0.46, 0, 0.74)], 0.02, M['black'])
-
-    # swingarm + chain guard + twin shocks
+    # 7-inch headlamp on ears, chrome ring, twin clocks, braced bars, round mirrors
+    hl = Vector((1.29, 0, 0.845))
+    sphere(hl, (0.075, 0.088, 0.088), M['black'])
+    torus(hl + Vector((0.06, 0, 0)), 0.084, 0.008, M['chrome'], 'X', 48, 10)
+    lens = sphere(hl + Vector((0.062, 0, 0)), (0.01, 0.08, 0.08), M['glass'], 32, 12); lens.name = 'headlamp_lens'
     for y in (-0.1, 0.1):
-        cyl((0.50, y, 0.36), (0.0, y, 0.315), 0.02, M['black'], 16)
-        top = Vector((0.12, y * 1.35, 0.77)); bot = Vector((0.04, y * 1.3, 0.37))
-        cyl(bot, top, 0.012, M['chrome'], 16)
-        d = (top - bot)
-        for k in range(9):
-            torus(bot + d * (0.18 + 0.075 * k), 0.028, 0.005, M['black'], 'Z', 24, 6).rotation_euler = Vector((0, 0, 1)).rotation_difference(d.normalized()).to_euler()
-        cyl(bot + d * 0.1, bot + d * 0.17, 0.03, M['black'], 16)
-        cyl(top - d * 0.14, top - d * 0.02, 0.028, M['black'], 16)
-    box((0.26, -0.13, 0.38), (0.42, 0.012, 0.05), M['black'], 0.01, (0, math.radians(-4), 0))
+        cyl(hl + Vector((-0.04, y, 0.02)), FA + fork_dir * 0.52 + Vector((0, y, 0)), 0.01, M['black'], 12)
+        pod = FA + fork_dir * 0.72 + Vector((0.02, y * 0.7, 0.05))
+        cyl(pod + Vector((0.025, 0, -0.03)), pod + Vector((-0.01, 0, 0.02)), 0.045, M['black'], 32)
+        cyl(pod + Vector((-0.008, 0, 0.018)), pod + Vector((-0.012, 0, 0.024)), 0.039, M['dial'], 32)
+        box(hl + Vector((0.02, y * 1.25, 0.03)), (0.05, 0.02, 0.02), M['amber'], 0.006)      # indicators
+    top = FA + fork_dir * 0.72
+    bar = [(1.02, -0.38, 1.06), (1.06, -0.30, 1.06), (1.10, -0.16, 1.03), (top.x, 0, top.z + 0.06), (1.10, 0.16, 1.03), (1.06, 0.30, 1.06), (1.02, 0.38, 1.06)]
+    tube(bar, 0.011, M['black'])
+    cyl((1.09, -0.14, 1.045), (1.09, 0.14, 1.045), 0.008, M['black'], 12)               # brace
+    for s in (-1, 1):
+        cyl((1.035, s * 0.30, 1.06), (1.015, s * 0.41, 1.065), 0.017, M['rubber'], 16)
+        tube([(1.06, s * 0.26, 1.06), (1.07, s * 0.29, 1.16), (1.05, s * 0.32, 1.27)], 0.005, M['black'])
+        cyl((1.055, s * 0.32, 1.28), (1.04, s * 0.32, 1.28), 0.045, M['black'], 32)
 
-    # engine: big air/oil-cooled parallel twin that fills the space under the tank
-    box((0.76, 0, 0.37), (0.40, 0.30, 0.24), M['engine'], 0.05)
-    box((0.66, 0, 0.30), (0.22, 0.22, 0.16), M['engine'], 0.05)          # gearbox case
-    cyl_c = Vector((0.85, 0, 0.60))
-    tilt = (0, math.radians(-8), 0)
-    box(cyl_c, (0.16, 0.27, 0.27), M['engine'], 0.02, tilt)
-    for k in range(14):
-        z = -0.12 + k * 0.0175
+    # frame: twin cradle, triangulated rear, seat rails
+    for y in (-0.075, 0.075):
+        tube([(1.12, y * 0.4, 0.93), (1.06, y, 0.62), (1.02, y, 0.32), (0.96, y, 0.19), (0.62, y, 0.17), (0.50, y, 0.30), (0.47, y, 0.42)], 0.016, M['black'])
+        tube([(0.47, y, 0.42), (0.40, y * 1.2, 0.62), (0.34, y * 1.4, 0.79)], 0.014, M['black'])
+        tube([(0.47, y, 0.42), (0.56, y * 1.2, 0.62), (0.62, y * 1.3, 0.79)], 0.014, M['black'])
+        tube([(0.70, y * 1.2, 0.80), (0.30, y * 1.45, 0.79), (-0.05, y * 1.45, 0.79), (-0.18, y * 1.1, 0.78)], 0.013, M['black'])
+        tube([(0.40, y * 1.3, 0.62), (0.19, y * 1.45, 0.70), (0.00, y * 1.45, 0.76)], 0.011, M['black'])
+    tube([(1.12, 0, 0.95), (0.95, 0, 0.84), (0.70, 0, 0.80)], 0.02, M['black'])
+
+    # swingarm, chain side, twin shocks with springs
+    for y in (-0.1, 0.1):
+        cyl((0.47, y, 0.40), (0.0, y, 0.315), 0.02, M['black'], 16)
+        bot = Vector((0.06, y * 1.35, 0.38)); tp = Vector((0.19, y * 1.35, 0.72))
+        cyl(bot, tp, 0.012, M['chrome'], 16)
+        d = tp - bot
+        for k in range(10):
+            torus(bot + d * (0.16 + 0.068 * k), 0.029, 0.0055, M['black'], 'Z', 24, 6).rotation_euler = Vector((0, 0, 1)).rotation_difference(d.normalized()).to_euler()
+        cyl(bot + d * 0.08, bot + d * 0.16, 0.032, M['black'], 16)
+        cyl(tp - d * 0.16, tp - d * 0.02, 0.03, M['black'], 16)
+    box((0.24, 0.13, 0.37), (0.44, 0.012, 0.05), M['black'], 0.01, (0, math.radians(-10), 0))
+
+    # engine: 648 cc air/oil-cooled parallel twin
+    loft([(0.54, 0.27, 0.44, 0.10), (0.58, 0.21, 0.50, 0.14), (0.70, 0.19, 0.52, 0.15), (0.86, 0.19, 0.52, 0.15), (0.94, 0.22, 0.48, 0.14), (0.975, 0.28, 0.42, 0.10)], M['engine'], p=3.0, name='crankcase')
+    bpy.ops.mesh.primitive_cylinder_add(vertices=64, radius=1, depth=0.03, location=(0.76, -0.16, 0.355))
+    cc = active(); cc.scale = (0.2, 0.15, 1); cc.rotation_euler = (math.pi / 2, 0, 0); finish(cc, M['engine'])  # clutch cover (right)
+    bpy.ops.mesh.primitive_cylinder_add(vertices=64, radius=1, depth=0.006, location=(0.76, -0.177, 0.355))
+    cc2 = active(); cc2.scale = (0.17, 0.12, 1); cc2.rotation_euler = (math.pi / 2, 0, 0); finish(cc2, M['black'])
+    sphere((0.80, -0.181, 0.36), (0.05, 0.004, 0.018), M['fin'], 20, 8)                       # cover script plate
+    cyl((0.70, 0.15, 0.36), (0.70, 0.18, 0.36), 0.11, M['engine'], 48)                  # alternator (left)
+    cyl_c = Vector((0.84, 0, 0.60)); tilt = (0, math.radians(-8), 0)
+    box(cyl_c, (0.17, 0.28, 0.20), M['engine'], 0.02, tilt)
+    for k in range(10):
+        z = -0.085 + k * 0.018
         off = Vector((math.sin(math.radians(8)) * z, 0, z))
-        box(cyl_c + off, (0.245, 0.36, 0.0055), M['fin'] if k % 2 == 0 else M['engine'], 0.002, tilt)
-    box(cyl_c + Vector((0.02, 0, 0.165)), (0.21, 0.33, 0.075), M['engine'], 0.03, tilt)   # rocker cover
-    for s_ in (-1, 1):
-        cyl((0.92, s_ * 0.12, 0.61), (0.92, s_ * 0.19, 0.61), 0.012, M['fin'], 12)       # spark plug caps
-    cyl((0.70, 0.15, 0.38), (0.70, 0.19, 0.38), 0.115, M['engine'], 48)     # clutch cover
-    cyl((0.70, 0.19, 0.38), (0.70, 0.196, 0.38), 0.08, M['fin'], 48)
-    cyl((0.76, -0.15, 0.39), (0.76, -0.185, 0.39), 0.105, M['engine'], 48)  # alternator cover
-    cyl((0.76, -0.185, 0.39), (0.76, -0.19, 0.39), 0.07, M['fin'], 48)
+        box(cyl_c + off, (0.26, 0.37, 0.006), M['fin'] if k % 2 == 0 else M['engine'], 0.002, tilt)
+    box(cyl_c + Vector((0.015, 0, 0.115)), (0.24, 0.35, 0.05), M['engine'], 0.02, tilt)   # head
+    box(cyl_c + Vector((0.02, 0, 0.155)), (0.19, 0.30, 0.035), M['engine'], 0.015, tilt)  # rocker cover
+    box((0.66, 0, 0.62), (0.12, 0.22, 0.12), M['black'], 0.03)                          # throttle bodies
+    box((0.64, -0.12, 0.64), (0.06, 0.04, 0.06), M['fin'], 0.01)                        # breather
+    box((0.75, 0, 0.17), (0.3, 0.2, 0.05), M['engine'], 0.02)                           # sump
 
-    # exhausts: headers down the front, peashooter mufflers
-    for y in (-0.09, 0.09):
-        s = 1 if y > 0 else -1
-        tube([(0.94, y, 0.60), (1.00, y, 0.52), (1.00, y * 1.2, 0.30), (0.92, s * 0.14, 0.18), (0.62, s * 0.17, 0.18), (0.42, s * 0.19, 0.22)], 0.021, M['black'])
-        cyl((0.44, s * 0.19, 0.225), (-0.18, s * 0.19, 0.35), 0.042, M['black'], 32, 0.05)
-        cyl((-0.18, s * 0.19, 0.35), (-0.2, s * 0.19, 0.354), 0.05, M['fin'], 32)
-
-    # fuel tank: deformed sphere, narrower and lower at the back
-    bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=32, radius=1, location=(0, 0, 0))
-    tank = active()
-    sp = lambda t, e: math.copysign(abs(t) ** e, t)
-    for v in tank.data.vertices:
-        x, y, z = v.co
-        x, y = sp(x, 0.8), sp(y, 0.75)
-        z = sp(z, 0.55) if z > 0 else z
-        rear = (1 - x) / 2
-        y *= 1 - 0.3 * rear ** 1.4
-        if z > 0: z *= 0.72
-        if z < -0.3: z = -0.3 + (z + 0.3) * 0.25
-        z -= 0.14 * rear ** 2
-        v.co = (x, y, z)
-    tank.scale = (0.30, 0.165, 0.17); tank.location = (0.855, 0, 0.935); tank.rotation_euler = (0, math.radians(-3), 0)
-    finish(tank, M['paint'])
+    # exhausts: headers wrap the front of the engine, long upswept peashooters
     for s in (-1, 1):
-        sphere((0.67, s * 0.14, 0.92), (0.075, 0.02, 0.05), M['rubber'], 24, 12)   # knee pads
-        sphere((0.92, s * 0.172, 0.95), (0.055, 0.005, 0.024), M['chrome'], 24, 10)    # badge
-    cyl((0.93, 0, 1.10), (0.93, 0, 1.115), 0.035, M['chrome'], 32)                  # filler cap
+        y1 = s * 0.075
+        tube([(0.95, y1, 0.57), (1.02, y1, 0.53), (1.045, s * 0.10, 0.42), (1.03, s * 0.12, 0.28), (0.97, s * 0.13, 0.17), (0.85, s * 0.14, 0.14), (0.66, s * 0.15, 0.15), (0.46, s * 0.17, 0.215)], 0.021, M['black'])
+        cyl((0.47, s * 0.17, 0.215), (0.43, s * 0.172, 0.23), 0.028, M['fin'], 24)          # clamp
+        cyl((0.43, s * 0.172, 0.23), (-0.30, s * 0.19, 0.49), 0.04, M['black'], 40, 0.056)
+        cyl((-0.30, s * 0.19, 0.49), (-0.36, s * 0.19, 0.51), 0.056, M['black'], 40, 0.03)  # reverse cone
+        cyl((-0.36, s * 0.19, 0.51), (-0.365, s * 0.19, 0.512), 0.03, M['fin'], 24)
 
-    # seat: long flat bench, tail with lamp, grab rail, side panels
-    box((0.30, 0, 0.835), (0.62, 0.27, 0.1), M['seat'], 0.045)
-    box((0.30, 0, 0.787), (0.64, 0.25, 0.02), M['black'], 0.006)
-    for k in range(6):                                                        # seat ribs
-        box((0.08 + k * 0.075, 0, 0.887), (0.006, 0.24, 0.006), M['rubber'], 0.002)
-    band(RA, 0.36, 0.17, 45, 172, 0.006, M['paint'])
-    box((-0.10, 0, 0.66), (0.05, 0.1, 0.06), M['black'], 0.01)
-    sphere((-0.13, 0, 0.66), (0.012, 0.045, 0.03), M['tail'], 20, 10)
-    tube([(0.12, -0.14, 0.80), (-0.05, -0.15, 0.82), (-0.13, 0, 0.83), (-0.05, 0.15, 0.82), (0.12, 0.14, 0.80)], 0.011, M['black'])
+    # fuel tank: lofted from traced side profile (flat bottom, domed top, narrow tail)
+    loft([(0.585, 0.795, 0.805, 0.055), (0.61, 0.78, 0.845, 0.105), (0.66, 0.772, 0.88, 0.138), (0.74, 0.77, 0.912, 0.165),
+          (0.84, 0.772, 0.932, 0.183), (0.94, 0.778, 0.94, 0.189), (1.02, 0.79, 0.932, 0.183), (1.08, 0.805, 0.91, 0.165),
+          (1.12, 0.825, 0.88, 0.121), (1.14, 0.845, 0.86, 0.044)], M['paint'], p=2.4, name='tank')
     for s in (-1, 1):
-        sidecover(s)
-        cyl((0.54, s * 0.12, 0.28), (0.54, s * 0.24, 0.28), 0.014, M['rubber'], 16)   # rider pegs
-    # chain + sprocket (left)
-    cyl((0.0, -0.11, 0.315), (0.0, -0.1, 0.315), 0.11, M['black'], 48)
-    tube([(0.0, -0.105, 0.43), (0.62, -0.105, 0.36)], 0.006, M['fin'])
-    tube([(0.0, -0.105, 0.2), (0.62, -0.105, 0.28)], 0.006, M['fin'])
+        sphere((0.76, s * 0.158, 0.858), (0.10, 0.018, 0.042), M['rubber'], 32, 12).rotation_euler = (0, math.radians(8), 0)  # knee pads
+        sphere((1.0, s * 0.182, 0.86), (0.045, 0.006, 0.03), M['chrome'], 24, 10)                                       # badge
+    cyl((0.95, 0, 0.935), (0.95, 0, 0.95), 0.035, M['chrome'], 32)                                                       # filler cap
+
+    # seat: long flat bench with a small kick at the back, pleated top
+    loft([(-0.13, 0.80, 0.86, 0.04), (-0.10, 0.79, 0.90, 0.11), (-0.02, 0.79, 0.90, 0.135), (0.15, 0.79, 0.885, 0.14),
+          (0.35, 0.795, 0.875, 0.14), (0.52, 0.80, 0.868, 0.13), (0.60, 0.805, 0.85, 0.09), (0.63, 0.81, 0.83, 0.04)], M['seat'], p=3.2, name='seat')
+    for k in range(9):
+        x = -0.06 + k * 0.07
+        box((x, 0, 0.885 - 0.012 * (k / 8)), (0.005, 0.25, 0.012), M['rubber'], 0.002)
+    box((0.25, 0, 0.78), (0.78, 0.22, 0.02), M['black'], 0.006)                                                        # seat pan
+
+    # side covers: inverted triangles under the seat front
+    for s in (-1, 1):
+        prism([(0.33, 0.785), (0.63, 0.785), (0.495, 0.56)], s * 0.10, s * 0.145, M['paint'], 0.022, 'cover')
+        sphere((0.49, s * 0.148, 0.715), (0.055, 0.004, 0.016), M['chrome'], 20, 8)
+        cyl((0.56, s * 0.12, 0.33), (0.56, s * 0.24, 0.33), 0.014, M['rubber'], 16)       # rider pegs
+        cyl((0.28, s * 0.14, 0.42), (0.28, s * 0.22, 0.42), 0.012, M['rubber'], 16)       # pillion pegs
+
+    # tail: short rear fender, lamp, indicators, grab rail
+    fender(RA, 0.36, 0.17, 64, 150, M['black'], 0.045)
+    box((-0.20, 0, 0.75), (0.1, 0.12, 0.05), M['black'], 0.015)
+    sphere((-0.255, 0, 0.765), (0.012, 0.045, 0.03), M['tail'], 20, 10)
+    for s in (-1, 1):
+        box((-0.23, s * 0.1, 0.74), (0.045, 0.018, 0.018), M['amber'], 0.006)
+    tube([(0.20, -0.15, 0.80), (0.0, -0.155, 0.81), (-0.15, -0.12, 0.82), (-0.17, 0, 0.82), (-0.15, 0.12, 0.82), (0.0, 0.155, 0.81), (0.20, 0.15, 0.80)], 0.011, M['black'])
+    # chain + sprocket on the left (+Y)
+    cyl((0.0, 0.11, 0.315), (0.0, 0.1, 0.315), 0.11, M['black'], 48)
+    tube([(0.0, 0.105, 0.43), (0.62, 0.105, 0.36)], 0.006, M['fin'])
+    tube([(0.0, 0.105, 0.2), (0.62, 0.105, 0.28)], 0.006, M['fin'])
 
 def build_rider():
     # hips over the seat, relaxed upright posture, hands on the grips, boots on the pegs
-    hip = Vector((0.34, 0, 0.93)); chest = Vector((0.45, 0, 1.28)); neck = Vector((0.49, 0, 1.40))
+    hip = Vector((0.36, 0, 0.97)); chest = Vector((0.46, 0, 1.31)); neck = Vector((0.50, 0, 1.43))
     capsule(hip, chest, 0.15, M['jacket'], 0.17)
     sphere(chest + Vector((0, 0, 0.02)), (0.13, 0.2, 0.13), M['jacket'])
     capsule(chest, neck, 0.06, M['jacket'])
@@ -283,14 +331,14 @@ def build_rider():
     sphere(head + Vector((0.075, 0, 0.0)), (0.075, 0.105, 0.06), M['visor'], 32, 12)
     for s in (-1, 1):
         sh = chest + Vector((0.0, s * 0.19, 0.06))
-        el = Vector((0.72, s * 0.3, 1.08))
-        grip = Vector((1.03, s * 0.35, 1.10))
+        el = Vector((0.74, s * 0.3, 1.1))
+        grip = Vector((1.02, s * 0.35, 1.065))
         capsule(sh, el, 0.055, M['jacket'], 0.048)
         capsule(el, grip, 0.045, M['jacket'], 0.04)
         sphere(grip, (0.045, 0.045, 0.045), M['glove'])
         hp = hip + Vector((0.02, s * 0.12, 0.0))
-        knee = Vector((0.70, s * 0.19, 0.78))
-        ankle = Vector((0.56, s * 0.2, 0.33))
+        knee = Vector((0.70, s * 0.19, 0.80))
+        ankle = Vector((0.57, s * 0.21, 0.36))
         capsule(hp, knee, 0.085, M['jeans'], 0.07)
         capsule(knee, ankle, 0.065, M['jeans'], 0.05)
         box(ankle + Vector((0.05, 0, -0.04)), (0.2, 0.09, 0.09), M['boot'], 0.03)
@@ -352,6 +400,9 @@ if __name__ == '__main__':
         camera((0.65, -8, 0.9), (0.65, 0, 0.9), ortho=2.2)
         w = int(argv[3]) if len(argv) > 3 else 880
         render(out, w, round(w * 1.8 / 2.2), 64, fmt=argv[4] if len(argv) > 4 else 'PNG')
+    elif view == 'overlay':
+        camera((0.677, -8, 0.626), (0.677, 0, 0.626), ortho=1600 / 660)
+        render(out, 1600, 1255, 16)
     elif view == 'spin':
         # turntable: rotate the bike about its centre, camera and lights fixed
         frames = int(argv[2]); only = [int(a) for a in argv[3].split(',')] if len(argv) > 3 and argv[3] != 'all' else range(frames)
