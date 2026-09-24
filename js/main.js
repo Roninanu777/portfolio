@@ -231,44 +231,62 @@ const WX = (code) => {
 function engineAudio() {
   const AC = window.AudioContext || window.webkitAudioContext;
   if (!AC) return null;
-  let ctx, osc, lp, master, timer = 0;
+  let ctx, osc, lp, pipe, master, pop, noiseBuf, timer = 0, prev = 0;
   function build() {
     ctx = new AC();
-    const N = 96, re = new Float32Array(N + 1), im = new Float32Array(N + 1);
+    // sharp combustion pulses: slow harmonic roll-off gives the bark its edge
+    const N = 160, re = new Float32Array(N + 1), im = new Float32Array(N + 1);
     for (let n = 1; n <= N; n++) {
-      const a = 1 / (1 + (n / 14) ** 1.6);                    // soft, thumpy pulse
+      const a = 1 / (1 + (n / 26) ** 1.25);
       for (const p of [0, 270 / 720]) { re[n] += a * Math.cos(2 * Math.PI * n * p); im[n] -= a * Math.sin(2 * Math.PI * n * p); }
     }
     osc = ctx.createOscillator();
     osc.setPeriodicWave(ctx.createPeriodicWave(re, im));
     osc.frequency.value = 8;
-    const shaper = ctx.createWaveShaper(), curve = new Float32Array(1024);
-    for (let i = 0; i < 1024; i++) curve[i] = Math.tanh(2.4 * (i / 511.5 - 1));
-    shaper.curve = curve; shaper.oversample = '2x';
-    lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 1.1; lp.frequency.value = 500;
-    // exhaust hiss: band-passed noise, gated by the same firing pulses
-    const buf = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate), d = buf.getChannelData(0);
+    // hard, slightly asymmetric clipping for grit
+    const shaper = ctx.createWaveShaper(), curve = new Float32Array(2048);
+    for (let i = 0; i < 2048; i++) { const x = i / 1023.5 - 1; curve[i] = Math.tanh(4.2 * x + 0.35 * x * x); }
+    shaper.curve = curve; shaper.oversample = '4x';
+    // the exhaust pipe: a resonant low-mid boost that follows the revs
+    pipe = ctx.createBiquadFilter(); pipe.type = 'peaking'; pipe.Q.value = 1.6; pipe.gain.value = 9; pipe.frequency.value = 180;
+    lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 1.4; lp.frequency.value = 700;
+    // exhaust rasp: band-passed noise gated by the firing pulses
+    noiseBuf = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
+    const d = noiseBuf.getChannelData(0);
     for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-    const noise = ctx.createBufferSource(); noise.buffer = buf; noise.loop = true;
-    const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1100; bp.Q.value = 0.8;
+    const noise = ctx.createBufferSource(); noise.buffer = noiseBuf; noise.loop = true;
+    const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 800; bp.Q.value = 0.9;
     const gate = ctx.createGain(); gate.gain.value = 0;
-    const depth = ctx.createGain(); depth.gain.value = 0.3;
+    const depth = ctx.createGain(); depth.gain.value = 0.55;
     osc.connect(depth).connect(gate.gain);
-    noise.connect(bp).connect(gate).connect(lp);
+    noise.connect(bp).connect(gate).connect(pipe);
     master = ctx.createGain(); master.gain.value = 0;
-    const comp = ctx.createDynamicsCompressor();
-    osc.connect(shaper).connect(lp);
-    lp.connect(master).connect(comp).connect(ctx.destination);
-    osc.start(); noise.start();
+    const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -14; comp.ratio.value = 4;
+    osc.connect(shaper).connect(pipe).connect(lp).connect(master).connect(comp).connect(ctx.destination);
+    // overrun pops: short noise cracks straight to the output
+    pop = ctx.createGain(); pop.gain.value = 0;
+    const popSrc = ctx.createBufferSource(); popSrc.buffer = noiseBuf; popSrc.loop = true;
+    const popBp = ctx.createBiquadFilter(); popBp.type = 'bandpass'; popBp.frequency.value = 1400; popBp.Q.value = 1.2;
+    popSrc.connect(popBp).connect(pop).connect(comp);
+    osc.start(); noise.start(); popSrc.start();
+  }
+  function crack(t, strength) {
+    pop.gain.cancelScheduledValues(t);
+    pop.gain.setValueAtTime(strength, t);
+    pop.gain.exponentialRampToValueAtTime(0.001, t + 0.035 + Math.random() * 0.03);
   }
   return {
     wake() { clearTimeout(timer); if (!ctx) build(); if (ctx.state === 'suspended') ctx.resume(); },
     set(rpm, level, load) {
       if (!ctx) return;
       const t = ctx.currentTime;
-      osc.frequency.setTargetAtTime(Math.max(rpm, 60) / 120, t, 0.02);          // one 720-degree cycle
-      lp.frequency.setTargetAtTime(320 + rpm * (load ? 0.62 : 0.42), t, 0.05);    // brighter under throttle
+      osc.frequency.setTargetAtTime(Math.max(rpm, 60) / 120, t, 0.02);            // one 720-degree cycle
+      lp.frequency.setTargetAtTime(650 + rpm * (load ? 0.75 : 0.5), t, 0.05);        // brighter under throttle
+      pipe.frequency.setTargetAtTime(150 + rpm * 0.03, t, 0.08);
       master.gain.setTargetAtTime(level, t, 0.06);
+      // closing the throttle from high revs: the twin crackles on the overrun
+      if (!load && level > 0 && rpm > 2200 && rpm < prev && Math.random() < 0.09) crack(t, 0.25 + Math.random() * 0.35);
+      prev = rpm;
     },
     sleep() { if (!ctx) return; master.gain.setTargetAtTime(0, ctx.currentTime, 0.15); clearTimeout(timer); timer = setTimeout(() => ctx.suspend(), 900); },
   };
@@ -309,7 +327,7 @@ function engineAudio() {
   function frame(now) {
     const dt = last ? clamp((now - last) / 1000, 0, 0.05) : 0; last = now;
     const target = held ? MAX - 150 : 0;
-    rpm += (target - rpm) * (held ? 2.2 : 2.6) * dt + (held ? (Math.random() - 0.5) * 60 : 0);
+    rpm += (target - rpm) * (held ? 1.15 : 1.5) * dt + (held ? (Math.random() - 0.5) * 60 : 0);
     rpm = clamp(rpm, 0, MAX);
     needle.setAttribute('transform', `rotate(${ang(rpm).toFixed(2)})`);
     rpmEl.textContent = rpm > 60 ? (rpm / 1000).toFixed(1) : 'off';
