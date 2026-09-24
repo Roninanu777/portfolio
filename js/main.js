@@ -233,6 +233,8 @@ function engineAudio() {
   if (!AC) return null;
   let ctx, osc, lp, pipe, master, pop, noiseBuf, timer = 0, prev = 0;
   function build() {
+    // iPhones mute Web Audio on the silent switch unless the page asks for playback
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch {}
     ctx = new AC();
     // sharp combustion pulses: slow harmonic roll-off gives the bark its edge
     const N = 160, re = new Float32Array(N + 1), im = new Float32Array(N + 1);
@@ -276,7 +278,9 @@ function engineAudio() {
     pop.gain.exponentialRampToValueAtTime(0.001, t + 0.035 + Math.random() * 0.03);
   }
   return {
-    wake() { clearTimeout(timer); if (!ctx) build(); if (ctx.state === 'suspended') ctx.resume(); },
+    wake() { clearTimeout(timer); if (!ctx) build(); if (ctx.state !== 'running') ctx.resume().catch(() => {}); },
+    running: () => !!ctx && ctx.state === 'running',
+    onchange(fn) { if (ctx) ctx.onstatechange = fn; },
     set(rpm, level, load) {
       if (!ctx) return;
       const t = ctx.currentTime;
@@ -352,9 +356,22 @@ function engineAudio() {
   btn.addEventListener('keyup', (e) => { if (e.key === ' ' || e.key === 'Enter') stop(); });
   btn.addEventListener('contextmenu', (e) => e.preventDefault());
   document.addEventListener('visibilitychange', () => { if (document.hidden) kill(); });
+  // Phones only allow audio after a tap (finger lifted), not when a finger first lands,
+  // so unlock on the first tap anywhere, and again when the throttle is released.
+  const coarse = matchMedia('(pointer: coarse)').matches;
+  let unlocked = false;
+  function unlock() {
+    if (!audio || !soundOn) return;
+    audio.wake();
+    audio.onchange(() => { if (audio.running()) { unlocked = true; paintSound(); } });
+    if (audio.running()) unlocked = true;
+    if (!held) audio.sleep();
+    paintSound();
+  }
+  ['pointerup', 'touchend', 'click', 'keydown'].forEach((ev) => document.addEventListener(ev, () => { if (!unlocked) unlock(); }, { passive: true }));
   function paintSound() {
     snd.setAttribute('aria-pressed', String(soundOn));
-    $('span', snd).textContent = soundOn ? 'Sound on' : 'Sound off';
+    $('span', snd).textContent = !soundOn ? 'Sound off' : coarse && !unlocked ? 'Tap for sound' : 'Sound on';
   }
   if (snd) {
     if (!audio) snd.hidden = true;
@@ -362,6 +379,7 @@ function engineAudio() {
     snd.addEventListener('click', () => {
       soundOn = !soundOn;
       try { localStorage.setItem('rev-sound', soundOn ? '1' : '0'); } catch {}
+      if (soundOn) unlock();
       if (soundOn && looping && audio) audio.wake();
       paintSound();
     });
