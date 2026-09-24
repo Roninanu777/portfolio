@@ -2,7 +2,7 @@
 
 A single-page portfolio for Roni Raj Kamal Pradhan, Senior Software Engineer. Static HTML, CSS and a few lines of vanilla JS. No build step, no framework, no dependencies beyond two Google Fonts.
 
-Design direction: **"Surfaces"** — a bento grid where every card holds a small working window of a product surface actually shipped. The windows are interactive: play the voice interview (and drop the participant), replay the agent run, scrub the spend chart, ship the LiveKit release, send the API request, flip billing roles, search participants, switch research methods, run the old and new invite delivery, and ask Codebase Archaeology a question. The three alternative directions explored before choosing this one are parked in `explorations/`.
+Design direction: **"Surfaces"** — every shipped product surface is a small working window rising out of its own softly lit, tinted stage, like a product shot. Four big "Selected work" features, then a 3×2 "Also shipped" gallery. The windows are interactive: play the voice interview (and drop the participant), replay the agent run, scrub the spend chart, ship the LiveKit release, send the API request, flip billing roles, search participants, switch research methods, run the old and new invite delivery, and ask Codebase Archaeology a question. The three alternative directions explored before choosing this one are parked in `explorations/`.
 
 ## Layout
 
@@ -46,7 +46,7 @@ python3 -m http.server 8080
 Everything is plain HTML in `index.html`:
 
 - **Hero copy and buttons**: the `<header class="hero">` block.
-- **Cards**: each `<article class="card">` has an eyebrow, a title, a caption (`.cap`), then a window (`.ui.win`) with a title bar (`.hd`) that is pinned to the card's bottom-right edge. Interactive windows have an `id` that `js/main.js` looks up; each block there returns early if its markup is missing. Card size is set by the `c3`…`c7` and `r2` classes on a 12-column grid, so each row should add up to 12. The tint is the inline `--tint` variable.
+- **Projects**: each `<article class="proj">` has a `.stage` holding the window (`.ui.win`, with a `.hd` title bar) and an `.info` block (title, `.kind`, `.cap`). Add `wide` to span the full row (Selected work) or `sm` for the gallery (Also shipped). `--tint` lights the stage and the window accents; `--tint2` adds a second glow. Interactive windows have an `id` that `js/main.js` looks up; each block there returns early if its markup is missing.
 - **Timezone line**: the paragraph and live clock in the "Say hello" block (`#contact`). Keep availability and notice-period details off the public site.
 - **Experience, Stack, Education**: the `section.plain` blocks.
 - **Domain**: the canonical and Open Graph URLs in `<head>` point at https://ronipradhan.dev/.

@@ -75,7 +75,7 @@
 
 <main class="wrap" id="main">
   <header class="hero" id="top">
-    <div class="meta"><span class="role"><i aria-hidden="true"></i>Senior Software Engineer</span><span>Itanagar, India · remote</span></div>
+    <div class="meta"><span class="who"><span class="av" aria-hidden="true">RP</span><span><b>Roni Pradhan</b><small>Senior Software Engineer at CleverX</small></span></span><span class="loc"><i aria-hidden="true"></i>Itanagar, India · remote</span></div>
     <h1>I build the surfaces users touch and the systems under them.</h1>
     <div class="lede">
       <p>Five years as one of two engineers on a B2B user-research platform: the <b>React app, Node API, AWS serverless layer and Stripe billing</b>, then its <b>LLM agents and real-time voice interviews</b>. Every window below is a working sketch of something I shipped. Click around.</p>
@@ -87,14 +87,12 @@
     </div>
   </header>
 
-  <section class="bento" id="work" aria-label="Things I shipped">
-
-    <!-- a. voice interviews: plays a scripted interview, can simulate a dropped connection -->
-    <article class="card c7 r2" style="--tint:var(--teal)">
-      <div class="eyebrow"><i></i>Real-time · CleverX</div>
-      <h3>AI voice interviews</h3>
-      <p class="cap">Persona and voice come from the study config. Live transcription through AssemblyAI and Cartesia, participant reconnection, and server-side session completion.</p>
-      <div class="ui win voice" id="voice" data-state="idle">
+  <section class="work" id="work" aria-labelledby="work-h">
+    <h2 class="sh" id="work-h">Selected work</h2>
+    <div class="feat">
+    <article class="proj wide" style="--tint:var(--teal);--tint2:var(--sky)">
+      <div class="stage">
+        <div class="ui win voice" id="voice" data-state="idle">
         <div class="hd"><span class="live">Interview · Q3 of 8</span><span class="timer">04:12</span></div>
         <div class="wave" aria-hidden="true"></div>
         <div class="tr" aria-live="polite"></div>
@@ -105,14 +103,17 @@
           <span class="chips"><span class="chip on">LiveKit agents</span><span class="chip">AssemblyAI</span><span class="chip">Cartesia</span></span>
         </div>
       </div>
+      </div>
+      <div class="info">
+        <h3>AI voice interviews</h3>
+        <p class="kind">CleverX · real-time</p>
+        <p class="cap">AI-led research interviews on LiveKit. Persona and voice come from the study config, with live transcription through AssemblyAI and Cartesia, reconnection when a participant drops, and server-side session completion.</p>
+      </div>
     </article>
 
-    <!-- b. study-builder agent: replays a run; the scheduler releases each call once its reads exist -->
-    <article class="card c5 r2" style="--tint:var(--violet)">
-      <div class="eyebrow"><i></i>AI layer · CleverX</div>
-      <h3>LLM study-builder agent</h3>
-      <p class="cap">A tool-call dependency scheduler orders calls by declared reads and writes, so a step never references something that isn't written yet. Anthropic and OpenAI, Langfuse-traced.</p>
-      <div class="ui win" id="agent">
+    <article class="proj" style="--tint:var(--violet);--tint2:var(--coral)">
+      <div class="stage">
+        <div class="ui win" id="agent">
         <div class="hd"><span>study-builder · run #<b class="run">4821</b></span><span class="tot">1.9s</span></div>
         <div class="dag">
           <div class="node done"><span>create_study</span><small>writes: study</small></div>
@@ -127,14 +128,69 @@
         </div>
         <div class="ctl"><button type="button" class="tbtn on" data-act="run">Run the agent</button><span class="note">prompt: “8-task onboarding study for fintech PMs”</span></div>
       </div>
+      </div>
+      <div class="info">
+        <h3>LLM study-builder agent</h3>
+        <p class="kind">CleverX · AI layer</p>
+        <p class="cap">Builds a whole study from one prompt. A dependency scheduler orders tool calls by what each one reads and writes, so no step references something that doesn’t exist yet. Anthropic and OpenAI, traced in Langfuse.</p>
+      </div>
     </article>
 
-    <!-- c. cost: scrub the chart; toggle the counterfactual -->
-    <article class="card c4" style="--tint:var(--amber)">
-      <div class="eyebrow"><i></i>Cost control</div>
-      <h3>−16% monthly LLM spend</h3>
-      <p class="cap">Traced a spike to low-cache-hit LLM-as-a-judge eval rules and fixed it with request sampling and model selection. Later moved tracing to Langfuse v4 and fixed agent traces that were reporting zero cost.</p>
-      <div class="ui win" id="cost">
+    <article class="proj" style="--tint:var(--sky);--tint2:var(--teal)">
+      <div class="stage">
+        <div class="ui win" id="mig" data-state="shipped">
+        <div class="hd"><span>release/livekit</span><span class="st">shipped</span></div>
+        <div class="mig">
+          <div class="repos">
+            <div class="repo ok"><span>api</span><small>rooms · tokens</small></div>
+            <div class="repo ok"><span>web</span><small>observer · reconnect</small></div>
+            <div class="repo ok"><span>recording</span><small>multi-egress</small></div>
+            <div class="repo ok"><span>archive</span><small>pipeline</small></div>
+          </div>
+          <svg viewBox="0 0 36 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0,10.5 C18,10.5 18,50 36,50"/><path d="M0,36.8 C18,36.8 18,50 36,50"/><path d="M0,63.2 C18,63.2 18,50 36,50"/><path d="M0,89.5 C18,89.5 18,50 36,50"/>
+          </svg>
+          <div class="rel">1 release<small>4 repos</small></div>
+        </div>
+        <div class="ctl"><button type="button" class="tbtn on" data-act="ship">Ship it again</button></div>
+      </div>
+      </div>
+      <div class="info">
+        <h3>Twilio → LiveKit</h3>
+        <p class="kind">CleverX · real-time video</p>
+        <p class="cap">Replaced the live video layer in one coordinated release across four repositories: rooms and tokens, multi-egress recording, per-question highlight clips, observer mode and reconnects.</p>
+      </div>
+    </article>
+
+    <article class="proj wide" style="--tint:var(--violet);--tint2:var(--amber)">
+      <div class="stage">
+        <div class="ui win chat" id="arch">
+        <div class="hd"><span>archaeology · ask</span><span>pgvector + BM25 → RRF</span></div>
+        <div class="thread" aria-live="polite">
+          <div class="bub q">why does retry_backoff exist?</div>
+          <div class="bub a">Added after a Postmark outage caused duplicate sends. Backoff is capped at five tries because the queue re-enqueues on failure.<span class="cite">cited: commit 7fd44e2 · PR #212 comment</span></div>
+        </div>
+        <div class="asks" role="group" aria-label="Ask a question">
+          <button type="button" class="chip" data-q="0">why does retry_backoff exist?</button>
+          <button type="button" class="chip" data-q="1">why is sharp pinned to 0.32?</button>
+          <button type="button" class="chip" data-q="2">why is legacy_scheduler still here?</button>
+        </div>
+      </div>
+      </div>
+      <div class="info">
+        <h3>Codebase Archaeology</h3>
+        <p class="kind">Open source · 2026</p>
+        <p class="cap">Answers “why does this code exist?” from git history, PR discussions and linked issues. Every claim cites a commit or comment, and it abstains when the evidence is thin. Python, Postgres + pgvector, served over MCP and REST.</p>
+        <p class="out"><a href="https://github.com/Roninanu777/codebase-archaeology">Source on GitHub</a><a href="https://codebase-archaeology.pages.dev">Live demo</a></p>
+      </div>
+    </article>
+    </div>
+
+    <h2 class="sh" id="more">Also shipped</h2>
+    <div class="more">
+    <article class="proj sm" style="--tint:var(--amber);--tint2:var(--coral)">
+      <div class="stage">
+        <div class="ui win" id="cost">
         <div class="hd"><span>LLM spend · monthly</span><span class="read">hover the line</span></div>
         <div class="big"><span class="val">−16%</span><small class="what">after the audit</small></div>
         <div class="plot">
@@ -151,37 +207,17 @@
         </div>
         <label class="sw"><input type="checkbox" id="ghost"><i aria-hidden="true"></i>Show spend without the fix</label>
       </div>
-    </article>
-
-    <!-- d. migration: ship the release repo by repo -->
-    <article class="card c4" style="--tint:var(--teal)">
-      <div class="eyebrow"><i></i>Real-time video</div>
-      <h3>Twilio → LiveKit</h3>
-      <p class="cap">Migrated the live video layer as one coordinated release across four repositories: room and token management, multi-egress recording, per-question highlight clips, observer mode, reconnect handling.</p>
-      <div class="ui win" id="mig" data-state="shipped">
-        <div class="hd"><span>release/livekit</span><span class="st">shipped</span></div>
-        <div class="mig">
-          <div class="repos">
-            <div class="repo ok"><span>api</span><small>rooms · tokens</small></div>
-            <div class="repo ok"><span>web</span><small>observer · reconnect</small></div>
-            <div class="repo ok"><span>recording</span><small>multi-egress</small></div>
-            <div class="repo ok"><span>archive</span><small>pipeline</small></div>
-          </div>
-          <svg viewBox="0 0 36 100" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0,10.5 C18,10.5 18,50 36,50"/><path d="M0,36.8 C18,36.8 18,50 36,50"/><path d="M0,63.2 C18,63.2 18,50 36,50"/><path d="M0,89.5 C18,89.5 18,50 36,50"/>
-          </svg>
-          <div class="rel">1 release<small>4 repos</small></div>
-        </div>
-        <div class="ctl"><button type="button" class="tbtn on" data-act="ship">Ship it again</button></div>
+      </div>
+      <div class="info">
+        <h3>−16% monthly LLM spend</h3>
+        <p class="kind">Cost control</p>
+        <p class="cap">Traced a spike to low-cache-hit LLM-as-a-judge evals and fixed it with request sampling and model selection.</p>
       </div>
     </article>
 
-    <!-- e. public api: send a request, watch the webhook fire -->
-    <article class="card c4" style="--tint:var(--sky)">
-      <div class="eyebrow"><i></i>Platform</div>
-      <h3>Public API + webhooks</h3>
-      <p class="cap">v1 study and participant endpoints, API-key management with superadmin access control, developer dashboard, published docs.</p>
-      <div class="ui win" id="api">
+    <article class="proj sm" style="--tint:var(--sky);--tint2:var(--violet)">
+      <div class="stage">
+        <div class="ui win" id="api">
         <div class="hd"><span>public API</span><span>v1</span></div>
 <pre class="code"><span class="k">POST</span> /v1/studies
 <span class="s">Authorization:</span> Bearer <button type="button" class="key" aria-label="Reveal the demo API key">cx_live_••••</button>
@@ -192,14 +228,17 @@
         <div class="evt"><span><b>study.completed</b> → https://…/hooks</span><span class="code-ev">idle</span></div>
         <div class="ctl"><button type="button" class="tbtn on" data-act="send">Send request</button></div>
       </div>
+      </div>
+      <div class="info">
+        <h3>Public API + webhooks</h3>
+        <p class="kind">Platform</p>
+        <p class="cap">v1 study and participant endpoints, API keys with superadmin controls, a developer dashboard and published docs.</p>
+      </div>
     </article>
 
-    <!-- f. billing: flip roles, observers are not billed -->
-    <article class="card c4" style="--tint:var(--coral)">
-      <div class="eyebrow"><i></i>Billing</div>
-      <h3>Billing + multi-seat teams</h3>
-      <p class="cap">Roles, ownership transfer, billing-excluded observer seats, Stripe autocharge, credits, and off-platform payment tracking. Click a role to change it.</p>
-      <div class="ui win" id="bill">
+    <article class="proj sm" style="--tint:var(--coral);--tint2:var(--amber)">
+      <div class="stage">
+        <div class="ui win" id="bill">
         <div class="hd"><span>Team · 3 seats</span><span class="billed">2 billed</span></div>
         <div class="seat"><span class="av">AK</span><span class="nm">Anika K.</span><span class="role own">Owner</span></div>
         <div class="seat"><span class="av">JM</span><span class="nm">Jonas M.</span><button type="button" class="role" data-role="Editor">Editor</button></div>
@@ -209,14 +248,17 @@
           <span>Credits <b class="credits">1,250</b></span>
         </div>
       </div>
+      </div>
+      <div class="info">
+        <h3>Billing + multi-seat teams</h3>
+        <p class="kind">Billing</p>
+        <p class="cap">Roles, ownership transfer, observer seats that aren’t billed, Stripe autocharge and credits.</p>
+      </div>
     </article>
 
-    <!-- g. search: type and toggle filters over a small fake index -->
-    <article class="card c4" style="--tint:var(--lime)">
-      <div class="eyebrow"><i></i>Search</div>
-      <h3>Search + matching</h3>
-      <p class="cap">Migrated Algolia to Typesense with geo indexing and relevance tuning; rewrote participant–study matching with search scoring, location weighting and exclusion filters.</p>
-      <div class="ui win" id="search">
+    <article class="proj sm" style="--tint:var(--lime);--tint2:var(--teal)">
+      <div class="stage">
+        <div class="ui win" id="search">
         <div class="hd"><span>participant search</span><span class="took">3 hits · 4 ms</span></div>
         <label class="q"><span class="sr">Search participants</span><input type="search" value="product fintech" autocomplete="off" spellcheck="false"></label>
         <div class="chips filt" role="group" aria-label="Filters">
@@ -226,14 +268,17 @@
         </div>
         <div class="results" aria-live="polite"></div>
       </div>
+      </div>
+      <div class="info">
+        <h3>Search + matching</h3>
+        <p class="kind">Search</p>
+        <p class="cap">Algolia to Typesense with geo indexing, and participant matching with location weighting and exclusions.</p>
+      </div>
     </article>
 
-    <!-- h. unmoderated research: three methods as working tabs -->
-    <article class="card c4" style="--tint:var(--amber)">
-      <div class="eyebrow"><i></i>Research methods</div>
-      <h3>Unmoderated research</h3>
-      <p class="cap">Video diaries, website tests with interaction heatmaps, and Figma prototype testing. Sessions are graded against the researcher's goal page and re-scored whenever the goal changes. Took the Figma OAuth app through vendor review to general availability.</p>
-      <div class="ui win" id="research">
+    <article class="proj sm" style="--tint:var(--amber);--tint2:var(--violet)">
+      <div class="stage">
+        <div class="ui win" id="research">
         <div class="hd tabs" role="tablist" aria-label="Research method">
           <button type="button" role="tab" id="rt-web" aria-controls="rp-web" aria-selected="true">Website test</button>
           <button type="button" role="tab" id="rt-fig" aria-controls="rp-fig" aria-selected="false" tabindex="-1">Figma prototype</button>
@@ -257,14 +302,17 @@
           <div class="quote">“By Friday I stopped opening it.”<small>video diary · transcribed</small></div>
         </div>
       </div>
+      </div>
+      <div class="info">
+        <h3>Unmoderated research</h3>
+        <p class="kind">Research methods</p>
+        <p class="cap">Diaries, website tests and Figma prototype tests, graded against the researcher’s goal page. Took the Figma OAuth app through review to GA.</p>
+      </div>
     </article>
 
-    <!-- m. reliability: run the old and the new invite delivery side by side -->
-    <article class="card c5" style="--tint:var(--lime)">
-      <div class="eyebrow"><i></i>Reliability</div>
-      <h3>Delivery at scale, consent enforced</h3>
-      <p class="cap">Invites used to stop at 1,000 per run and never resume; they now run in batches until the queue drains, with a sweep that recovers stranded ones. One-click unsubscribe and opt-out enforcement reach the API, the mail Lambda and all 110 templates.</p>
-      <div class="ui win" id="deliver" data-mode="new">
+    <article class="proj sm" style="--tint:var(--lime);--tint2:var(--sky)">
+      <div class="stage">
+        <div class="ui win" id="deliver" data-mode="new">
         <div class="hd"><span>deliver invites · 1,343 queued</span><span class="st">drained</span></div>
         <div class="meter"><span class="bar"><i style="--w:100%"></i><em class="wall" aria-hidden="true"></em></span><b class="n">1,343</b></div>
         <div class="cells" aria-hidden="true"><i class="sent"></i><i class="sent"></i><i class="sent"></i><i class="sent"></i><i class="sent"></i><i class="sent"></i><i class="sent"></i></div>
@@ -274,28 +322,14 @@
           <button type="button" class="tbtn on" data-act="new">Run the new version</button>
         </div>
       </div>
-    </article>
-
-    <!-- i. codebase archaeology: ask one of three questions -->
-    <article class="card c7" style="--tint:var(--violet)">
-      <div class="eyebrow"><i></i>Open source · 2026</div>
-      <h3>Codebase Archaeology</h3>
-      <p class="cap">Answers “why does this code exist” from git history, PR discussions and linked issues, with every claim cited to a commit or comment, and abstains when evidence is thin. Python, Postgres 16 + pgvector, served over MCP and REST.</p>
-      <div class="out"><a href="https://github.com/Roninanu777/codebase-archaeology">GitHub</a><a href="https://codebase-archaeology.pages.dev">Live demo</a></div>
-      <div class="ui win chat" id="arch">
-        <div class="hd"><span>archaeology · ask</span><span>pgvector + BM25 → RRF</span></div>
-        <div class="thread" aria-live="polite">
-          <div class="bub q">why does retry_backoff exist?</div>
-          <div class="bub a">Added after a Postmark outage caused duplicate sends. Backoff is capped at five tries because the queue re-enqueues on failure.<span class="cite">cited: commit 7fd44e2 · PR #212 comment</span></div>
-        </div>
-        <div class="asks" role="group" aria-label="Ask a question">
-          <button type="button" class="chip" data-q="0">why does retry_backoff exist?</button>
-          <button type="button" class="chip" data-q="1">why is sharp pinned to 0.32?</button>
-          <button type="button" class="chip" data-q="2">why is legacy_scheduler still here?</button>
-        </div>
+      </div>
+      <div class="info">
+        <h3>Invites that finish sending</h3>
+        <p class="kind">Reliability</p>
+        <p class="cap">Invites used to stop at 1,000 per run. Now they drain the queue, with a recovery sweep and opt-outs enforced across all 110 email templates.</p>
       </div>
     </article>
-
+    </div>
   </section>
 
   <section class="plain" id="experience">
