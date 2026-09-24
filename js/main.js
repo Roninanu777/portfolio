@@ -106,6 +106,7 @@ const WX = (code) => {
     ks.forEach((k, i) => ridges[i].setAttribute('fill', mix(base, bg, k)));
     const night = alt < -4;
     scene.classList.toggle('night', night);
+    scene.classList.toggle('twilight', !night && alt < 7);
     // sun: across the sky with the hour angle, height with altitude
     const sx = 800 + clamp(ha / 100, -1.1, 1.1) * 680, sy = 300 - alt * 7;
     sun.setAttribute('cx', sx); sun.setAttribute('cy', sy); glow.setAttribute('cx', sx); glow.setAttribute('cy', Math.min(sy, 330));
@@ -276,6 +277,30 @@ const WX = (code) => {
   btn.addEventListener('contextmenu', (e) => e.preventDefault());
   needle.setAttribute('transform', `rotate(${ang(0)})`);
   rpmEl.textContent = 'off';
+})();
+
+// Off the clock: a 24-frame Blender turntable of the Interceptor. Frames load
+// when the panel gets close; it turns slowly on its own until someone drags it.
+(function turntable() {
+  const box = $('#spin');
+  if (!box) return;
+  const img = $('img', box), N = 24;
+  const src = (k) => `assets/interceptor/spin-${String(k).padStart(2, '0')}.webp`;
+  let i = 0, loaded = false, auto = 0, drag = null, touched = false;
+  const cache = [];
+  function load() { if (loaded) return; loaded = true; for (let k = 0; k < N; k++) { const im = new Image(); im.decoding = 'async'; im.src = src(k); cache.push(im); } }
+  function show(k) { i = ((k % N) + N) % N; img.src = src(i); }
+  function play() { if (reduceMotion || touched || auto) return; auto = setInterval(() => show(i + 1), 160); }
+  function stop() { clearInterval(auto); auto = 0; }
+  function use() { touched = true; stop(); box.classList.add('used'); }
+  new IntersectionObserver(([e]) => { if (e.isIntersecting) load(); }, { rootMargin: '600px' }).observe(box);
+  new IntersectionObserver(([e]) => { e.isIntersecting ? play() : stop(); }, { threshold: 0.5 }).observe(box);
+  box.addEventListener('pointerdown', (e) => { use(); drag = { x: e.clientX, i }; box.setPointerCapture(e.pointerId); });
+  box.addEventListener('pointermove', (e) => { if (drag) show(drag.i - Math.round((e.clientX - drag.x) / 16)); });
+  ['pointerup', 'pointercancel'].forEach((ev) => box.addEventListener(ev, () => { drag = null; }));
+  box.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); use(); show(i + (e.key === 'ArrowRight' ? -1 : 1)); }
+  });
 })();
 
 // Off the clock: keepy-uppy. Tap the ball before it hits the ground.

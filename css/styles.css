@@ -97,7 +97,11 @@ body { overflow-x: clip; }
 .land .clouds { animation: drift 90s linear infinite alternate; }
 @keyframes drift { to { transform: translateX(-60px); } }
 .land .r3 { fill: var(--bg); }
-.rider { color: var(--bg); cursor: pointer; outline: none; }
+.rider { cursor: pointer; outline: none; }
+/* the render is lit like a studio; dim and cool it to sit in the scene's light */
+.rider .bike { transition: filter 1.2s ease; filter: brightness(.92) saturate(.95); }
+.scene.twilight .rider .bike { filter: brightness(.62) saturate(.8) sepia(.12); }
+.scene.night .rider .bike { filter: brightness(.34) saturate(.55) hue-rotate(10deg); }
 .rider .beam { opacity: 0; transition: opacity 1s ease; }
 .scene.night .rider .beam { opacity: 1; }
 .rider .lamp-dot { fill: #FFE7A3; opacity: 0; transition: opacity 1s ease; }
@@ -493,11 +497,19 @@ button.chip:hover { color: var(--text); border-color: var(--tint); }
 .panel > p { margin: 0 4px; color: var(--muted); font-size: 15.5px; line-height: 1.6; max-width: 52ch; }
 .panel .say { position: absolute; left: 0; right: 0; bottom: 18px; margin: 0; text-align: center; font-size: 14px; color: rgba(255, 255, 255, .75); min-height: 1.4em; }
 
+.moto { grid-column: 1 / -1; }
 .moto .play {
-  display: grid; place-items: center; align-content: center; gap: 6px; padding-bottom: 34px;
-  background: radial-gradient(80% 70% at 50% 20%, #2A2A2E, transparent 70%), linear-gradient(#1B1B1E, #111113);
+  height: 420px; display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); align-items: center;
+  background: radial-gradient(70% 80% at 35% 30%, #2C2C31, transparent 70%), linear-gradient(#1B1B1E, #111113);
 }
-.gauge { width: min(260px, 70%); height: auto; overflow: visible; }
+.spin { position: relative; height: 100%; display: grid; place-items: center; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.spin:active { cursor: grabbing; }
+.spin img { width: 100%; height: auto; pointer-events: none; }
+.spin .hint { position: absolute; left: 22px; bottom: 18px; font-size: 13px; color: rgba(255, 255, 255, .55); transition: opacity .4s ease; }
+.spin.used .hint { opacity: 0; }
+.moto.shake .spin img { animation: shake .05s linear infinite; }
+.dash { position: relative; height: 100%; display: grid; place-items: center; align-content: center; gap: 6px; padding-bottom: 34px; border-left: 1px solid rgba(255, 255, 255, .06); }
+.gauge { width: min(250px, 78%); height: auto; overflow: visible; }
 .gauge .track { fill: none; stroke: #3A3B40; stroke-width: 6; stroke-linecap: round; }
 .gauge .red { fill: none; stroke: #E5484D; stroke-width: 6; stroke-linecap: round; }
 .gauge .ticks line { stroke: #8B8D94; stroke-width: 2; stroke-linecap: round; }
@@ -559,6 +571,10 @@ button.chip:hover { color: var(--text); border-color: var(--tint); }
 /* responsive --------------------------------------------------------- */
 @media (max-width: 1000px) {
   .off-grid { grid-template-columns: minmax(0, 1fr); }
+  .moto .play { height: auto; grid-template-columns: minmax(0, 1fr); }
+  .spin { height: auto; aspect-ratio: 16 / 10; }
+  .spin img { width: 100%; }
+  .dash { border-left: 0; border-top: 1px solid rgba(255, 255, 255, .06); padding: 24px 0 48px; }
   .more { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .proj.wide .info { grid-template-columns: minmax(0, 1fr); }
   .proj.wide .info .cap, .proj.wide .info .out { grid-column: 1; grid-row: auto; margin-top: 8px; }
@@ -582,7 +598,7 @@ button.chip:hover { color: var(--text); border-color: var(--tint); }
   .intro { margin-top: -16px; padding-bottom: 72px; }
   .ride-btn { display: none; }
   .ride, .off { padding-top: 104px; }
-  .panel .play { height: 300px; }
+  .fball .play { height: 300px; }
   .nav .links a { padding: 6px 7px; }
   .nav .links .in, .nav .links .sep { display: none; }
   .tr .ln { grid-template-columns: 1fr; gap: 0; }
