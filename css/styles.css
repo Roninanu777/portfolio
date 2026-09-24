@@ -527,6 +527,16 @@ button.chip:hover { color: var(--text); border-color: var(--tint); }
   box-shadow: 0 6px 20px -8px rgba(0, 0, 0, .8);
 }
 .throttle.on { background: #FF7A45; color: #111; }
+.snd {
+  position: absolute; top: 14px; right: 14px; display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 10px; border-radius: 999px; cursor: pointer; font-size: 12.5px; color: rgba(255, 255, 255, .7);
+  background: rgba(255, 255, 255, .05); border: 1px solid rgba(255, 255, 255, .12);
+}
+.snd:hover { color: #fff; border-color: rgba(255, 255, 255, .3); }
+.snd svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.snd .spk { fill: currentColor; stroke: none; }
+.snd .x, .snd[aria-pressed="false"] .w1, .snd[aria-pressed="false"] .w2 { display: none; }
+.snd[aria-pressed="false"] .x { display: inline; }
 
 .fball .play {
   cursor: default; touch-action: manipulation;

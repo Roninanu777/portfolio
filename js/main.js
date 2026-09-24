@@ -225,6 +225,55 @@ const WX = (code) => {
   update();
 })();
 
+// Engine sound for the rev counter, synthesised with Web Audio (no recordings).
+// The Interceptor's parallel twin has a 270-degree crank, so each 720-degree cycle
+// has two firing pulses 270 degrees apart: the uneven, V-twin-like burble.
+function engineAudio() {
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return null;
+  let ctx, osc, lp, master, timer = 0;
+  function build() {
+    ctx = new AC();
+    const N = 96, re = new Float32Array(N + 1), im = new Float32Array(N + 1);
+    for (let n = 1; n <= N; n++) {
+      const a = 1 / (1 + (n / 14) ** 1.6);                    // soft, thumpy pulse
+      for (const p of [0, 270 / 720]) { re[n] += a * Math.cos(2 * Math.PI * n * p); im[n] -= a * Math.sin(2 * Math.PI * n * p); }
+    }
+    osc = ctx.createOscillator();
+    osc.setPeriodicWave(ctx.createPeriodicWave(re, im));
+    osc.frequency.value = 8;
+    const shaper = ctx.createWaveShaper(), curve = new Float32Array(1024);
+    for (let i = 0; i < 1024; i++) curve[i] = Math.tanh(2.4 * (i / 511.5 - 1));
+    shaper.curve = curve; shaper.oversample = '2x';
+    lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 1.1; lp.frequency.value = 500;
+    // exhaust hiss: band-passed noise, gated by the same firing pulses
+    const buf = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    const noise = ctx.createBufferSource(); noise.buffer = buf; noise.loop = true;
+    const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1100; bp.Q.value = 0.8;
+    const gate = ctx.createGain(); gate.gain.value = 0;
+    const depth = ctx.createGain(); depth.gain.value = 0.3;
+    osc.connect(depth).connect(gate.gain);
+    noise.connect(bp).connect(gate).connect(lp);
+    master = ctx.createGain(); master.gain.value = 0;
+    const comp = ctx.createDynamicsCompressor();
+    osc.connect(shaper).connect(lp);
+    lp.connect(master).connect(comp).connect(ctx.destination);
+    osc.start(); noise.start();
+  }
+  return {
+    wake() { clearTimeout(timer); if (!ctx) build(); if (ctx.state === 'suspended') ctx.resume(); },
+    set(rpm, level, load) {
+      if (!ctx) return;
+      const t = ctx.currentTime;
+      osc.frequency.setTargetAtTime(Math.max(rpm, 60) / 120, t, 0.02);          // one 720-degree cycle
+      lp.frequency.setTargetAtTime(320 + rpm * (load ? 0.62 : 0.42), t, 0.05);    // brighter under throttle
+      master.gain.setTargetAtTime(level, t, 0.06);
+    },
+    sleep() { if (!ctx) return; master.gain.setTargetAtTime(0, ctx.currentTime, 0.15); clearTimeout(timer); timer = setTimeout(() => ctx.suspend(), 900); },
+  };
+}
+
 // Off the clock: hold the button to rev the Interceptor. Redline at 7,000.
 (function rev() {
   const panel = $('.moto');
@@ -252,29 +301,53 @@ const WX = (code) => {
     }
     ticks.append(l);
   }
-  const IDLE = 1000;
-  let rpm = 0, held = false, last = 0, running = false, peaked = false;
+  const audio = engineAudio(), snd = $('#snd');
+  let soundOn = true;
+  try { soundOn = localStorage.getItem('rev-sound') !== '0'; } catch {}
+  let rpm = 0, held = false, last = 0, looping = false, peaked = false;
+  // the needle rests at 0: holding revs it up, letting go lets it fall all the way back
   function frame(now) {
     const dt = last ? clamp((now - last) / 1000, 0, 0.05) : 0; last = now;
-    const target = held ? MAX - 150 : IDLE;
-    rpm += (target - rpm) * (held ? 2.2 : 3.2) * dt + (Math.random() - 0.5) * 60;
+    const target = held ? MAX - 150 : 0;
+    rpm += (target - rpm) * (held ? 2.2 : 2.6) * dt + (held ? (Math.random() - 0.5) * 60 : 0);
     rpm = clamp(rpm, 0, MAX);
     needle.setAttribute('transform', `rotate(${ang(rpm).toFixed(2)})`);
-    rpmEl.textContent = (rpm / 1000).toFixed(1);
+    rpmEl.textContent = rpm > 60 ? (rpm / 1000).toFixed(1) : 'off';
     panel.classList.toggle('shake', rpm > 5500);
     if (rpm > 7000 && !peaked) { peaked = true; say.textContent = 'Easy. No need to redline it.'; }
     if (rpm < 2500 && peaked) { peaked = false; say.textContent = 'That’s better. Nice and calm.'; }
-    if (held || Math.abs(rpm - IDLE) > 40) requestAnimationFrame(frame);
-    else { running = false; panel.classList.remove('shake'); }
+    if (audio) audio.set(rpm, soundOn ? (0.16 + 0.26 * (rpm / MAX)) * Math.min(1, rpm / 900) : 0, held);
+    if (held || rpm > 20) requestAnimationFrame(frame);
+    else { looping = false; rpm = 0; rpmEl.textContent = 'off'; needle.setAttribute('transform', `rotate(${ang(0)})`); panel.classList.remove('shake'); if (audio) audio.sleep(); }
   }
-  function kick() { if (!running) { running = true; last = 0; requestAnimationFrame(frame); } }
-  function start(e) { e.preventDefault(); held = true; btn.classList.add('on'); btn.textContent = 'Revving…'; if (rpm < IDLE) rpm = IDLE; kick(); }
+  function kick() { if (!looping) { looping = true; last = 0; requestAnimationFrame(frame); } }
+  function start(e) {
+    e.preventDefault();
+    if (audio && soundOn) audio.wake();
+    held = true; btn.classList.add('on'); btn.textContent = 'Revving…'; kick();
+  }
   function stop() { if (!held) return; held = false; btn.classList.remove('on'); btn.textContent = 'Hold to rev'; kick(); }
+  function kill() { stop(); }
   btn.addEventListener('pointerdown', start);
   ['pointerup', 'pointerleave', 'pointercancel', 'blur'].forEach((ev) => btn.addEventListener(ev, stop));
   btn.addEventListener('keydown', (e) => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) start(e); });
   btn.addEventListener('keyup', (e) => { if (e.key === ' ' || e.key === 'Enter') stop(); });
   btn.addEventListener('contextmenu', (e) => e.preventDefault());
+  document.addEventListener('visibilitychange', () => { if (document.hidden) kill(); });
+  function paintSound() {
+    snd.setAttribute('aria-pressed', String(soundOn));
+    $('span', snd).textContent = soundOn ? 'Sound on' : 'Sound off';
+  }
+  if (snd) {
+    if (!audio) snd.hidden = true;
+    paintSound();
+    snd.addEventListener('click', () => {
+      soundOn = !soundOn;
+      try { localStorage.setItem('rev-sound', soundOn ? '1' : '0'); } catch {}
+      if (soundOn && looping && audio) audio.wake();
+      paintSound();
+    });
+  }
   needle.setAttribute('transform', `rotate(${ang(0)})`);
   rpmEl.textContent = 'off';
 })();
