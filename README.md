@@ -6,7 +6,7 @@ Design direction: **a portfolio that feels like Roni.** The page opens on the li
 
 - **Things I own**: every shipped product surface is a small working window on a lit stage. Play the voice interview, replay the agent run, scrub the spend chart, ship the LiveKit release, send the API request, flip billing roles, search participants, switch research methods, run the old and new invite delivery, ask Codebase Archaeology a question.
 - **The ride so far**: the story as a road, from the 2020 hostel weather app to now. A headlight rides down it as you scroll.
-- **Off the clock**: a Blender turntable of the Interceptor you can drag to turn, a rev counter to hold, and a Barça keepy-uppy game.
+- **Off the clock**: a Blender turntable of the Interceptor you drag to see all the way round, a rev counter to hold, and a Barça keepy-uppy game.
 
 The alternative directions explored earlier are parked in `explorations/`.
 
