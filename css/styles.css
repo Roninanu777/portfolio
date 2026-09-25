@@ -545,6 +545,26 @@ button.chip:hover { color: var(--text); border-color: var(--tint); }
 .ball .patch { fill: #1A1A1A; }
 .ball .seam { stroke: #1A1A1A; stroke-width: 2; fill: none; }
 .fball .say.cheer { color: #EDBB00; font-weight: 600; }
+.score .rec { text-align: right; }
+.score .rec small { display: block; margin-top: 2px; font-size: 12px; color: rgba(255, 255, 255, .6); max-width: 18ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-left: auto; }
+.claim {
+  position: absolute; inset: 0; z-index: 3; display: grid; place-content: center; justify-items: center; gap: 8px; padding: 20px;
+  background: rgba(8, 10, 20, .72); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); text-align: center;
+}
+.claim[hidden] { display: none; }
+.claim-h { margin: 0; font-size: 18px; font-weight: 600; color: #fff; }
+.claim-h b { color: #EDBB00; }
+.claim label { font-size: 14px; color: rgba(255, 255, 255, .75); }
+.claim-row { display: flex; gap: 8px; }
+.claim input {
+  width: min(220px, 55vw); padding: 9px 12px; border-radius: 10px; font: inherit; font-size: 15px; color: #fff;
+  background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .25); outline: none;
+}
+.claim input:focus { border-color: #EDBB00; }
+.claim button[type="submit"] { padding: 9px 16px; border-radius: 10px; border: 0; font: inherit; font-weight: 600; font-size: 14px; color: #111; background: #EDBB00; cursor: pointer; }
+.claim button[type="submit"]:disabled { opacity: .6; cursor: default; }
+.claim-skip { background: none; border: 0; color: rgba(255, 255, 255, .6); font: inherit; font-size: 13px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.claim-err { margin: 0; min-height: 1.3em; font-size: 13px; color: #FF9A8A; }
 
 .stack { margin: 0; }
 .stack > div { display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding: 16px 0; border-top: 1px solid var(--border); }

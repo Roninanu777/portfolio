@@ -6,7 +6,7 @@ Design direction: **a portfolio that feels like Roni.** The page opens on the li
 
 - **Things I own**: every shipped product surface is a small working window on a lit stage. Play the voice interview, replay the agent run, scrub the spend chart, ship the LiveKit release, send the API request, flip billing roles, search participants, switch research methods, run the old and new invite delivery, ask Codebase Archaeology a question.
 - **The ride so far**: the story as a road, from the 2020 hostel weather app to now. A headlight rides down it as you scroll.
-- **Off the clock**: an Interceptor rev counter to hold (with a synthesised engine sound) and a Barça keepy-uppy game.
+- **Off the clock**: an Interceptor rev counter to hold (with a synthesised engine sound) and a Barça keepy-uppy game with a shared record: whoever beats it puts their name on it.
 
 The alternative directions explored earlier are parked in `explorations/`.
 
@@ -45,6 +45,20 @@ $B --background blender/gt_stock.blend --python blender/render_gt_assets.py -- s
 The side render frames exactly 2.2 m × 1.8 m with the ground at the bottom edge, which is what the hero's `<image>` and headlamp beam coordinates assume. EEVEE renders black in headless sessions here, so the script uses Cycles on the CPU.
 
 `blender/interceptor.py` is an earlier Interceptor built entirely from primitives (profiles traced from CC BY-SA photos on Wikimedia Commons by Auge=mit), kept as a fallback.
+
+## Keepy-uppy record
+
+`src/worker.js` serves `/api/keepy` from the Workers KV namespace `KEEPY` (bound in `wrangler.jsonc`). It stores one `record` key (`{ score, name, at }`), a `secret` key used to sign round tickets (created automatically on first use), and short-lived `used:<id>` keys so each ticket works once.
+
+Each round asks for a signed ticket on its first kick. A claimed score is accepted only if the ticket is genuine, unused, under 30 minutes old, and the score was possible in that time (at most 8 kicks a second, 999 overall). Names are 1–20 letters, numbers or spaces and are shown with `textContent`. This stops casual cheating, not a determined one.
+
+To reset the record, or remove a name you don't want on the site:
+
+```sh
+npx wrangler kv key delete record --namespace-id 7ac9df86490d4294879239ff8c5e7231 --remote
+```
+
+Test locally with `./build.sh && npx wrangler dev --local --local-protocol https` (the local store lives in `.wrangler/`). Opened as a plain file, the game falls back to a per-browser best.
 
 ## Resume PDF
 

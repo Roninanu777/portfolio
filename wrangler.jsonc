@@ -10,6 +10,10 @@
     { "pattern": "ronipradhan.dev", "custom_domain": true },
     { "pattern": "www.ronipradhan.dev", "custom_domain": true }
   ],
+  // Shared keepy-uppy record (score, name, date) plus the key that signs round tickets.
+  "kv_namespaces": [
+    { "binding": "KEEPY", "id": "7ac9df86490d4294879239ff8c5e7231" }
+  ],
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",

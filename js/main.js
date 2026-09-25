@@ -389,18 +389,38 @@ function engineAudio() {
 })();
 
 // Off the clock: keepy-uppy. Tap the ball before it hits the ground.
+// The record is shared: /api/keepy holds the best score and whoever set it. Each round
+// asks for a signed ticket on its first kick; beating the record lets you claim it by name.
+// Without the API (a local file preview, or offline) it falls back to this browser's best.
 (function keepyUppy() {
   const pitch = $('#pitch');
   if (!pitch) return;
-  const ball = $('#ball'), kc = $('#kc'), kb = $('#kb'), say = $('#kick-say');
+  const ball = $('#ball'), kc = $('#kc'), kb = $('#kb'), kl = $('#kl'), kn = $('#kn'), say = $('#kick-say');
+  const claim = $('#claim'), claimN = $('#claim-n'), claimName = $('#claim-name'), claimErr = $('#claim-err');
   const R = 28, G = 2100;
+  const api = location.protocol.startsWith('http');
+  let record = { score: 0, name: '' }, shared = false, ticket = null, pending = 0;
   let best = 0;
   try { best = +localStorage.getItem('keepy-best') || 0; } catch {}
-  kb.textContent = best;
+  function paintRecord() {
+    if (shared) { kl.textContent = 'Record'; kb.textContent = record.score; kn.textContent = record.name ? record.name : ''; }
+    else { kl.textContent = 'Best'; kb.textContent = best; kn.textContent = ''; }
+  }
+  paintRecord();
+  if (api) fetch('/api/keepy').then((r) => (r.ok ? r.json() : null)).then((d) => { if (d) { record = d; shared = true; paintRecord(); } }).catch(() => {});
+
   let x = 0, y = 0, vx = 0, vy = 0, spin = 0, count = 0, airborne = false, last = 0, raf = 0;
   const size = () => [pitch.clientWidth, pitch.clientHeight - 40];
   function rest() { const [w, h] = size(); x = w / 2 - R; y = h - 2 * R; draw(); }
   function draw() { ball.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) rotate(${spin.toFixed(0)}deg)`; }
+  function dropped() {
+    const n = count;
+    count = 0; kc.textContent = 0; say.classList.remove('cheer');
+    if (!n) return;
+    if (shared && n > record.score && ticket) { openClaim(n, ticket); ticket = null; return; }
+    ticket = null;
+    say.textContent = !shared && n >= best && n > 1 ? `New best: ${n}. Not bad.` : `Dropped it at ${n}. Go again.`;
+  }
   function frame(now) {
     // rAF timestamps can predate the kick that started the loop; never step backwards
     const dt = last ? clamp((now - last) / 1000, 0, 0.033) : 0; last = now;
@@ -411,11 +431,7 @@ function engineAudio() {
     if (y < 44) { y = 44; vy = Math.abs(vy) * 0.3; }
     if (y >= h - 2 * R && vy >= 0) {   // only a falling ball lands; a fresh kick is still on the grass
       y = h - 2 * R;
-      if (airborne) {
-        airborne = false;
-        if (count > 0) say.textContent = count >= best && count > 1 ? `New best: ${count}. Not bad.` : `Dropped it at ${count}. Go again.`;
-        count = 0; kc.textContent = 0; say.classList.remove('cheer');
-      }
+      if (airborne) { airborne = false; dropped(); }
       vy = -vy * 0.35; vx *= 0.8;
       if (Math.abs(vy) < 60) { vy = 0; if (Math.abs(vx) < 8) { draw(); raf = 0; return; } }
     }
@@ -430,15 +446,44 @@ function engineAudio() {
   });
   ball.addEventListener('keydown', (e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); kick((Math.random() - 0.5) * 0.6); } });
   function kick(off) {
+    if (!claim.hidden) return;
     vy = -(820 + Math.random() * 140);
     vx = vx * 0.4 - off * 260 + (Math.random() - 0.5) * 120;
     airborne = true; count++;
     kc.textContent = count;
-    if (count > best) { best = count; kb.textContent = best; try { localStorage.setItem('keepy-best', best); } catch {} }
-    if (count === 10) { say.textContent = 'Visca el Barça!'; say.classList.add('cheer'); }
-    else if (count < 10) say.textContent = count === 1 ? 'Keep it up…' : '';
+    // first kick of a round: ask for a ticket so a record can be claimed afterwards
+    if (count === 1 && shared) ticket = fetch('/api/keepy/start', { method: 'POST' }).then((r) => (r.ok ? r.json() : null)).then((d) => d && d.ticket).catch(() => null);
+    if (count > best) { best = count; if (!shared) kb.textContent = best; try { localStorage.setItem('keepy-best', best); } catch {} }
+    if (shared && count === record.score + 1 && record.score > 0) { say.textContent = 'New record. Keep going!'; say.classList.add('cheer'); }
+    else if (count === 10) { say.textContent = 'Visca el Barça!'; say.classList.add('cheer'); }
+    else if (count < 10 && !(shared && count > record.score && record.score > 0)) say.textContent = count === 1 ? 'Keep it up…' : '';
     if (!raf) { last = 0; raf = requestAnimationFrame(frame); }
   }
+
+  let claimTicket = null;
+  function openClaim(n, t) {
+    pending = n; claimTicket = t;
+    claimN.textContent = n; claimErr.textContent = ''; say.textContent = '';
+    try { claimName.value = localStorage.getItem('keepy-name') || ''; } catch {}
+    claim.hidden = false; claimName.focus();
+  }
+  function closeClaim(msg) { claim.hidden = true; claimTicket = null; if (msg) say.textContent = msg; }
+  $('#claim-skip').addEventListener('click', () => closeClaim(`Dropped it at ${pending}. Go again.`));
+  claim.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = claimName.value.trim();
+    const btn = $('button[type="submit"]', claim); btn.disabled = true; claimErr.textContent = '';
+    try {
+      const t = await claimTicket;
+      if (!t) throw new Error('Could not reach the scoreboard. Try another round.');
+      const r = await fetch('/api/keepy', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ score: pending, name, ticket: t }) });
+      const d = await r.json();
+      if (r.status === 201) { record = d; paintRecord(); try { localStorage.setItem('keepy-name', name); } catch {} closeClaim(`Record saved. It’s yours, ${name}.`); }
+      else if (r.status === 409) { record = d; paintRecord(); closeClaim(`Someone just set ${d.score}. Go again.`); }
+      else throw new Error(d.error || 'That didn’t save. Try again.');
+    } catch (err) { claimErr.textContent = err.message; }
+    finally { btn.disabled = false; }
+  });
   rest();
   let wait;
   addEventListener('resize', () => { clearTimeout(wait); wait = setTimeout(() => { if (!raf) rest(); }, 150); });

@@ -431,11 +431,21 @@
       </article>
       <article class="panel fball">
         <div class="play pitch" id="pitch">
-          <p class="score"><span>Keepy-uppies <b id="kc">0</b></span><span>Best <b id="kb">0</b></span></p>
+          <p class="score"><span>Keepy-uppies <b id="kc">0</b></span><span class="rec"><span id="kl">Best</span> <b id="kb">0</b><small id="kn"></small></span></p>
           <button type="button" class="ball" id="ball" aria-label="Kick the ball">
             <svg viewBox="-50 -50 100 100" aria-hidden="true"><circle r="47" class="leather"/><path class="patch" d="M0,-16 L15.2,-4.9 L9.4,12.9 L-9.4,12.9 L-15.2,-4.9 Z"/><path class="seam" d="M0,-16 L0,-34 M15.2,-4.9 L32,-11 M9.4,12.9 L20,28 M-9.4,12.9 L-20,28 M-15.2,-4.9 L-32,-11"/><path class="patch" d="M-8,-47 L8,-47 L0,-34 Z M47,-6 L41,12 L32,-11 Z M30,38 L12,46 L20,28 Z M-30,38 L-12,46 L-20,28 Z M-47,-6 L-41,12 L-32,-11 Z"/></svg>
           </button>
           <p class="say" id="kick-say" aria-live="polite">Tap the ball to keep it up.</p>
+          <form class="claim" id="claim" hidden>
+            <p class="claim-h">New record: <b id="claim-n">0</b></p>
+            <label for="claim-name">Put your name on it</label>
+            <div class="claim-row">
+              <input id="claim-name" name="name" maxlength="20" autocomplete="nickname" spellcheck="false" required placeholder="Your name">
+              <button type="submit">Save</button>
+            </div>
+            <button type="button" class="claim-skip" id="claim-skip">Skip</button>
+            <p class="claim-err" id="claim-err" aria-live="polite"></p>
+          </form>
         </div>
         <h3>Football</h3>
         <p>I play football and support Barça, win or lose. Visca el Barça.</p>
