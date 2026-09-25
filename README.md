@@ -31,21 +31,21 @@ resume/             resume source (resume.html), local IBM Plex fonts, build scr
 
 `js/main.js` computes the sun's altitude over Itanagar with the NOAA solar equations and colours the sky, hills, sun, moon and stars from it every 30 seconds. Weather comes from Open-Meteo (free, no key, called from the visitor's browser every 15 minutes); if that request fails the sky still works and the weather text is simply left out.
 
-## The Interceptor model
+## The bike model
 
-The renders in `assets/interceptor/` (hero rider sprite and the 24-frame turntable) come from a Continental GT 650 model that was converted into an Interceptor in Blender: the GT's clip-on bars, café seat, tank and knobbly tyres were removed and replaced with an Interceptor tank, long bench seat, braced roadster bar with round mirrors, and road tyres. The converted scene is `blender/ic_from_gt.blend`, which is gitignored and never published because the base mesh is third-party.
+The renders in `assets/interceptor/` (hero rider sprite and the 24-frame turntable) are of a stock Royal Enfield Continental GT 650, the Interceptor's café-racer twin, with a simple rider added for the hero. The page says so in the Off the clock caption. The scene is `blender/gt_stock.blend`, which is gitignored and never published because the bike mesh is third-party. (`blender/ic_from_gt.blend` is an abandoned attempt to convert it into an Interceptor.)
 
 Re-render from it with:
 
 ```sh
 B=/Applications/Blender.app/Contents/MacOS/Blender
-$B --background blender/ic_from_gt.blend --python blender/render_gt_assets.py -- side assets/interceptor/rider.webp 440
-$B --background blender/ic_from_gt.blend --python blender/render_gt_assets.py -- spin assets/interceptor 24
+$B --background blender/gt_stock.blend --python blender/render_gt_assets.py -- side assets/interceptor/rider.webp 440
+$B --background blender/gt_stock.blend --python blender/render_gt_assets.py -- spin assets/interceptor 24
 ```
 
 The side render frames exactly 2.2 m × 1.8 m with the ground at the bottom edge, which is what the hero's `<image>` and headlamp beam coordinates assume. EEVEE renders black in headless sessions here, so the script uses Cycles on the CPU.
 
-`blender/interceptor.py` is the earlier model built entirely from primitives (profiles traced from CC BY-SA photos on Wikimedia Commons by Auge=mit). It is kept as a fallback and no longer used for the site assets.
+`blender/interceptor.py` is an earlier Interceptor built entirely from primitives (profiles traced from CC BY-SA photos on Wikimedia Commons by Auge=mit), kept as a fallback.
 
 ## Resume PDF
 
