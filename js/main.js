@@ -388,27 +388,6 @@ function engineAudio() {
   rpmEl.textContent = 'off';
 })();
 
-// Off the clock: a 24-frame Blender turntable of the Interceptor. It only turns
-// when someone drags it (or uses the arrow keys); frames load as the panel gets close.
-(function turntable() {
-  const box = $('#spin');
-  if (!box) return;
-  const img = $('img', box), N = 24;
-  const src = (k) => `assets/interceptor/spin-${String(k).padStart(2, '0')}.webp`;
-  let i = 0, loaded = false, drag = null;
-  const cache = [];
-  function load() { if (loaded) return; loaded = true; for (let k = 0; k < N; k++) { const im = new Image(); im.decoding = 'async'; im.src = src(k); cache.push(im); } }
-  function show(k) { i = ((k % N) + N) % N; img.src = src(i); }
-  function use() { load(); box.classList.add('used'); }
-  new IntersectionObserver(([e]) => { if (e.isIntersecting) load(); }, { rootMargin: '600px' }).observe(box);
-  box.addEventListener('pointerdown', (e) => { use(); drag = { x: e.clientX, i }; box.setPointerCapture(e.pointerId); });
-  box.addEventListener('pointermove', (e) => { if (drag) show(drag.i - Math.round((e.clientX - drag.x) / 16)); });
-  ['pointerup', 'pointercancel'].forEach((ev) => box.addEventListener(ev, () => { drag = null; }));
-  box.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); use(); show(i + (e.key === 'ArrowRight' ? -1 : 1)); }
-  });
-})();
-
 // Off the clock: keepy-uppy. Tap the ball before it hits the ground.
 (function keepyUppy() {
   const pitch = $('#pitch');

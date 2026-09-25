@@ -497,18 +497,10 @@ button.chip:hover { color: var(--text); border-color: var(--tint); }
 .panel > p { margin: 0 4px; color: var(--muted); font-size: 15.5px; line-height: 1.6; max-width: 52ch; }
 .panel .say { position: absolute; left: 0; right: 0; bottom: 18px; margin: 0; text-align: center; font-size: 14px; color: rgba(255, 255, 255, .75); min-height: 1.4em; }
 
-.moto { grid-column: 1 / -1; }
 .moto .play {
-  height: 420px; display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); align-items: center;
-  background: radial-gradient(70% 80% at 35% 30%, #2C2C31, transparent 70%), linear-gradient(#1B1B1E, #111113);
+  background: radial-gradient(80% 70% at 50% 20%, #2A2A2E, transparent 70%), linear-gradient(#1B1B1E, #111113);
 }
-.spin { position: relative; height: 100%; display: grid; place-items: center; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
-.spin:active { cursor: grabbing; }
-.spin img { width: 100%; height: auto; pointer-events: none; }
-.spin .hint { position: absolute; left: 22px; bottom: 18px; font-size: 13px; color: rgba(255, 255, 255, .55); transition: opacity .4s ease; }
-.spin.used .hint { opacity: 0; }
-.moto.shake .spin img { animation: shake .05s linear infinite; }
-.dash { position: relative; height: 100%; display: grid; place-items: center; align-content: center; gap: 6px; padding-bottom: 34px; border-left: 1px solid rgba(255, 255, 255, .06); }
+.dash { position: relative; height: 100%; display: grid; place-items: center; align-content: center; gap: 6px; padding-bottom: 34px; }
 .gauge { width: min(250px, 78%); height: auto; overflow: visible; }
 .gauge .track { fill: none; stroke: #3A3B40; stroke-width: 6; stroke-linecap: round; }
 .gauge .red { fill: none; stroke: #E5484D; stroke-width: 6; stroke-linecap: round; }
@@ -581,10 +573,6 @@ button.chip:hover { color: var(--text); border-color: var(--tint); }
 /* responsive --------------------------------------------------------- */
 @media (max-width: 1000px) {
   .off-grid { grid-template-columns: minmax(0, 1fr); }
-  .moto .play { height: auto; grid-template-columns: minmax(0, 1fr); }
-  .spin { height: auto; aspect-ratio: 16 / 10; }
-  .spin img { width: 100%; }
-  .dash { border-left: 0; border-top: 1px solid rgba(255, 255, 255, .06); padding: 24px 0 48px; }
   .more { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .proj.wide .info { grid-template-columns: minmax(0, 1fr); }
   .proj.wide .info .cap, .proj.wide .info .out { grid-column: 1; grid-row: auto; margin-top: 8px; }

@@ -6,7 +6,7 @@ Design direction: **a portfolio that feels like Roni.** The page opens on the li
 
 - **Things I own**: every shipped product surface is a small working window on a lit stage. Play the voice interview, replay the agent run, scrub the spend chart, ship the LiveKit release, send the API request, flip billing roles, search participants, switch research methods, run the old and new invite delivery, ask Codebase Archaeology a question.
 - **The ride so far**: the story as a road, from the 2020 hostel weather app to now. A headlight rides down it as you scroll.
-- **Off the clock**: a Blender turntable of the Interceptor you drag to see all the way round, a rev counter to hold, and a Barça keepy-uppy game.
+- **Off the clock**: an Interceptor rev counter to hold (with a synthesised engine sound) and a Barça keepy-uppy game.
 
 The alternative directions explored earlier are parked in `explorations/`.
 
@@ -16,7 +16,7 @@ The alternative directions explored earlier are parked in `explorations/`.
 index.html          the page (all content lives here)
 css/styles.css      tokens, then one block per section
 js/main.js          sky, rider, story road, off-the-clock toys, then one block per work window
-assets/interceptor/ Blender renders: rider.webp (hero) and spin-00…23.webp (turntable)
+assets/interceptor/ Blender render: rider.webp (the hero rider)
 blender/interceptor.py
                     the Interceptor 650 model and render script (see below)
 assets/favicon.svg
@@ -33,14 +33,13 @@ resume/             resume source (resume.html), local IBM Plex fonts, build scr
 
 ## The bike model
 
-The renders in `assets/interceptor/` (hero rider sprite and the 24-frame turntable) are of a stock Royal Enfield Continental GT 650, the Interceptor's café-racer twin, with a simple rider added for the hero. The page says so in the Off the clock caption. The scene is `blender/gt_stock.blend`, which is gitignored and never published because the bike mesh is third-party. (`blender/ic_from_gt.blend` is an abandoned attempt to convert it into an Interceptor.)
+The hero rider sprite in `assets/interceptor/` is a stock Royal Enfield Continental GT 650, the Interceptor's café-racer twin, with a simple rider added. The scene is `blender/gt_stock.blend`, which is gitignored and never published because the bike mesh is third-party. (`blender/ic_from_gt.blend` is an abandoned attempt to convert it into an Interceptor.)
 
 Re-render from it with:
 
 ```sh
 B=/Applications/Blender.app/Contents/MacOS/Blender
 $B --background blender/gt_stock.blend --python blender/render_gt_assets.py -- side assets/interceptor/rider.webp 440
-$B --background blender/gt_stock.blend --python blender/render_gt_assets.py -- spin assets/interceptor 24
 ```
 
 The side render frames exactly 2.2 m × 1.8 m with the ground at the bottom edge, which is what the hero's `<image>` and headlamp beam coordinates assume. EEVEE renders black in headless sessions here, so the script uses Cycles on the CPU.
