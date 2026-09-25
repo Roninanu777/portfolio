@@ -532,11 +532,8 @@ button.chip:hover { color: var(--text); border-color: var(--tint); }
 
 .fball .play {
   cursor: default; touch-action: manipulation;
-  /* dark and low-contrast so long sessions are easy on the eyes; the blaugrana is only a hint */
-  background:
-    radial-gradient(70% 60% at 50% 100%, rgba(0, 77, 152, .16), transparent 70%),
-    repeating-linear-gradient(90deg, rgba(0, 77, 152, .07) 0 44px, rgba(165, 0, 68, .07) 44px 88px),
-    linear-gradient(#15161B, #0F1013);
+  /* plain and dark, the same as the rev counter panel, so long sessions are easy on the eyes */
+  background: radial-gradient(80% 70% at 50% 20%, #2A2A2E, transparent 70%), linear-gradient(#1B1B1E, #111113);
 }
 .fball .play::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 56px; background: linear-gradient(transparent, rgba(0, 0, 0, .35)); pointer-events: none; }
 .score { position: absolute; left: 18px; right: 18px; top: 16px; margin: 0; display: flex; justify-content: space-between; font-size: 14px; color: rgba(255, 255, 255, .8); z-index: 1; }
