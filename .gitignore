@@ -4,3 +4,7 @@ dist/
 .wrangler/
 resume/out/
 resume/.private
+
+# third-party GT 650 model converted to an Interceptor; not redistributed
+blender/*.blend
+blender/*.blend1

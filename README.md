@@ -33,17 +33,19 @@ resume/             resume source (resume.html), local IBM Plex fonts, build scr
 
 ## The Interceptor model
 
-`blender/interceptor.py` builds a Royal Enfield Interceptor 650 in the Black Ray colours and renders it with Cycles. The tank and seat are lofted from cross-sections, and every part's side profile was traced from two CC BY-SA 4.0 photos on Wikimedia Commons by Auge=mit ("Royal Enfield 650 Interceptor A-Seite noBG" and "B-Seite noBG"), scaled to the bike's 1,400 mm wheelbase. The photos were used only as modelling reference and are not published on the site. The `overlay` view renders at the photo's scale (660 px/m, rear axle at 353, 833 in a 1600 px frame) so the model can be checked against it. Blender 5.2 is at `/Applications/Blender.app`. EEVEE renders black in headless sessions here, so the script uses Cycles on the CPU.
+The renders in `assets/interceptor/` (hero rider sprite and the 24-frame turntable) come from a Continental GT 650 model that was converted into an Interceptor in Blender: the GT's clip-on bars, café seat, tank and knobbly tyres were removed and replaced with an Interceptor tank, long bench seat, braced roadster bar with round mirrors, and road tyres. The converted scene is `blender/ic_from_gt.blend`, which is gitignored and never published because the base mesh is third-party.
+
+Re-render from it with:
 
 ```sh
 B=/Applications/Blender.app/Contents/MacOS/Blender
-# hero sprite: side view with the rider, 440 px wide
-$B --background --factory-startup --python blender/interceptor.py -- side assets/interceptor/rider.webp rider 440 WEBP
-# turntable: 24 frames, about 5 minutes
-$B --background --factory-startup --python blender/interceptor.py -- spin assets/interceptor 24 all
+$B --background blender/ic_from_gt.blend --python blender/render_gt_assets.py -- side assets/interceptor/rider.webp 440
+$B --background blender/ic_from_gt.blend --python blender/render_gt_assets.py -- spin assets/interceptor 24
 ```
 
-The hero places `rider.webp` assuming the side render frames exactly 2.2 m × 1.8 m with the ground at the bottom edge; if you change the side camera, update the `<image>` in the hero and the headlight beam coordinates next to it.
+The side render frames exactly 2.2 m × 1.8 m with the ground at the bottom edge, which is what the hero's `<image>` and headlamp beam coordinates assume. EEVEE renders black in headless sessions here, so the script uses Cycles on the CPU.
+
+`blender/interceptor.py` is the earlier model built entirely from primitives (profiles traced from CC BY-SA photos on Wikimedia Commons by Auge=mit). It is kept as a fallback and no longer used for the site assets.
 
 ## Resume PDF
 
